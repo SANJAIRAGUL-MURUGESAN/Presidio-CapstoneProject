@@ -1,0 +1,64 @@
+Blogging App Like Twitter
+
+Role Players:
+
+1) Admin
+2) User
+
+Functionalities of WebApp:
+
+=> User
+
+* User Registration,User Login and User Logout Page.
+* User Profile Page with certain user provided details.
+* One user can follow other user and unfollowing can also be done.
+* Particular user will be acknowledged as a VerifiedBadge Holder.The verified badge means an account has been verified based on their activity across our products and information or documents they provide.(As of now, Based on number of followers and Verification on any credentials) 
+
+=> Tweet
+
+* User can Create a Tweet(Post) that comprises of Text Content, Images and Videos.
+* Other Users can Like, Comment, Repost the Tweets created by a User.
+* Tweet Created Time, Date will be displayed,
+* During Tweet creation, other users can be mentioned in the tweet.
+* During Tweer creation, users can create Hashtags in the tweet.
+* Users can Edit and Delete a Tweet.
+
+=> Tweet Feeding
+
+* If a user mention a other user, the mentioned user will be notified.
+* If a user make a tweet, the tweet created will be feeded to all followers of the User.
+* If a user make a tweet and if it is liked(other actions also) by a follower, then the tweet will be feeded to all the followers of the Liked User.
+* Random tweets and Trending tweets will be also be feeded to the users.
+
+=> Comments
+
+* Users can comment for a tweet.
+* Users can comment for a comment.
+* Users can also like a comment.
+* Users can delete their comment.
+* Comment posted time,date will be displayed.
+* In comments also, users can mention other users and mentioned users will be notified.
+* In comments also, users can include Hashtags.
+
+=> Hashtags
+
+* Users can create a Hashtag during their tweet creation.
+* Other users can also use the hashtags created by other users.
+
+=> Trending = Hashtags via Posts and Comments
+
+* Based on the Particular Hashtag counts mentioned in a tweet,Comments and Tweet likes, Trending hashtags will be displayed.
+
+=> Admin
+
+* Admin can Login and admin credentials will be provided to the respective person in prior.
+* Admin can delete the post that causes violation overrule.
+
+
+Future Enhancements in Next Updated Version:
+
+* Direct communication between users will be developed.
+* Users can save tweets - option will be developed.
+* Admin Dashboard will be developed.
+
+
