@@ -3,16 +3,24 @@
   "WorkspaceRootPath": "C:\\Users\\VC\\Desktop\\BloggingApp\\Backend\\BloggingApp\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{C50B6094-9E49-4F01-907B-8A218B009A14}|BloggingApp\\BloggingApp.csproj|c:\\users\\vc\\desktop\\bloggingapp\\backend\\bloggingapp\\bloggingapp\\contexts\\bloggingappcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{C50B6094-9E49-4F01-907B-8A218B009A14}|BloggingApp\\BloggingApp.csproj|solutionrelative:bloggingapp\\contexts\\bloggingappcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{C50B6094-9E49-4F01-907B-8A218B009A14}|BloggingApp\\BloggingApp.csproj|c:\\users\\vc\\desktop\\bloggingapp\\backend\\bloggingapp\\bloggingapp\\models\\user.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{C50B6094-9E49-4F01-907B-8A218B009A14}|BloggingApp\\BloggingApp.csproj|solutionrelative:bloggingapp\\models\\user.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{C50B6094-9E49-4F01-907B-8A218B009A14}|BloggingApp\\BloggingApp.csproj|c:\\users\\vc\\desktop\\bloggingapp\\backend\\bloggingapp\\bloggingapp\\services\\userservices.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C50B6094-9E49-4F01-907B-8A218B009A14}|BloggingApp\\BloggingApp.csproj|solutionrelative:bloggingapp\\services\\userservices.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{C50B6094-9E49-4F01-907B-8A218B009A14}|BloggingApp\\BloggingApp.csproj|c:\\users\\vc\\desktop\\bloggingapp\\backend\\bloggingapp\\bloggingapp\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{C50B6094-9E49-4F01-907B-8A218B009A14}|BloggingApp\\BloggingApp.csproj|solutionrelative:bloggingapp\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C50B6094-9E49-4F01-907B-8A218B009A14}|BloggingApp\\BloggingApp.csproj|c:\\users\\vc\\desktop\\bloggingapp\\backend\\bloggingapp\\bloggingapp\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{C50B6094-9E49-4F01-907B-8A218B009A14}|BloggingApp\\BloggingApp.csproj|solutionrelative:bloggingapp\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C50B6094-9E49-4F01-907B-8A218B009A14}|BloggingApp\\BloggingApp.csproj|c:\\users\\vc\\desktop\\bloggingapp\\backend\\bloggingapp\\bloggingapp\\repositories\\userrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C50B6094-9E49-4F01-907B-8A218B009A14}|BloggingApp\\BloggingApp.csproj|solutionrelative:bloggingapp\\repositories\\userrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C50B6094-9E49-4F01-907B-8A218B009A14}|BloggingApp\\BloggingApp.csproj|c:\\users\\vc\\desktop\\bloggingapp\\backend\\bloggingapp\\bloggingapp\\models\\user.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C50B6094-9E49-4F01-907B-8A218B009A14}|BloggingApp\\BloggingApp.csproj|solutionrelative:bloggingapp\\models\\user.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -22,47 +30,73 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 1,
+          "SelectedChildIndex": 0,
           "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "UserServices.cs",
+              "DocumentMoniker": "C:\\Users\\VC\\Desktop\\BloggingApp\\Backend\\BloggingApp\\BloggingApp\\Services\\UserServices.cs",
+              "RelativeDocumentMoniker": "BloggingApp\\Services\\UserServices.cs",
+              "ToolTip": "C:\\Users\\VC\\Desktop\\BloggingApp\\Backend\\BloggingApp\\BloggingApp\\Services\\UserServices.cs",
+              "RelativeToolTip": "BloggingApp\\Services\\UserServices.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAIAAAAQAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-07-23T11:54:50.861Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "appsettings.json",
+              "DocumentMoniker": "C:\\Users\\VC\\Desktop\\BloggingApp\\Backend\\BloggingApp\\BloggingApp\\appsettings.json",
+              "RelativeDocumentMoniker": "BloggingApp\\appsettings.json",
+              "ToolTip": "C:\\Users\\VC\\Desktop\\BloggingApp\\Backend\\BloggingApp\\BloggingApp\\appsettings.json",
+              "RelativeToolTip": "BloggingApp\\appsettings.json",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2024-07-23T11:52:07.352Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "UserRepository.cs",
+              "DocumentMoniker": "C:\\Users\\VC\\Desktop\\BloggingApp\\Backend\\BloggingApp\\BloggingApp\\Repositories\\UserRepository.cs",
+              "RelativeDocumentMoniker": "BloggingApp\\Repositories\\UserRepository.cs",
+              "ToolTip": "C:\\Users\\VC\\Desktop\\BloggingApp\\Backend\\BloggingApp\\BloggingApp\\Repositories\\UserRepository.cs",
+              "RelativeToolTip": "BloggingApp\\Repositories\\UserRepository.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAADgAAAAyAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-07-23T11:47:48.904Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "User.cs",
+              "DocumentMoniker": "C:\\Users\\VC\\Desktop\\BloggingApp\\Backend\\BloggingApp\\BloggingApp\\Models\\User.cs",
+              "RelativeDocumentMoniker": "BloggingApp\\Models\\User.cs",
+              "ToolTip": "C:\\Users\\VC\\Desktop\\BloggingApp\\Backend\\BloggingApp\\BloggingApp\\Models\\User.cs",
+              "RelativeToolTip": "BloggingApp\\Models\\User.cs",
+              "ViewState": "AQIAAAQAAAAAAAAAAAAzwAsAAAAvAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-07-23T08:39:52.001Z",
+              "EditorCaption": ""
+            },
             {
               "$type": "Bookmark",
               "Name": "ST:0:0:{e1b7d1f8-9b3c-49b1-8f4f-bfc63a88835d}"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "BloggingAppContext.cs",
-              "DocumentMoniker": "C:\\Users\\VC\\Desktop\\BloggingApp\\Backend\\BloggingApp\\BloggingApp\\Contexts\\BloggingAppContext.cs",
-              "RelativeDocumentMoniker": "BloggingApp\\Contexts\\BloggingAppContext.cs",
-              "ToolTip": "C:\\Users\\VC\\Desktop\\BloggingApp\\Backend\\BloggingApp\\BloggingApp\\Contexts\\BloggingAppContext.cs",
-              "RelativeToolTip": "BloggingApp\\Contexts\\BloggingAppContext.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAgAAAAAAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-07-23T08:44:00.594Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
               "DocumentIndex": 1,
-              "Title": "User.cs",
-              "DocumentMoniker": "C:\\Users\\VC\\Desktop\\BloggingApp\\Backend\\BloggingApp\\BloggingApp\\Models\\User.cs",
-              "RelativeDocumentMoniker": "BloggingApp\\Models\\User.cs",
-              "ToolTip": "C:\\Users\\VC\\Desktop\\BloggingApp\\Backend\\BloggingApp\\BloggingApp\\Models\\User.cs",
-              "RelativeToolTip": "BloggingApp\\Models\\User.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAA0AAAAAAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-07-23T08:39:52.001Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
               "Title": "Program.cs",
               "DocumentMoniker": "C:\\Users\\VC\\Desktop\\BloggingApp\\Backend\\BloggingApp\\BloggingApp\\Program.cs",
               "RelativeDocumentMoniker": "BloggingApp\\Program.cs",
               "ToolTip": "C:\\Users\\VC\\Desktop\\BloggingApp\\Backend\\BloggingApp\\BloggingApp\\Program.cs",
               "RelativeToolTip": "BloggingApp\\Program.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAQAAAAAAAAA",
+              "ViewState": "AQIAADoAAAAAAAAAAAAQwEkAAAAcAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-07-23T08:32:18.382Z",
               "EditorCaption": ""

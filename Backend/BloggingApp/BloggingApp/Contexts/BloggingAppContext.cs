@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using BloggingApp.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace BloggingApp.Contexts
 {
@@ -8,5 +9,6 @@ namespace BloggingApp.Contexts
         {
 
         }
+        public DbSet<User> Users { get; set; }
     }
 }

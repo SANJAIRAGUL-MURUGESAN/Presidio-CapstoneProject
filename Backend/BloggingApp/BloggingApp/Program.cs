@@ -1,3 +1,6 @@
+using BloggingApp.Interfaces;
+using BloggingApp.Models;
+using BloggingApp.Repositories;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
@@ -63,6 +66,13 @@ namespace BloggingApp
                 options.AddPolicy("RequireAdministratorRole",
                      policy => policy.RequireRole("Admin"));
             });
+
+            #region Repositories
+            builder.Services.AddScoped<IRepository<int, User>, UserRepository>();
+            #endregion
+
+            #region Services
+            #endregion
 
             var app = builder.Build();
 
