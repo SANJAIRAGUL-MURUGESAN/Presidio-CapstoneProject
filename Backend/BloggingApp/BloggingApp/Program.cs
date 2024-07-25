@@ -1,7 +1,10 @@
+using BloggingApp.Contexts;
 using BloggingApp.Interfaces;
 using BloggingApp.Models;
 using BloggingApp.Repositories;
+using BloggingApp.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System.Text;
@@ -67,11 +70,49 @@ namespace BloggingApp
                      policy => policy.RequireRole("Admin"));
             });
 
+            #region Contexts
+            builder.Services.AddDbContext<BloggingAppContext>(
+                options => options.UseSqlServer(builder.Configuration.GetConnectionString("defaultConnection"))
+            );
+            #endregion
+
+            builder.Services.AddHttpClient("BloggingApp", client =>
+            {
+                client.BaseAddress = new Uri("https://localhost:7186/");
+            }).ConfigurePrimaryHttpMessageHandler(() => new HttpClientHandler
+            {
+                ServerCertificateCustomValidationCallback = (message, cert, chain, errors) => true
+            });
+
+
             #region Repositories
             builder.Services.AddScoped<IRepository<int, User>, UserRepository>();
+            builder.Services.AddScoped<IRepository<int, Tweet>, TweetRepository>();
+            builder.Services.AddScoped<IRepository<int, TweetFiles>, TweetFilesRepository>();
+            builder.Services.AddScoped<IRepository<int, TweetHashTags>, TweetHashTagsRepository>();
+            builder.Services.AddScoped<IRepository<int, TweetMentions>, TweetMentionsRepository>();
+            builder.Services.AddScoped<IRepository<int, HashTags>, HashTagRepository>();
             #endregion
 
             #region Services
+            builder.Services.AddScoped<ITweetServices, TweetServices>();
+            builder.Services.AddScoped<IUserServices, UserServices>();
+            builder.Services.AddScoped<IAzureBlobService>(provider =>
+            {
+                var configuration = provider.GetRequiredService<IConfiguration>();
+                var connectionString = configuration.GetConnectionString("AzureBlobStorage");
+                var containerName = configuration.GetValue<string>("BlobContainerName");
+                return new AzureBlobService(connectionString, containerName);
+            });
+            #endregion
+
+            #region CORS
+            builder.Services.AddCors(opts => {
+                opts.AddPolicy("MyCors", options =>
+                {
+                    options.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin();
+                });
+            });
             #endregion
 
             var app = builder.Build();
@@ -84,8 +125,11 @@ namespace BloggingApp
             }
 
             app.UseHttpsRedirection();
+            app.UseCors("MyCors");
             app.UseAuthentication();
             app.UseAuthorization();
+            app.UseHttpLogging();
+            app.MapControllers();
 
 
             app.MapControllers();

@@ -69,3 +69,10 @@ C:\Users\VC\Desktop\BloggingApp\Backend\BloggingApp\BloggingApp\bin\Debug\net6.0
 C:\Users\VC\Desktop\BloggingApp\Backend\BloggingApp\BloggingApp\bin\Debug\net6.0\runtimes\win\lib\netstandard2.0\System.Runtime.Caching.dll
 C:\Users\VC\Desktop\BloggingApp\Backend\BloggingApp\BloggingApp\bin\Debug\net6.0\runtimes\win\lib\netstandard2.0\System.Security.Cryptography.ProtectedData.dll
 C:\Users\VC\Desktop\BloggingApp\Backend\BloggingApp\BloggingApp\bin\Debug\net6.0\runtimes\win\lib\netcoreapp3.0\System.Windows.Extensions.dll
+C:\Users\VC\Desktop\BloggingApp\Backend\BloggingApp\BloggingApp\bin\Debug\net6.0\Azure.Core.dll
+C:\Users\VC\Desktop\BloggingApp\Backend\BloggingApp\BloggingApp\bin\Debug\net6.0\Azure.Storage.Blobs.dll
+C:\Users\VC\Desktop\BloggingApp\Backend\BloggingApp\BloggingApp\bin\Debug\net6.0\Azure.Storage.Common.dll
+C:\Users\VC\Desktop\BloggingApp\Backend\BloggingApp\BloggingApp\bin\Debug\net6.0\Microsoft.Bcl.AsyncInterfaces.dll
+C:\Users\VC\Desktop\BloggingApp\Backend\BloggingApp\BloggingApp\bin\Debug\net6.0\System.ClientModel.dll
+C:\Users\VC\Desktop\BloggingApp\Backend\BloggingApp\BloggingApp\bin\Debug\net6.0\System.IO.Hashing.dll
+C:\Users\VC\Desktop\BloggingApp\Backend\BloggingApp\BloggingApp\bin\Debug\net6.0\System.Memory.Data.dll

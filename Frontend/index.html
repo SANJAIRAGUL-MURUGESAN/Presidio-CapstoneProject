@@ -15,6 +15,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="ActionStyle.css">
+
+
     <script src="script.js" defer></script>
     <script src="ActionScritp.js" defer></script>
 </head>
@@ -191,9 +193,9 @@
                             <img src="images/post-img-1.jpg" alt="post">
                         </div>
                         <div class="post-icons">
-                            <i class="far fa-comment"></i>
-                            <i class="fas fa-retweet"></i>
-                            <i class="far fa-heart"></i>
+                            <i class="far fa-comment"><h6 style="font-size: 8px;">12 Comments</h6></i>
+                            <i class="fas fa-retweet"><h6 style="font-size: 8px;">3 Retweets</h6></i>
+                            <i class="far fa-heart"><h6 style="font-size: 8px;">78 Likes</h6></i>
                             <i class="fas fa-share-alt"></i>
                         </div>
                     </div>
@@ -368,15 +370,20 @@
                     <div class="modal-img">
                         <img src="images/user1.jpg">
                     </div>
-                    <input type="text" placeholder="whats happening?" class="modal-input">
-                    <i class="far fa-smile"></i>
+                    <input type="text" placeholder="whats happening?" class="modal-input" id="tweetcontentinput">
+                    <div id="emojiContainer" class="emoji-container">
+                        <!-- <div>HI Hello</div> -->
+                    </div>
+                    <div id="emojiContainer1" class="emoji-container"></div>
+                    <i class="far fa-smile" id="emojiButton"></i>
                 </div>
                 <div class="modal-footer">
                     <div class="modal-icons">
                         <i class="far fa-image" id="imageIcon"></i>
                         <input type="file" id="fileInput" accept="image/*" multiple style="display: none;">
                         <i class="fas fa-camera"></i>
-                        <i class="far fa-chart-bar"></i>
+                        <i class="fas fa-comment" id="commentenable" class="commentenable"></i>
+                        <i class="fas fa-comment-slash commentdisable" id="commentdisable"></i>
                         <span>+</span>
                     </div>
                     <div id="imagePreviewContainer" class="image-preview-container"></div>

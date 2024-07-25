@@ -25,3 +25,63 @@ input[type="file"] {
     border-radius: 5px;
 }
 
+/* Hashtag Container */
+
+/* Basic styles for modal and input */
+
+/* Hashtags, Comments starts */
+
+.emoji-container {
+    display: none;
+    flex-wrap: wrap;
+    position: absolute;
+    background: white;
+    /* overflow-y: auto; */
+    z-index: 1000;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    padding: 10px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    width: 300px;
+    top: 40px; /* Adjust based on your layout */
+    left: 0; /* Adjust based on your layout */
+    margin-left: 100px;
+    margin-top: 150px;
+    scroll-behavior: auto;
+}
+
+.emoji-container  div {
+    padding: 8px;
+    cursor: pointer;
+    width: 300px;
+    font-size: 18px;
+}
+
+.emoji-container  div:hover {
+    background: #f0f0f0;
+}
+
+/* .emoji {
+    font-size: 20px;
+    margin: 5px;
+    cursor: pointer;
+}
+
+.emoji:hover {
+    background: #f0f0f0;
+    border-radius: 4px;
+} */
+
+/* End of hastag Container */
+
+/* Hashtags, Comments ends */
+
+/* Comments Enable,disable starts*/
+
+.commentdisable{
+    display: none;
+}
+
+
+/* Comments Enable,disable ends*/
+
