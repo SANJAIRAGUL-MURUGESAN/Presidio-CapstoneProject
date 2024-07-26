@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace BloggingApp.Migrations
 {
-    public partial class initial : Migration
+    public partial class Initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -18,13 +18,15 @@ namespace BloggingApp.Migrations
                     UserName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     UserId = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     UserEmail = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    UserPassword = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Location = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     UserMobile = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     UserGender = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     IsPremiumHolder = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     DateOfBirth = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Age = table.Column<int>(type: "int", nullable: false),
-                    BioDescription = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    BioDescription = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    UserProfileImgLink = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -64,7 +66,6 @@ namespace BloggingApp.Migrations
                     TweetContent = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     TweetDateTime = table.Column<DateTime>(type: "datetime2", nullable: false),
                     IsCommentEnable = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    RepostTweetId = table.Column<int>(type: "int", nullable: false),
                     UserId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
@@ -79,6 +80,35 @@ namespace BloggingApp.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Retweets",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    RetweetContent = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    RetweetDateTime = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    IsCommentEnable = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ActualTweetId = table.Column<int>(type: "int", nullable: false),
+                    UserId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Retweets", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Retweets_Tweets_ActualTweetId",
+                        column: x => x.ActualTweetId,
+                        principalTable: "Tweets",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Retweets_Users_UserId",
+                        column: x => x.UserId,
+                        principalTable: "Users",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "TweetFiles",
                 columns: table => new
                 {
@@ -86,7 +116,6 @@ namespace BloggingApp.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     File1 = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     File2 = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    File3 = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     TweetId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
@@ -148,6 +177,16 @@ namespace BloggingApp.Migrations
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Retweets_ActualTweetId",
+                table: "Retweets",
+                column: "ActualTweetId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Retweets_UserId",
+                table: "Retweets",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_TweetFiles_TweetId",
                 table: "TweetFiles",
                 column: "TweetId");
@@ -172,6 +211,9 @@ namespace BloggingApp.Migrations
         {
             migrationBuilder.DropTable(
                 name: "HashTags");
+
+            migrationBuilder.DropTable(
+                name: "Retweets");
 
             migrationBuilder.DropTable(
                 name: "TweetFiles");

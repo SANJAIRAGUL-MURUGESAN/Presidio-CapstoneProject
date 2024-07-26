@@ -2,12 +2,14 @@ using BloggingApp.Contexts;
 using BloggingApp.Interfaces;
 using BloggingApp.Models;
 using BloggingApp.Repositories;
+using BloggingApp.Repositories.TweetRequest;
 using BloggingApp.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System.Text;
+using static BloggingApp.Services.TokenService;
 
 namespace BloggingApp
 {
@@ -92,11 +94,16 @@ namespace BloggingApp
             builder.Services.AddScoped<IRepository<int, TweetHashTags>, TweetHashTagsRepository>();
             builder.Services.AddScoped<IRepository<int, TweetMentions>, TweetMentionsRepository>();
             builder.Services.AddScoped<IRepository<int, HashTags>, HashTagRepository>();
+            builder.Services.AddScoped<IRepository<int, Retweet>, RetweetRepository>();
+
+            // Repository for getting TweetFiles for a particular tweet
+            builder.Services.AddScoped<TweetRequestForTweetFilesRepository>();
             #endregion
 
             #region Services
             builder.Services.AddScoped<ITweetServices, TweetServices>();
             builder.Services.AddScoped<IUserServices, UserServices>();
+            builder.Services.AddScoped<ITokenServices, TokenService>();
             builder.Services.AddScoped<IAzureBlobService>(provider =>
             {
                 var configuration = provider.GetRequiredService<IConfiguration>();

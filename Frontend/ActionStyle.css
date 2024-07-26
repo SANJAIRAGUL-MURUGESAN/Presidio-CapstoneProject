@@ -85,3 +85,19 @@ input[type="file"] {
 
 /* Comments Enable,disable ends*/
 
+.liked {
+    background-color: red !important;
+}
+
+.highlight {
+    color: #1aa1f5;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.retweet {
+    margin-top: 10px;
+    padding: 10px;
+    border-top: 1px solid #ccc;
+}
+

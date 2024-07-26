@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Presidio Share</title>
+    <link rel="shortcut icon" href="https://www.presidio.com/icheestu/2021/03/favicon-32x32-1.png" type="image/x-icon">
+
+    <link rel="stylesheet" 
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" 
+    integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g=="
+     crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./Styles/Register.css">
+    <link rel="stylesheet" href="ActionStyle.css">
+
+
+    <!-- <script src="script.js" defer></script> -->
+    <script src="./Scripts/UserLogin.js" defer></script>
+    <!-- <script src="ActionScritp.js" defer></script> -->
+</head>
+<body>
+
+ 
+
+     <!-- Login Page -->
+      
+     <section class="login-page">
+        <nav class="login-page-nav">
+            <ul>
+                <li class="brand">
+                    <a href="#"> <i class="fas fa-dove"></i> Home</a>
+                </li>
+                <li><a href="#">About</a></li>
+                <li><a href="#">Language: English</a></li>
+            </ul>
+        </nav>
+
+        <div class="login">
+            <div class="login-content">
+                <h2>Login to PresidioShare</h2>
+                <form class="login-form">
+                    <input type="text" class="login-form-info" placeholder="Email" id="useremail">
+                    <input type="password" class="login-password" placeholder="Password" id="password"> 
+                    
+                    <div>
+                        <button type="button" class="login-form-btn">
+                            Login
+                        </button>
+                        <input type="checkbox" class="login-form-checkbox" id="check">
+                        <label for="check">Remember Me</label>
+                        <a href="#">Forgot Password?</a>
+                    </div>
+
+
+                </form>
+            </div>
+            <footer class="login-footer">
+                <p>New To Twitter? <a href="#">Sign-Up Now</a></p>
+                <p>Already using Twitter via text message? <a href="#">Activate your Account</a></p>
+            </footer>
+        </div>
+
+    
+        <!-- Login Modal -->
+        
+        <div class="login-modal">
+            <i class="fas fa-times"></i>
+            <p>The username and password you entered did not match our records. Please double check and try again</p>
+        </div>
+        <!-- End of Login Modal -->
+
+     </section>
+    
+     <!-- End of Login Page -->
+
+    
+   
+
+</body>
+</html>

@@ -11,6 +11,7 @@ namespace BloggingApp.Contexts
         }
         public DbSet<User> Users { get; set; }
         public DbSet<Tweet> Tweets { get; set; }
+        public DbSet<Retweet> Retweets { get; set; }
         public DbSet<TweetFiles> TweetFiles { get; set; }
         public DbSet<TweetMentions> TweetMentions { get; set; }
         public DbSet<TweetHashTags> TweetHashTags { get; set; }
@@ -22,6 +23,14 @@ namespace BloggingApp.Contexts
             modelBuilder.Entity<Tweet>()
               .HasOne(r => r.User)
               .WithMany(e => e.UserTweets)
+              .HasForeignKey(r => r.UserId)
+              .OnDelete(DeleteBehavior.Restrict)
+              .IsRequired();
+
+            // Mapping Users and their Retweets
+            modelBuilder.Entity<Retweet>()
+              .HasOne(r => r.User)
+              .WithMany(e => e.UserRetweets)
               .HasForeignKey(r => r.UserId)
               .OnDelete(DeleteBehavior.Restrict)
               .IsRequired();

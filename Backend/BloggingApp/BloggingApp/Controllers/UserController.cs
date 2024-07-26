@@ -38,5 +38,24 @@ namespace BloggingApp.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, new ErrorModel(500, ex.Message));
             }
         }
+
+        [Route("UserLogin")]
+        [HttpPost]
+        [ProducesResponseType(typeof(UserLoginReturnDTO), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ErrorModel), StatusCodes.Status409Conflict)]
+        [ProducesResponseType(typeof(ErrorModel), StatusCodes.Status500InternalServerError)]
+        [ProducesErrorResponseType(typeof(ErrorModel))]
+        public async Task<ActionResult<UserLoginReturnDTO>> UserLogin([FromBody] UserLoginDTO userLoginDTO)
+        {
+            try
+            {
+                var user = await _UserServices.UserLogin(userLoginDTO);
+                return Ok(user);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, new ErrorModel(500, ex.Message));
+            }
+        }
     }
 }

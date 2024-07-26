@@ -56,6 +56,40 @@ namespace BloggingApp.Migrations
                     b.ToTable("HashTags");
                 });
 
+            modelBuilder.Entity("BloggingApp.Models.Retweet", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<int>("ActualTweetId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("IsCommentEnable")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("RetweetContent")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("RetweetDateTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ActualTweetId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Retweets");
+                });
+
             modelBuilder.Entity("BloggingApp.Models.Tweet", b =>
                 {
                     b.Property<int>("Id")
@@ -67,9 +101,6 @@ namespace BloggingApp.Migrations
                     b.Property<string>("IsCommentEnable")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("RepostTweetId")
-                        .HasColumnType("int");
 
                     b.Property<string>("TweetContent")
                         .IsRequired()
@@ -101,10 +132,6 @@ namespace BloggingApp.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("File2")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("File3")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -214,6 +241,14 @@ namespace BloggingApp.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("UserPassword")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UserProfileImgLink")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.HasKey("Id");
 
                     b.ToTable("Users");
@@ -226,6 +261,25 @@ namespace BloggingApp.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("BloggingApp.Models.Retweet", b =>
+                {
+                    b.HasOne("BloggingApp.Models.Tweet", "Tweet")
+                        .WithMany()
+                        .HasForeignKey("ActualTweetId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("BloggingApp.Models.User", "User")
+                        .WithMany("UserRetweets")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Tweet");
 
                     b.Navigation("User");
                 });
@@ -285,6 +339,8 @@ namespace BloggingApp.Migrations
 
             modelBuilder.Entity("BloggingApp.Models.User", b =>
                 {
+                    b.Navigation("UserRetweets");
+
                     b.Navigation("UserTweets");
                 });
 #pragma warning restore 612, 618

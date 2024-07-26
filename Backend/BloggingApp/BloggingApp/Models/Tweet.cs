@@ -11,7 +11,6 @@ namespace BloggingApp.Models
         public string TweetContent { get; set; }
         public DateTime TweetDateTime { get; set; }
         public string IsCommentEnable { get; set; }
-        public int RepostTweetId { get; set; }
 
         // ForeignKey - User ID
         public int UserId { get; set; }
