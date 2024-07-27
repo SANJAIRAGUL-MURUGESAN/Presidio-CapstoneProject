@@ -19,5 +19,6 @@ namespace BloggingApp.Models
         public ICollection<TweetFiles> TweetFiles { get; set; }//No effect on the table
         public ICollection<TweetMentions> TweetMentions { get; set; }//No effect on the table
         public ICollection<TweetHashTags> TweetHashTags { get; set; }//No effect on the table
+        public ICollection<TweetLikes> TweetLikes{ get; set; }//No effect on the table
     }
 }

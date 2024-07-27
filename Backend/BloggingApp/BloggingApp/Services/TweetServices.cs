@@ -8,6 +8,7 @@ using BloggingApp.Repositories.TweetRequest;
 using Microsoft.Extensions.Configuration;
 using System.Diagnostics;
 using static System.Collections.Specialized.BitVector32;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace BloggingApp.Services
 {
@@ -21,11 +22,14 @@ namespace BloggingApp.Services
         private readonly IRepository<int, User> _UserRepository;
         private readonly IRepository<int, TweetFiles> _TweetFilesRepository;
         private readonly IRepository<int, Retweet> _RetweetRepository;
+        private readonly IRepository<int, TweetLikes> _TweetLikesRepository;
+        private readonly IRepository<int, RetweetLikes> _RetweetLikesRepository;
         private readonly TweetRequestForTweetFilesRepository _TweetRequestForTweetFilesRepository; //To get Tweet Files for a Tweet
 
         public TweetServices(IRepository<int, Tweet> tweetRepository, IRepository<int, TweetMentions> tweetMentionsRepository, IRepository<int, User> userRepository,
             IRepository<int, TweetHashTags> tweetHashTagsRepository, IRepository<int,HashTags> hashTagsRepository,IRepository<int,TweetFiles> tweetFilesRepository,
-            TweetRequestForTweetFilesRepository tweetRequestForTweetFiles, IRepository<int, Retweet> retweetRepository)
+            TweetRequestForTweetFilesRepository tweetRequestForTweetFiles, IRepository<int, Retweet> retweetRepository, IRepository<int, TweetLikes> tweetLikesRepository,
+            IRepository<int, RetweetLikes> reTweetLikesRepository)
         {
             _TweetRepository = tweetRepository;
             _TweetMentionsRepository = tweetMentionsRepository;
@@ -35,6 +39,8 @@ namespace BloggingApp.Services
             _TweetFilesRepository = tweetFilesRepository;
             _RetweetRepository = retweetRepository;
             _TweetRequestForTweetFilesRepository = tweetRequestForTweetFiles;
+            _TweetLikesRepository = tweetLikesRepository;
+            _RetweetLikesRepository = reTweetLikesRepository;
         }
 
         // Function to Add Tweet to database - Starts
@@ -133,7 +139,7 @@ namespace BloggingApp.Services
 
         // Function to Provide Tweets - Starts(dummy)
 
-        public async Task<RetweetsFeederResponseDTO> MapRetweetswihtLargeValues(Tweet tweet1, Retweet retweet)
+        public async Task<RetweetsFeederResponseDTO> MapRetweetswihtLargeValues(Tweet tweet1, Retweet retweet, int userid)
         {
             var TweetFiles1 = await _TweetRequestForTweetFilesRepository.GetbyKey(tweet1.Id);
             var Files1 = TweetFiles1.TweetFiles.ToList();
@@ -177,6 +183,17 @@ namespace BloggingApp.Services
             retweetsFeederResponseDTO.RetweetUserName = retweetuserdetails.UserName;
             retweetsFeederResponseDTO.RetweetUserProfileImgLink = retweetuserdetails.UserProfileImgLink;
             retweetsFeederResponseDTO.RetweetUserId = retweetuserdetails.UserId;
+            var RetweetLikes = ((await _RetweetLikesRepository.Get()).Where(l => l.RetweetId == retweet.Id)).ToList();
+            var IsUSerLikedRetweet = (await _RetweetLikesRepository.Get()).Where(l => l.RetweetId == retweet.Id && l.LikedUserId == userid).ToList();
+            if(IsUSerLikedRetweet.Count > 0)
+            {
+                retweetsFeederResponseDTO.IsRetweetLikedByUser = "Yes";
+            }
+            else
+            {
+                retweetsFeederResponseDTO.IsRetweetLikedByUser = "No";
+            }
+            retweetsFeederResponseDTO.RetweetLikesCount = RetweetLikes.Count;
 
             return retweetsFeederResponseDTO;
 
@@ -194,6 +211,7 @@ namespace BloggingApp.Services
                 {
                     var user = await _UserRepository.GetbyKey(tweet.UserId);
                     var TweetFiles = await _TweetRequestForTweetFilesRepository.GetbyKey(tweet.Id);
+                    var TweetLikes = ((await _TweetLikesRepository.Get()).Where(l => l.TweetId == tweet.Id)).ToList();
                     var Files = TweetFiles.TweetFiles.ToList();
                     TweetsFeederDTO tweetsFeederDTO = new TweetsFeederDTO();
                     tweetsFeederDTO.TweetId = tweet.Id;
@@ -204,8 +222,19 @@ namespace BloggingApp.Services
                     tweetsFeederDTO.TweetOwnerUserName = user.UserName;
                     tweetsFeederDTO.TweetOwnerUserId = user.UserId;
                     tweetsFeederDTO.TweetOwnerProfileImgLink = user.UserProfileImgLink;
+                    tweetsFeederDTO.TweetLikesCount = TweetLikes.Count;
 
-                    if(Files.Count == 1)
+                    var IsTweetLikedByUser = ((await _TweetLikesRepository.Get()).Where(l => l.TweetId == tweet.Id && l.LikedUserId == userid)).ToList();
+                    if(IsTweetLikedByUser.Count > 0)
+                    {
+                        tweetsFeederDTO.IsTweetLikedByUser = "Yes";
+                    }
+                    else
+                    {
+                        tweetsFeederDTO.IsTweetLikedByUser = "No";
+                    }
+
+                    if (Files.Count == 1)
                     {
                         foreach (TweetFiles tweetfile in Files)
                         {
@@ -236,7 +265,7 @@ namespace BloggingApp.Services
                 foreach(var retweet in Retweets)
                 {
                     var actutaltweetdetails = await _TweetRepository.GetbyKey(retweet.ActualTweetId);
-                    var mappedretweets = await MapRetweetswihtLargeValues(actutaltweetdetails,retweet);
+                    var mappedretweets = await MapRetweetswihtLargeValues(actutaltweetdetails,retweet,userid);
                     retweetsFeederResponseDTOs.Add(mappedretweets);
                 }
 
@@ -245,7 +274,7 @@ namespace BloggingApp.Services
                 feedsPageReturnDTO.retweets = retweetsFeederResponseDTOs;
 
 
-                if (tweetsFeederDTOs.Count > 0 && retweetsFeederResponseDTOs.Count>0)
+                if (tweetsFeederDTOs.Count > 0 || retweetsFeederResponseDTOs.Count > 0)
                 {
                     return feedsPageReturnDTO;
                 }

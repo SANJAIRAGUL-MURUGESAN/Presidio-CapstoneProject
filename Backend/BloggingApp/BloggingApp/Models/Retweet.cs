@@ -18,6 +18,8 @@ namespace BloggingApp.Models
 
         public int UserId { get; set; }
         public User User { get; set; }
- 
+
+        public ICollection<RetweetLikes> RetweetLikes { get; set; }//No effect on the table
+
     }
 }

@@ -22,6 +22,8 @@
         public string RetweetUserName { get; set; }
         public string RetweetUserId { get; set; }
         public string RetweetUserProfileImgLink { get; set; }
+        public int RetweetLikesCount { get; set; }
+        public string IsRetweetLikedByUser { get; set; }
 
     }
 }

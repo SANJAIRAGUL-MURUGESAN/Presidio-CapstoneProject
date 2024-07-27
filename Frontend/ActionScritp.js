@@ -140,7 +140,8 @@ document.querySelector('.modal-header button').addEventListener('click', functio
         if (!res.ok) {
             console.log(data.errorCode)
         }else{
-            alert('Hey User, Your Repost Added Successfully!');
+          localStorage.removeItem('actualtweetid');
+          alert('Hey User, Your Repost Added Successfully!');
         }
     })
     .catch(error => {
@@ -325,15 +326,87 @@ document.getElementById('commentdisable').addEventListener('click', function () 
 // Function to get the Feeds - starts
 
 async function updateLikeStatus(tweetId) {
-  await fetch(`https://localhost:7186/api/Tweet/Like/${tweetId}`, {
+  await fetch('https://localhost:7186/api/Tweet/AddTweetLike', {
       method: 'POST',
       headers: {
           'Authorization': 'Bearer ' + localStorage.getItem('token'),
           'Content-Type': 'application/json',
-      }
+      },
+      body: JSON.stringify({
+        "likedUserId": localStorage.getItem('userid'),
+        "tweetId": tweetId
+    })
   }).then(response => {
       if (!response.ok) {
           throw new Error('Failed to update like status');
+      }else{
+        alert('Like Added Successfully')
+      }
+  }).catch(error => {
+      console.error(error);
+  });
+}
+
+async function updateTweetDisLikeStatus(tweetId) {
+  await fetch('https://localhost:7186/api/Tweet/AddTweetDisLike', {
+      method: 'POST',
+      headers: {
+          'Authorization': 'Bearer ' + localStorage.getItem('token'),
+          'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        "tweetId": tweetId,
+        "likedUserId": localStorage.getItem('userid')
+    })
+  }).then(response => {
+      if (!response.ok) {
+          throw new Error('Failed to update Dislike status');
+      }else{
+        alert('Dislike Added Successfully')
+      }
+  }).catch(error => {
+      console.error(error);
+  });
+}
+
+async function updateRetweetLikeStatus(tweetId) {
+  await fetch('https://localhost:7186/api/Tweet/AddReTweetLike', {
+      method: 'POST',
+      headers: {
+          'Authorization': 'Bearer ' + localStorage.getItem('token'),
+          'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        "likedUserId": localStorage.getItem('userid'),
+        "retweetId": tweetId
+    })
+  }).then(response => {
+      if (!response.ok) {
+          throw new Error('Failed to update like status');
+      }else{
+        alert('Like Added Successfully')
+      }
+  }).catch(error => {
+      console.error(error);
+  });
+}
+
+async function updateRetweetDisLikeStatus(tweetId) {
+  await fetch('https://localhost:7186/api/Tweet/AddReTweetDisLike', {
+      method: 'POST',
+      headers: {
+          'Authorization': 'Bearer ' + localStorage.getItem('token'),
+          'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        "retweetId": tweetId,
+        "likedUserId": localStorage.getItem('userid')
+    })
+  }).then(response => {
+      if (!response.ok) {
+          throw new Error('Failed to update Dislike status');
+      }else{
+        alert('Dislike Added Successfully')
       }
   }).catch(error => {
       console.error(error);
@@ -369,135 +442,13 @@ function timeAgo(date) {
   const months = Math.floor(days / 30);
 
   if (minutes < 1) return 'just now';
-  if (minutes < 60) return `${minutes} mins ago`;
-  if (hours < 24) return `${hours} hrs ago`;
-  if (days < 30) return `${days} days ago`;
-  return `${months} mon ago`;
+  if (minutes < 60) return `${minutes}mins`;
+  if (hours < 24) return `${hours}hrs `;
+  if (days < 30) return `${days}days`;
+  return `${months}mon`;
 }
 
-function renderTweets(tweets) {
-  const postContainer = document.getElementById('post-container');
-  postContainer.innerHTML = ''; // Clear existing posts
 
-  tweets.forEach(tweet => {
-      const postDiv = document.createElement('div');
-      postDiv.className = 'post';
-
-      const userAvatarDiv = document.createElement('div');
-      userAvatarDiv.className = 'user-avatar';
-      const userAvatarImg = document.createElement('img');
-      userAvatarImg.src = tweet.tweetOwnerProfileImgLink;
-      userAvatarDiv.appendChild(userAvatarImg);
-
-      const postContentDiv = document.createElement('div');
-      postContentDiv.className = 'post-content';
-
-      const postUserInfoDiv = document.createElement('div');
-      postUserInfoDiv.className = 'post-user-info';
-
-      const userNameH4 = document.createElement('h4');
-      userNameH4.textContent = tweet.tweetOwnerUserName;
-      const checkIcon = document.createElement('i');
-      checkIcon.className = 'fas fa-check-circle';
-      const userHandleSpan = document.createElement('span');
-      userHandleSpan.textContent = `@${tweet.tweetOwnerUserId} . ${timeAgo(tweet.tweetDateTime)}`;
-
-      postUserInfoDiv.appendChild(userNameH4);
-      postUserInfoDiv.appendChild(checkIcon);
-      postUserInfoDiv.appendChild(userHandleSpan);
-
-      const postTextP = document.createElement('p');
-      postTextP.className = 'post-text';
-      postTextP.innerHTML = tweet.tweetContent.replace(/(@\w+|#\w+)/g, match => {
-          return `<span class="highlight">${match}</span>`;
-      });
-
-      const postImgDiv = document.createElement('div');
-      postImgDiv.className = 'post-img';
-      if (tweet.tweetFile1 && tweet.tweetFile1 !== "null") {
-          const postImg = document.createElement('img');
-          postImg.src = tweet.tweetFile1;
-          postImg.alt = 'post';
-          postImgDiv.appendChild(postImg);
-      }
-
-      const postIconsDiv = document.createElement('div');
-      postIconsDiv.className = 'post-icons';
-
-      const commentIcon = document.createElement('i');
-      commentIcon.className = 'far fa-comment';
-      const commentText = document.createElement('h6');
-      commentText.style.fontSize = '8px';
-      commentText.textContent = '12 Comments';
-      commentIcon.appendChild(commentText);
-
-      const retweetIcon = document.createElement('i');
-      retweetIcon.id = 'retweet-icon'; 
-      retweetIcon.className = 'fas fa-retweet';
-      retweetIcon.style.cursor = 'pointer'
-      const retweetText = document.createElement('h6');
-      retweetText.style.fontSize = '8px';
-      retweetText.textContent = '3 Retweets';
-      retweetIcon.appendChild(retweetText);
-
-      retweetIcon.addEventListener('click', async function() {
-        modal.style.display = 'block'
-        modalWrapper.classList.add('modal-wrapper-display')
-    
-        if(modalInput.value !== ''){
-            modalInput.value = '';
-            changeOpacity(0.5)
-        }
-
-        localStorage.setItem("actualtweetid",tweet.tweetId);
-    });
-
-      const likeIcon = document.createElement('i');
-      likeIcon.className = 'fa-regular fa-heart';
-      likeIcon.style.color = '#3e6f6f'
-      likeIcon.style.cursor = 'pointer'
-      const likeText = document.createElement('h6');
-      likeText.style.fontSize = '8px';
-      likeText.textContent = '78 Likes';
-      likeText.style.color  = 'grey'
-      likeIcon.appendChild(likeText);
-
-      likeIcon.addEventListener('click', async function() {
-        if (likeIcon.classList.contains('fa-regular')) {
-          likeIcon.className = 'fa-solid fa-heart';
-          likeIcon.style.color = '#ed0c0c'
-            await updateLikeStatus(tweet.tweetId);
-        }else{
-          likeIcon.className = 'fa-regular fa-heart';
-          likeIcon.style.color = '#3e6f6f'
-        }
-    });
-
-      const shareIcon = document.createElement('i');
-      shareIcon.className = 'fas fa-share-alt';
-
-      postIconsDiv.appendChild(commentIcon);
-      postIconsDiv.appendChild(retweetIcon);
-      postIconsDiv.appendChild(likeIcon);
-      postIconsDiv.appendChild(shareIcon);
-
-      postContentDiv.appendChild(postUserInfoDiv);
-      postContentDiv.appendChild(postTextP);
-      postContentDiv.appendChild(postImgDiv);
-      postContentDiv.appendChild(postIconsDiv);
-
-      postDiv.appendChild(userAvatarDiv);
-      postDiv.appendChild(postContentDiv);
-
-      postContainer.appendChild(postDiv);
-
-      document.querySelectorAll('.highlight').forEach(element => {
-        element.addEventListener('click', function() {
-            handleMentionClick(element.textContent);
-        });
-    });
-  });
-}
 
 document.addEventListener('DOMContentLoaded', async function() {
 
@@ -509,12 +460,13 @@ document.addEventListener('DOMContentLoaded', async function() {
               'Authorization': 'Bearer '+localStorage.getItem('token'),
               'Content-Type': 'application/json',
           },
-          body: JSON.stringify(2)
+          body: JSON.stringify(localStorage.getItem('userid'))
       }).then(async (response) => {
           var data = await response.json();
           console.log(data.retweets);
-          // renderTweets(data.tweets)
-          renderRetweets(data.retweets)
+          console.log(data.tweets);
+          renderRetweets(data.retweets,data.tweets)
+          // renderTweets(data.tweets) 
           // data.forEach(element => {
           //     console.log(element)
           //     renderProducts(element);
@@ -528,12 +480,11 @@ document.addEventListener('DOMContentLoaded', async function() {
 
 // Function to get the Feeds - ends
 
-function renderRetweets(tweets) {
+function renderRetweets(retweets,tweets) {
   const postContainer = document.getElementById('post-container');
   postContainer.innerHTML = ''; // Clear existing posts
 
-  tweets.forEach(tweet => {
-     
+  retweets.forEach(tweet => {
     
       const postDiv = document.createElement('div');
       postDiv.className = 'post';
@@ -662,18 +613,25 @@ function renderRetweets(tweets) {
       likeIcon.style.cursor = 'pointer'
       const likeText = document.createElement('h6');
       likeText.style.fontSize = '8px';
-      likeText.textContent = '78 Likes';
+      likeText.textContent = `${tweet.retweetLikesCount} Likes`;
       likeText.style.color  = 'grey'
       likeIcon.appendChild(likeText);
+
+      if(tweet.isRetweetLikedByUser == 'Yes'){
+        likeIcon.className = 'fa-solid fa-heart';
+        likeIcon.style.color = '#ed0c0c'
+      }
+  
 
       likeIcon.addEventListener('click', async function() {
         if (likeIcon.classList.contains('fa-regular')) {
           likeIcon.className = 'fa-solid fa-heart';
           likeIcon.style.color = '#ed0c0c'
-            await updateLikeStatus(tweet.tweetId);
-        }else{
+            await updateRetweetLikeStatus(tweet.retweetId);
+        }else if(likeIcon.classList.contains('fa-heart')){
           likeIcon.className = 'fa-regular fa-heart';
           likeIcon.style.color = '#3e6f6f'
+          updateRetweetDisLikeStatus(tweet.retweetId)
         }
     });
 
@@ -709,6 +667,132 @@ function renderRetweets(tweets) {
         });
     });
   });
+
+  tweets.forEach(tweet => {
+    const postDiv = document.createElement('div');
+    postDiv.className = 'post';
+
+    const userAvatarDiv = document.createElement('div');
+    userAvatarDiv.className = 'user-avatar';
+    const userAvatarImg = document.createElement('img');
+    userAvatarImg.src = tweet.tweetOwnerProfileImgLink;
+    userAvatarDiv.appendChild(userAvatarImg);
+
+    const postContentDiv = document.createElement('div');
+    postContentDiv.className = 'post-content';
+
+    const postUserInfoDiv = document.createElement('div');
+    postUserInfoDiv.className = 'post-user-info';
+
+    const userNameH4 = document.createElement('h4');
+    userNameH4.textContent = tweet.tweetOwnerUserName;
+    const checkIcon = document.createElement('i');
+    checkIcon.className = 'fas fa-check-circle';
+    const userHandleSpan = document.createElement('span');
+    userHandleSpan.textContent = `@${tweet.tweetOwnerUserId} . ${timeAgo(tweet.tweetDateTime)}`;
+    userHandleSpan.style.fontSize = '12px'
+
+    postUserInfoDiv.appendChild(userNameH4);
+    postUserInfoDiv.appendChild(checkIcon);
+    postUserInfoDiv.appendChild(userHandleSpan);
+
+    const postTextP = document.createElement('p');
+    postTextP.className = 'post-text';
+    postTextP.innerHTML = tweet.tweetContent.replace(/(@\w+|#\w+)/g, match => {
+        return `<span class="highlight">${match}</span>`;
+    });
+
+    const postImgDiv = document.createElement('div');
+    postImgDiv.className = 'post-img';
+    if (tweet.tweetFile1 && tweet.tweetFile1 !== "null") {
+        const postImg = document.createElement('img');
+        postImg.src = tweet.tweetFile1;
+        postImg.alt = 'post';
+        postImgDiv.appendChild(postImg);
+    }
+
+    const postIconsDiv = document.createElement('div');
+    postIconsDiv.className = 'post-icons';
+
+    const commentIcon = document.createElement('i');
+    commentIcon.className = 'far fa-comment';
+    const commentText = document.createElement('h6');
+    commentText.style.fontSize = '8px';
+    commentText.textContent = '12 Comments';
+    commentIcon.appendChild(commentText);
+
+    const retweetIcon = document.createElement('i');
+    retweetIcon.id = 'retweet-icon'; 
+    retweetIcon.className = 'fas fa-retweet';
+    retweetIcon.style.cursor = 'pointer'
+    const retweetText = document.createElement('h6');
+    retweetText.style.fontSize = '8px';
+    retweetText.textContent = '3 Retweets';
+    retweetIcon.appendChild(retweetText);
+
+    retweetIcon.addEventListener('click', async function() {
+      modal.style.display = 'block'
+      modalWrapper.classList.add('modal-wrapper-display')
+  
+      if(modalInput.value !== ''){
+          modalInput.value = '';
+          changeOpacity(0.5)
+      }
+
+      localStorage.setItem("actualtweetid",tweet.tweetId);
+  });
+
+    const likeIcon = document.createElement('i');
+    likeIcon.className = 'fa-regular fa-heart';
+    likeIcon.style.color = '#3e6f6f'
+    likeIcon.style.cursor = 'pointer'
+    const likeText = document.createElement('h6');
+    likeText.style.fontSize = '8px';
+    likeText.textContent = `${tweet.tweetLikesCount} Likes`;
+    likeText.style.color  = 'grey'
+    likeIcon.appendChild(likeText);
+
+    if(tweet.isTweetLikedByUser == 'Yes'){
+      likeIcon.className = 'fa-solid fa-heart';
+      likeIcon.style.color = '#ed0c0c'
+    }
+
+    likeIcon.addEventListener('click', async function() {
+      if (likeIcon.classList.contains('fa-regular')) {
+        likeIcon.className = 'fa-solid fa-heart';
+        likeIcon.style.color = '#ed0c0c'
+          await updateLikeStatus(tweet.tweetId);
+      }else if(likeIcon.classList.contains('fa-heart')){
+        likeIcon.className = 'fa-regular fa-heart';
+        likeIcon.style.color = '#3e6f6f'
+        updateTweetDisLikeStatus(tweet.tweetId)
+      }
+  });
+
+    const shareIcon = document.createElement('i');
+    shareIcon.className = 'fas fa-share-alt';
+
+    postIconsDiv.appendChild(commentIcon);
+    postIconsDiv.appendChild(retweetIcon);
+    postIconsDiv.appendChild(likeIcon);
+    postIconsDiv.appendChild(shareIcon);
+
+    postContentDiv.appendChild(postUserInfoDiv);
+    postContentDiv.appendChild(postTextP);
+    postContentDiv.appendChild(postImgDiv);
+    postContentDiv.appendChild(postIconsDiv);
+
+    postDiv.appendChild(userAvatarDiv);
+    postDiv.appendChild(postContentDiv);
+
+    postContainer.appendChild(postDiv);
+
+    document.querySelectorAll('.highlight').forEach(element => {
+      element.addEventListener('click', function() {
+          handleMentionClick(element.textContent);
+      });
+  });
+});
 }
 
 

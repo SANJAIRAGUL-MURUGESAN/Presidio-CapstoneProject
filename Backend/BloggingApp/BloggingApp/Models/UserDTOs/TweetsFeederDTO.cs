@@ -16,5 +16,7 @@ namespace BloggingApp.Models.UserDTOs
         public string TweetOwnerUserId { get; set; }
         //public string TweetOwnerId { get; set; }
         public string TweetOwnerProfileImgLink { get; set; }
+        public int TweetLikesCount { get; set; }
+        public string IsTweetLikedByUser { get; set; }
     }
 }

@@ -15,6 +15,8 @@ namespace BloggingApp.Contexts
         public DbSet<TweetFiles> TweetFiles { get; set; }
         public DbSet<TweetMentions> TweetMentions { get; set; }
         public DbSet<TweetHashTags> TweetHashTags { get; set; }
+        public DbSet<TweetLikes> TweetLikes { get; set; }
+        public DbSet<RetweetLikes> RetweetLikes { get; set; }
         public DbSet<HashTags> HashTags { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -56,6 +58,22 @@ namespace BloggingApp.Contexts
               .HasOne(r => r.Tweet)
               .WithMany(e => e.TweetHashTags)
               .HasForeignKey(r => r.TweetId)
+              .OnDelete(DeleteBehavior.Restrict)
+              .IsRequired();
+
+            // Mapping Tweet and corresponding TweetLikes
+            modelBuilder.Entity<TweetLikes>()
+              .HasOne(r => r.Tweet)
+              .WithMany(e => e.TweetLikes)
+              .HasForeignKey(r => r.TweetId)
+              .OnDelete(DeleteBehavior.Restrict)
+              .IsRequired();
+
+            // Mapping Retweet and corresponding RetweetLikes
+            modelBuilder.Entity<RetweetLikes>()
+              .HasOne(r => r.Retweet)
+              .WithMany(e => e.RetweetLikes)
+              .HasForeignKey(r => r.RetweetId)
               .OnDelete(DeleteBehavior.Restrict)
               .IsRequired();
         }

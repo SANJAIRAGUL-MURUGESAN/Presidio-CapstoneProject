@@ -95,15 +95,18 @@ namespace BloggingApp
             builder.Services.AddScoped<IRepository<int, TweetMentions>, TweetMentionsRepository>();
             builder.Services.AddScoped<IRepository<int, HashTags>, HashTagRepository>();
             builder.Services.AddScoped<IRepository<int, Retweet>, RetweetRepository>();
-
+            builder.Services.AddScoped<IRepository<int, TweetLikes>, TweetLikesRepository>();
+            builder.Services.AddScoped<IRepository<int, RetweetLikes>, RetweetLikesRepository>();
             // Repository for getting TweetFiles for a particular tweet
             builder.Services.AddScoped<TweetRequestForTweetFilesRepository>();
             #endregion
 
             #region Services
             builder.Services.AddScoped<ITweetServices, TweetServices>();
-            builder.Services.AddScoped<IUserServices, UserServices>();
             builder.Services.AddScoped<ITokenServices, TokenService>();
+            builder.Services.AddScoped<IUserServices, UserServices>();
+            builder.Services.AddScoped<IUserServices, UserServices>();
+            builder.Services.AddScoped<ITweetLikesServices, TweetLikesServices>();
             builder.Services.AddScoped<IAzureBlobService>(provider =>
             {
                 var configuration = provider.GetRequiredService<IConfiguration>();
