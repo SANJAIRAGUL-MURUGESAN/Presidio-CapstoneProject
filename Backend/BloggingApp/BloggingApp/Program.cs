@@ -2,6 +2,8 @@ using BloggingApp.Contexts;
 using BloggingApp.Interfaces;
 using BloggingApp.Models;
 using BloggingApp.Repositories;
+using BloggingApp.Repositories.CommentRequest;
+using BloggingApp.Repositories.RetweetCommentRequest;
 using BloggingApp.Repositories.TweetRequest;
 using BloggingApp.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -97,8 +99,15 @@ namespace BloggingApp
             builder.Services.AddScoped<IRepository<int, Retweet>, RetweetRepository>();
             builder.Services.AddScoped<IRepository<int, TweetLikes>, TweetLikesRepository>();
             builder.Services.AddScoped<IRepository<int, RetweetLikes>, RetweetLikesRepository>();
+            builder.Services.AddScoped<IRepository<int, Comment>, CommentRepository>();
+            builder.Services.AddScoped<IRepository<int, Reply>, ReplyRepository>();
+            builder.Services.AddScoped<IRepository<int, RetweetComment>, RetweetCommentRepository>();
+            builder.Services.AddScoped<IRepository<int, RetweetCommentReply>, RetweetCommentReplyRepository>();
+            builder.Services.AddScoped<IRepository<int, TweetCommentLikes>, TweetCommentLikeRepository>();
             // Repository for getting TweetFiles for a particular tweet
             builder.Services.AddScoped<TweetRequestForTweetFilesRepository>();
+            builder.Services.AddScoped<CommentRequestForRepliesRepository>();
+            builder.Services.AddScoped<RetweetCommentRequestforRepliesRepository>();
             #endregion
 
             #region Services
@@ -106,6 +115,7 @@ namespace BloggingApp
             builder.Services.AddScoped<ITokenServices, TokenService>();
             builder.Services.AddScoped<IUserServices, UserServices>();
             builder.Services.AddScoped<IUserServices, UserServices>();
+            builder.Services.AddScoped<ICommentServices, CommentServices>();
             builder.Services.AddScoped<ITweetLikesServices, TweetLikesServices>();
             builder.Services.AddScoped<IAzureBlobService>(provider =>
             {

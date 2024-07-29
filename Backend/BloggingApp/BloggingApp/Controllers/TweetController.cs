@@ -247,5 +247,55 @@ namespace BloggingApp.Controllers
 
         // Function to Add Retweet Dislikes to database - Ends
 
+        // Function to Add Tweet Details - Starts
+
+        [Route("TweetDetails")]
+        [HttpPost]
+        [ProducesResponseType(typeof(TweetDetailsReturnDTO), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ErrorModel), StatusCodes.Status409Conflict)]
+        [ProducesResponseType(typeof(ErrorModel), StatusCodes.Status500InternalServerError)]
+        [ProducesErrorResponseType(typeof(ErrorModel))]
+        public async Task<ActionResult<TweetDetailsReturnDTO>> TweetDetailsFeeder([FromBody] TweetDetailsDTO tweetDetailsDTO)
+        {
+            try
+            {
+                 var tweetDetails = await _TweetServices.TweetDetailsFeeder(tweetDetailsDTO);
+                 return Ok(tweetDetails);
+
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                return StatusCode(StatusCodes.Status500InternalServerError, new ErrorModel(500, ex.Message));
+            }
+        }
+
+        // Function  Function to Add Tweet Details - Ends
+
+        // Function to Return Retweet Details - Starts
+
+        [Route("RetweetDetails")]
+        [HttpPost]
+        [ProducesResponseType(typeof(RetweetDetailsDTO), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ErrorModel), StatusCodes.Status409Conflict)]
+        [ProducesResponseType(typeof(ErrorModel), StatusCodes.Status500InternalServerError)]
+        [ProducesErrorResponseType(typeof(ErrorModel))]
+        public async Task<ActionResult<RetweetDetailsDTO>> RetweetDetailsFeeder([FromBody] RetweetDetailsDTO retweetDetailsDTO)
+        {
+            try
+            {
+                var tweetDetails = await _TweetServices.RetweetDetailsFeeder(retweetDetailsDTO);
+                return Ok(tweetDetails);
+
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                return StatusCode(StatusCodes.Status500InternalServerError, new ErrorModel(500, ex.Message));
+            }
+        }
+
+        // Function  Function to Return Retweet Details - Ends
+
     }
 }

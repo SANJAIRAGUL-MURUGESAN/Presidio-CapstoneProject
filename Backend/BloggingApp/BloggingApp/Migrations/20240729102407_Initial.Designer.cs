@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BloggingApp.Migrations
 {
     [DbContext(typeof(BloggingAppContext))]
-    [Migration("20240727093006_Initial")]
+    [Migration("20240729102407_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -23,6 +23,34 @@ namespace BloggingApp.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
+
+            modelBuilder.Entity("BloggingApp.Models.Comment", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("CommentContent")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CommentDateTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("TweetId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("TweetId");
+
+                    b.ToTable("Comments");
+                });
 
             modelBuilder.Entity("BloggingApp.Models.HashTags", b =>
                 {
@@ -58,6 +86,41 @@ namespace BloggingApp.Migrations
                     b.ToTable("HashTags");
                 });
 
+            modelBuilder.Entity("BloggingApp.Models.Reply", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<int>("CommentId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("ReplyContent")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("ReplyDateTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("ReplyId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("ReplyType")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CommentId");
+
+                    b.ToTable("Replies");
+                });
+
             modelBuilder.Entity("BloggingApp.Models.Retweet", b =>
                 {
                     b.Property<int>("Id")
@@ -90,6 +153,69 @@ namespace BloggingApp.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("Retweets");
+                });
+
+            modelBuilder.Entity("BloggingApp.Models.RetweetComment", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("CommentContent")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CommentDateTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("RetweetId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("RetweetId");
+
+                    b.ToTable("RetweetComments");
+                });
+
+            modelBuilder.Entity("BloggingApp.Models.RetweetCommentReply", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("ReplyContent")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("ReplyDateTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("ReplyId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("ReplyType")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("RetweetCommentId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("RetweetCommentId");
+
+                    b.ToTable("RetweetCommentReplies");
                 });
 
             modelBuilder.Entity("BloggingApp.Models.RetweetLikes", b =>
@@ -298,6 +424,17 @@ namespace BloggingApp.Migrations
                     b.ToTable("Users");
                 });
 
+            modelBuilder.Entity("BloggingApp.Models.Comment", b =>
+                {
+                    b.HasOne("BloggingApp.Models.Tweet", "Tweet")
+                        .WithMany("TweetComments")
+                        .HasForeignKey("TweetId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Tweet");
+                });
+
             modelBuilder.Entity("BloggingApp.Models.HashTags", b =>
                 {
                     b.HasOne("BloggingApp.Models.User", "User")
@@ -307,6 +444,17 @@ namespace BloggingApp.Migrations
                         .IsRequired();
 
                     b.Navigation("User");
+                });
+
+            modelBuilder.Entity("BloggingApp.Models.Reply", b =>
+                {
+                    b.HasOne("BloggingApp.Models.Comment", "Comment")
+                        .WithMany("CommentReplies")
+                        .HasForeignKey("CommentId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Comment");
                 });
 
             modelBuilder.Entity("BloggingApp.Models.Retweet", b =>
@@ -326,6 +474,28 @@ namespace BloggingApp.Migrations
                     b.Navigation("Tweet");
 
                     b.Navigation("User");
+                });
+
+            modelBuilder.Entity("BloggingApp.Models.RetweetComment", b =>
+                {
+                    b.HasOne("BloggingApp.Models.Retweet", "Retweet")
+                        .WithMany("RetweetComments")
+                        .HasForeignKey("RetweetId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Retweet");
+                });
+
+            modelBuilder.Entity("BloggingApp.Models.RetweetCommentReply", b =>
+                {
+                    b.HasOne("BloggingApp.Models.RetweetComment", "RetweetComment")
+                        .WithMany("RetweetCommentReplies")
+                        .HasForeignKey("RetweetCommentId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("RetweetComment");
                 });
 
             modelBuilder.Entity("BloggingApp.Models.RetweetLikes", b =>
@@ -394,13 +564,27 @@ namespace BloggingApp.Migrations
                     b.Navigation("Tweet");
                 });
 
+            modelBuilder.Entity("BloggingApp.Models.Comment", b =>
+                {
+                    b.Navigation("CommentReplies");
+                });
+
             modelBuilder.Entity("BloggingApp.Models.Retweet", b =>
                 {
+                    b.Navigation("RetweetComments");
+
                     b.Navigation("RetweetLikes");
+                });
+
+            modelBuilder.Entity("BloggingApp.Models.RetweetComment", b =>
+                {
+                    b.Navigation("RetweetCommentReplies");
                 });
 
             modelBuilder.Entity("BloggingApp.Models.Tweet", b =>
                 {
+                    b.Navigation("TweetComments");
+
                     b.Navigation("TweetFiles");
 
                     b.Navigation("TweetHashTags");

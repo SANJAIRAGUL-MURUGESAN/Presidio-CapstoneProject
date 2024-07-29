@@ -581,10 +581,17 @@ function renderRetweets(retweets,tweets) {
 
       const commentIcon = document.createElement('i');
       commentIcon.className = 'far fa-comment';
+      commentIcon.style.cursor = 'pointer'
       const commentText = document.createElement('h6');
       commentText.style.fontSize = '8px';
       commentText.textContent = '12 Comments';
       commentIcon.appendChild(commentText);
+
+      commentIcon.addEventListener('click', async function() {
+        localStorage.setItem('TweetType-Tweetdetails','Retweet')
+        localStorage.setItem('TweetId-Tweetdetails',tweet.retweetId)
+        window.open("TweetDetails.html", "_blank");
+      })
 
       const retweetIcon = document.createElement('i');
       retweetIcon.id = 'retweet-icon'; 
@@ -715,11 +722,18 @@ function renderRetweets(retweets,tweets) {
     postIconsDiv.className = 'post-icons';
 
     const commentIcon = document.createElement('i');
+    commentIcon.style.cursor = 'pointer'
     commentIcon.className = 'far fa-comment';
     const commentText = document.createElement('h6');
     commentText.style.fontSize = '8px';
     commentText.textContent = '12 Comments';
     commentIcon.appendChild(commentText);
+
+    commentIcon.addEventListener('click', async function() {
+      localStorage.setItem('TweetType-Tweetdetails','Tweet')
+      localStorage.setItem('TweetId-Tweetdetails',tweet.tweetId)
+      window.open("TweetDetails.html", "_blank");
+    })
 
     const retweetIcon = document.createElement('i');
     retweetIcon.id = 'retweet-icon'; 

@@ -327,5 +327,153 @@ namespace BloggingApp.Services
         }
 
         // Function to Add Retweets - Ends
+
+        // Function to Return TweetDetails - Starts
+
+        public async Task<TweetDetailsReturnDTO> TweetDetailsFeeder(TweetDetailsDTO tweetDetailsDTO)
+        {
+            try
+            {
+                if(tweetDetailsDTO.TweetType == "Tweet")
+                {
+                    var tweet = await _TweetRepository.GetbyKey(tweetDetailsDTO.TweetId);
+                    var user = await _UserRepository.GetbyKey(tweet.UserId);
+                    if(tweet != null)
+                    {
+                        var TweetFiles = await _TweetRequestForTweetFilesRepository.GetbyKey(tweetDetailsDTO.TweetId);
+                        var TweetLikes = ((await _TweetLikesRepository.Get()).Where(l => l.TweetId == tweet.Id)).ToList();
+                        var Files = TweetFiles.TweetFiles.ToList();
+                        TweetDetailsReturnDTO tweetDetailsReturnDTO = new TweetDetailsReturnDTO();
+                        tweetDetailsReturnDTO.TweetId = tweet.Id;
+                        tweetDetailsReturnDTO.TweetContent = tweet.TweetContent;
+                        tweetDetailsReturnDTO.TweetDateTime = tweet.TweetDateTime;
+                        tweetDetailsReturnDTO.IsCommentEnable = tweet.IsCommentEnable;
+                        tweetDetailsReturnDTO.UserId = tweet.UserId;
+                        tweetDetailsReturnDTO.TweetOwnerUserName = user.UserName;
+                        tweetDetailsReturnDTO.TweetOwnerUserId = user.UserId;
+                        tweetDetailsReturnDTO.TweetOwnerProfileImgLink = user.UserProfileImgLink;
+                        tweetDetailsReturnDTO.TweetLikesCount = TweetLikes.Count;
+                        var IsTweetLikedByUser = ((await _TweetLikesRepository.Get()).Where(l => l.TweetId == tweet.Id && l.LikedUserId == tweetDetailsDTO.UserId)).ToList();
+                        if (IsTweetLikedByUser.Count > 0)
+                        {
+                            tweetDetailsReturnDTO.IsTweetLikedByUser = "Yes";
+                        }
+                        else
+                        {
+                            tweetDetailsReturnDTO.IsTweetLikedByUser = "No";
+                        }
+
+                        if (Files.Count == 1)
+                        {
+                            foreach (TweetFiles tweetfile in Files)
+                            {
+                                tweetDetailsReturnDTO.TweetFile1 = tweetfile.File1;
+                                tweetDetailsReturnDTO.TweetFile2 = "null";
+
+                            }
+                        }
+                        else if (Files.Count == 2)
+                        {
+                            foreach (TweetFiles tweetfile in Files)
+                            {
+                                tweetDetailsReturnDTO.TweetFile1 = tweetfile.File1;
+                                tweetDetailsReturnDTO.TweetFile2 = tweetfile.File2;
+                            }
+                        }
+                        else
+                        {
+                            tweetDetailsReturnDTO.TweetFile1 = "null";
+                            tweetDetailsReturnDTO.TweetFile2 = "null";
+                        }
+                        return tweetDetailsReturnDTO;
+                    }
+                    else
+                    {
+                        throw new NoTweetsFoundException();
+                    }
+                }
+                else
+                {
+                    throw new Exception();
+                }
+            }
+            catch (Exception)
+            {
+                throw new Exception();
+            }
+        }
+        // Function to Return TweetDetails - Ends
+
+
+        // Function to Return RetweetDetails - Starts
+
+        public async Task<RetweetDetailsReturnDTO> RetweetDetailsFeeder(RetweetDetailsDTO retweetDetailsDTO)
+        {
+            try
+            {
+                var retweet = await _RetweetRepository.GetbyKey(retweetDetailsDTO.RetweetId);
+                var actutaltweetdetails = await _TweetRepository.GetbyKey(retweet.ActualTweetId);
+                var TweetFiles1 = await _TweetRequestForTweetFilesRepository.GetbyKey(actutaltweetdetails.Id);
+                var Files1 = TweetFiles1.TweetFiles.ToList();
+                var user = await _UserRepository.GetbyKey(actutaltweetdetails.UserId);
+                RetweetDetailsReturnDTO retweetDetailsReturnDTO = new RetweetDetailsReturnDTO();
+                retweetDetailsReturnDTO.TweetId = actutaltweetdetails.Id;
+                retweetDetailsReturnDTO.TweetContent = actutaltweetdetails.TweetContent;
+                retweetDetailsReturnDTO.TweetDateTime = actutaltweetdetails.TweetDateTime;
+                retweetDetailsReturnDTO.IsCommentEnable = actutaltweetdetails.IsCommentEnable;
+                retweetDetailsReturnDTO.UserId = actutaltweetdetails.UserId;
+                retweetDetailsReturnDTO.TweetOwnerUserName = user.UserName;
+                retweetDetailsReturnDTO.TweetOwnerUserId = user.UserId;
+                retweetDetailsReturnDTO.TweetOwnerProfileImgLink = user.UserProfileImgLink;
+                if (Files1.Count == 1)
+                {
+                    foreach (TweetFiles tweetfile in Files1)
+                    {
+                        retweetDetailsReturnDTO.TweetFile1 = tweetfile.File1;
+                        retweetDetailsReturnDTO.TweetFile2 = "null";
+
+                    }
+                }
+                else if (Files1.Count == 2)
+                {
+                    foreach (TweetFiles tweetfile in Files1)
+                    {
+                        retweetDetailsReturnDTO.TweetFile1 = tweetfile.File1;
+                        retweetDetailsReturnDTO.TweetFile2 = tweetfile.File2;
+                    }
+                }
+                else
+                {
+                    retweetDetailsReturnDTO.TweetFile1 = "null";
+                    retweetDetailsReturnDTO.TweetFile1 = "null";
+                }
+                retweetDetailsReturnDTO.RetweetId = retweet.Id;
+                retweetDetailsReturnDTO.RetweetContent = retweet.RetweetContent;
+                retweetDetailsReturnDTO.RetweetDateTime = retweet.RetweetDateTime;
+                retweetDetailsReturnDTO.IsRetweetCommentEnable = retweet.IsCommentEnable;
+                var retweetuserdetails = await _UserRepository.GetbyKey(retweet.UserId);
+                retweetDetailsReturnDTO.RetweetUserName = retweetuserdetails.UserName;
+                retweetDetailsReturnDTO.RetweetUserProfileImgLink = retweetuserdetails.UserProfileImgLink;
+                retweetDetailsReturnDTO.RetweetUserId = retweetuserdetails.UserId;
+                var RetweetLikes = ((await _RetweetLikesRepository.Get()).Where(l => l.RetweetId == retweet.Id)).ToList();
+                var IsUSerLikedRetweet = (await _RetweetLikesRepository.Get()).Where(l => l.RetweetId == retweet.Id && l.LikedUserId == retweetDetailsDTO.UserId).ToList();
+                if (IsUSerLikedRetweet.Count > 0)
+                {
+                    retweetDetailsReturnDTO.IsRetweetLikedByUser = "Yes";
+                }
+                else
+                {
+                    retweetDetailsReturnDTO.IsRetweetLikedByUser = "No";
+                }
+                retweetDetailsReturnDTO.RetweetLikesCount = RetweetLikes.Count;
+                return retweetDetailsReturnDTO;
+            }
+            catch (Exception)
+            {
+                throw new Exception();
+            }
+        }
+
+        // Function to Return RetweetDetails - Ends
     }
 }

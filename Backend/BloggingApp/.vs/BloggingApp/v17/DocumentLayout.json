@@ -3,24 +3,24 @@
   "WorkspaceRootPath": "C:\\Users\\VC\\Desktop\\BloggingApp\\Backend\\BloggingApp\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\VC\\Desktop\\BloggingApp\\Backend\\BloggingApp\\BloggingApp\\Migrations\\20240727093006_Initial.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:BloggingApp\\Migrations\\20240727093006_Initial.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{C50B6094-9E49-4F01-907B-8A218B009A14}|BloggingApp\\BloggingApp.csproj|c:\\users\\vc\\desktop\\bloggingapp\\backend\\bloggingapp\\bloggingapp\\exceptions\\tweetcommentreplylikesrepository\\nosuchtweetcommentreplylikefoundexception.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C50B6094-9E49-4F01-907B-8A218B009A14}|BloggingApp\\BloggingApp.csproj|solutionrelative:bloggingapp\\exceptions\\tweetcommentreplylikesrepository\\nosuchtweetcommentreplylikefoundexception.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{C50B6094-9E49-4F01-907B-8A218B009A14}|BloggingApp\\BloggingApp.csproj|c:\\users\\vc\\desktop\\bloggingapp\\backend\\bloggingapp\\bloggingapp\\services\\tweetservices.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{C50B6094-9E49-4F01-907B-8A218B009A14}|BloggingApp\\BloggingApp.csproj|solutionrelative:bloggingapp\\services\\tweetservices.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{C50B6094-9E49-4F01-907B-8A218B009A14}|BloggingApp\\BloggingApp.csproj|c:\\users\\vc\\desktop\\bloggingapp\\backend\\bloggingapp\\bloggingapp\\exceptions\\tweetcommentreplylikesrepository\\notweetcommentreplylikesfoundexception.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C50B6094-9E49-4F01-907B-8A218B009A14}|BloggingApp\\BloggingApp.csproj|solutionrelative:bloggingapp\\exceptions\\tweetcommentreplylikesrepository\\notweetcommentreplylikesfoundexception.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{C50B6094-9E49-4F01-907B-8A218B009A14}|BloggingApp\\BloggingApp.csproj|c:\\users\\vc\\desktop\\bloggingapp\\backend\\bloggingapp\\bloggingapp\\controllers\\tweetcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{C50B6094-9E49-4F01-907B-8A218B009A14}|BloggingApp\\BloggingApp.csproj|solutionrelative:bloggingapp\\controllers\\tweetcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{C50B6094-9E49-4F01-907B-8A218B009A14}|BloggingApp\\BloggingApp.csproj|c:\\users\\vc\\desktop\\bloggingapp\\backend\\bloggingapp\\bloggingapp\\repositories\\tweetcommentlikerepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C50B6094-9E49-4F01-907B-8A218B009A14}|BloggingApp\\BloggingApp.csproj|solutionrelative:bloggingapp\\repositories\\tweetcommentlikerepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{C50B6094-9E49-4F01-907B-8A218B009A14}|BloggingApp\\BloggingApp.csproj|c:\\users\\vc\\desktop\\bloggingapp\\backend\\bloggingapp\\bloggingapp\\services\\tweetlikesservices.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{C50B6094-9E49-4F01-907B-8A218B009A14}|BloggingApp\\BloggingApp.csproj|solutionrelative:bloggingapp\\services\\tweetlikesservices.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{C50B6094-9E49-4F01-907B-8A218B009A14}|BloggingApp\\BloggingApp.csproj|c:\\users\\vc\\desktop\\bloggingapp\\backend\\bloggingapp\\bloggingapp\\contexts\\bloggingappcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C50B6094-9E49-4F01-907B-8A218B009A14}|BloggingApp\\BloggingApp.csproj|solutionrelative:bloggingapp\\contexts\\bloggingappcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{C50B6094-9E49-4F01-907B-8A218B009A14}|BloggingApp\\BloggingApp.csproj|c:\\users\\vc\\desktop\\bloggingapp\\backend\\bloggingapp\\bloggingapp\\models\\userdtos\\tweetsfeederdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{C50B6094-9E49-4F01-907B-8A218B009A14}|BloggingApp\\BloggingApp.csproj|solutionrelative:bloggingapp\\models\\userdtos\\tweetsfeederdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{C50B6094-9E49-4F01-907B-8A218B009A14}|BloggingApp\\BloggingApp.csproj|c:\\users\\vc\\desktop\\bloggingapp\\backend\\bloggingapp\\bloggingapp\\models\\tweetreplylikes.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C50B6094-9E49-4F01-907B-8A218B009A14}|BloggingApp\\BloggingApp.csproj|solutionrelative:bloggingapp\\models\\tweetreplylikes.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -30,7 +30,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 1,
+          "SelectedChildIndex": 2,
           "Children": [
             {
               "$type": "Bookmark",
@@ -38,67 +38,67 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "20240727093006_Initial.cs",
-              "DocumentMoniker": "C:\\Users\\VC\\Desktop\\BloggingApp\\Backend\\BloggingApp\\BloggingApp\\Migrations\\20240727093006_Initial.cs",
-              "RelativeDocumentMoniker": "BloggingApp\\Migrations\\20240727093006_Initial.cs",
-              "ToolTip": "C:\\Users\\VC\\Desktop\\BloggingApp\\Backend\\BloggingApp\\BloggingApp\\Migrations\\20240727093006_Initial.cs",
-              "RelativeToolTip": "BloggingApp\\Migrations\\20240727093006_Initial.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-07-27T09:30:06.218Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "TweetsFeederDTO.cs",
-              "DocumentMoniker": "C:\\Users\\VC\\Desktop\\BloggingApp\\Backend\\BloggingApp\\BloggingApp\\Models\\UserDTOs\\TweetsFeederDTO.cs",
-              "RelativeDocumentMoniker": "BloggingApp\\Models\\UserDTOs\\TweetsFeederDTO.cs",
-              "ToolTip": "C:\\Users\\VC\\Desktop\\BloggingApp\\Backend\\BloggingApp\\BloggingApp\\Models\\UserDTOs\\TweetsFeederDTO.cs",
-              "RelativeToolTip": "BloggingApp\\Models\\UserDTOs\\TweetsFeederDTO.cs",
-              "ViewState": "AQIAAAgAAAAAAAAAAAA3wBIAAAAwAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-07-27T08:10:32.417Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
               "DocumentIndex": 1,
-              "Title": "TweetServices.cs",
-              "DocumentMoniker": "C:\\Users\\VC\\Desktop\\BloggingApp\\Backend\\BloggingApp\\BloggingApp\\Services\\TweetServices.cs",
-              "RelativeDocumentMoniker": "BloggingApp\\Services\\TweetServices.cs",
-              "ToolTip": "C:\\Users\\VC\\Desktop\\BloggingApp\\Backend\\BloggingApp\\BloggingApp\\Services\\TweetServices.cs",
-              "RelativeToolTip": "BloggingApp\\Services\\TweetServices.cs",
-              "ViewState": "AQIAALIAAAAAAAAAAAAcwLsAAAArAAAA",
+              "Title": "NoTweetCommentReplyLikesFoundException.cs",
+              "DocumentMoniker": "C:\\Users\\VC\\Desktop\\BloggingApp\\Backend\\BloggingApp\\BloggingApp\\Exceptions\\TweetCommentReplyLikesRepository\\NoTweetCommentReplyLikesFoundException.cs",
+              "RelativeDocumentMoniker": "BloggingApp\\Exceptions\\TweetCommentReplyLikesRepository\\NoTweetCommentReplyLikesFoundException.cs",
+              "ToolTip": "C:\\Users\\VC\\Desktop\\BloggingApp\\Backend\\BloggingApp\\BloggingApp\\Exceptions\\TweetCommentReplyLikesRepository\\NoTweetCommentReplyLikesFoundException.cs",
+              "RelativeToolTip": "BloggingApp\\Exceptions\\TweetCommentReplyLikesRepository\\NoTweetCommentReplyLikesFoundException.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAcAAAAuAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-07-27T07:18:51.523Z",
+              "WhenOpened": "2024-07-29T15:51:44.278Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "TweetController.cs",
-              "DocumentMoniker": "C:\\Users\\VC\\Desktop\\BloggingApp\\Backend\\BloggingApp\\BloggingApp\\Controllers\\TweetController.cs",
-              "RelativeDocumentMoniker": "BloggingApp\\Controllers\\TweetController.cs",
-              "ToolTip": "C:\\Users\\VC\\Desktop\\BloggingApp\\Backend\\BloggingApp\\BloggingApp\\Controllers\\TweetController.cs",
-              "RelativeToolTip": "BloggingApp\\Controllers\\TweetController.cs",
-              "ViewState": "AQIAAHEAAAAAAAAAAAAiwH8AAAAIAAAA",
+              "DocumentIndex": 0,
+              "Title": "NoSuchTweetCommentReplyLikeFoundException.cs",
+              "DocumentMoniker": "C:\\Users\\VC\\Desktop\\BloggingApp\\Backend\\BloggingApp\\BloggingApp\\Exceptions\\TweetCommentReplyLikesRepository\\NoSuchTweetCommentReplyLikeFoundException.cs",
+              "RelativeDocumentMoniker": "BloggingApp\\Exceptions\\TweetCommentReplyLikesRepository\\NoSuchTweetCommentReplyLikeFoundException.cs",
+              "ToolTip": "C:\\Users\\VC\\Desktop\\BloggingApp\\Backend\\BloggingApp\\BloggingApp\\Exceptions\\TweetCommentReplyLikesRepository\\NoSuchTweetCommentReplyLikeFoundException.cs",
+              "RelativeToolTip": "BloggingApp\\Exceptions\\TweetCommentReplyLikesRepository\\NoSuchTweetCommentReplyLikeFoundException.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAcAAAA7AAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-07-27T07:07:33.862Z",
+              "WhenOpened": "2024-07-29T15:49:43.564Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 3,
-              "Title": "TweetLikesServices.cs",
-              "DocumentMoniker": "C:\\Users\\VC\\Desktop\\BloggingApp\\Backend\\BloggingApp\\BloggingApp\\Services\\TweetLikesServices.cs",
-              "RelativeDocumentMoniker": "BloggingApp\\Services\\TweetLikesServices.cs",
-              "ToolTip": "C:\\Users\\VC\\Desktop\\BloggingApp\\Backend\\BloggingApp\\BloggingApp\\Services\\TweetLikesServices.cs",
-              "RelativeToolTip": "BloggingApp\\Services\\TweetLikesServices.cs",
-              "ViewState": "AQIAAFUAAAAAAAAAAAAwwGUAAAAQAAAA",
+              "Title": "BloggingAppContext.cs",
+              "DocumentMoniker": "C:\\Users\\VC\\Desktop\\BloggingApp\\Backend\\BloggingApp\\BloggingApp\\Contexts\\BloggingAppContext.cs",
+              "RelativeDocumentMoniker": "BloggingApp\\Contexts\\BloggingAppContext.cs",
+              "ToolTip": "C:\\Users\\VC\\Desktop\\BloggingApp\\Backend\\BloggingApp\\BloggingApp\\Contexts\\BloggingAppContext.cs",
+              "RelativeToolTip": "BloggingApp\\Contexts\\BloggingAppContext.cs",
+              "ViewState": "AQIAAHgAAAAAAAAAAAAYwBkAAABDAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-07-27T06:49:56.94Z",
+              "WhenOpened": "2024-07-29T15:45:20.385Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "TweetReplyLikes.cs",
+              "DocumentMoniker": "C:\\Users\\VC\\Desktop\\BloggingApp\\Backend\\BloggingApp\\BloggingApp\\Models\\TweetReplyLikes.cs",
+              "RelativeDocumentMoniker": "BloggingApp\\Models\\TweetReplyLikes.cs",
+              "ToolTip": "C:\\Users\\VC\\Desktop\\BloggingApp\\Backend\\BloggingApp\\BloggingApp\\Models\\TweetReplyLikes.cs",
+              "RelativeToolTip": "BloggingApp\\Models\\TweetReplyLikes.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-07-29T15:44:31.23Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "TweetCommentLikeRepository.cs",
+              "DocumentMoniker": "C:\\Users\\VC\\Desktop\\BloggingApp\\Backend\\BloggingApp\\BloggingApp\\Repositories\\TweetCommentLikeRepository.cs",
+              "RelativeDocumentMoniker": "BloggingApp\\Repositories\\TweetCommentLikeRepository.cs",
+              "ToolTip": "C:\\Users\\VC\\Desktop\\BloggingApp\\Backend\\BloggingApp\\BloggingApp\\Repositories\\TweetCommentLikeRepository.cs",
+              "RelativeToolTip": "BloggingApp\\Repositories\\TweetCommentLikeRepository.cs",
+              "ViewState": "AQIAACgAAAAAAAAAAAAqwD4AAAAJAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-07-29T15:22:42.356Z",
               "EditorCaption": ""
             }
           ]

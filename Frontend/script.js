@@ -88,6 +88,7 @@ const changeOpacity = (x) =>{
 }
 
 postModalX.addEventListener('click',()=>{
+    localStorage.removeItem('BackendTo')
     modal.style.display = 'none'
     modalWrapper.classList.remove('modal-wrapper-display')
 })

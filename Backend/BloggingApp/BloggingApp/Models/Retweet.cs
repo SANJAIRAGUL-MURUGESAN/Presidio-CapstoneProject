@@ -20,6 +20,7 @@ namespace BloggingApp.Models
         public User User { get; set; }
 
         public ICollection<RetweetLikes> RetweetLikes { get; set; }//No effect on the table
+        public ICollection<RetweetComment> RetweetComments { get; set; }//No effect on the table
 
     }
 }
