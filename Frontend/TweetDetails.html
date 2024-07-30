@@ -16,7 +16,7 @@
     <link rel="stylesheet" href="./Styles/TweetDetails.css">
     <link rel="stylesheet" href="ActionStyle.css">
     <script src="./Scripts/TweetDetails.js" defer></script>
-
+    <script src="./Scripts/PeopleDetails.js" defer></script>
     <script src="script.js" defer></script>
 </head>
 <body>
@@ -239,9 +239,9 @@
 
             </div>
 
-            <div class="follow dark-mode-1">
+            <div class="follow dark-mode-1" id="follow-container">
                 <h3 class="follow-heading">Who to follow</h3>
-                <div class="follow-user">
+                <!-- <div class="follow-user">
                     <div class="follow-user-img">
                         <img src="images/user5.jpg">
                     </div>
@@ -293,7 +293,7 @@
                         <li><a href="#">About</a></li>
                         <li><a href="#">More</a></li>
                     </ul>
-                </footer>
+                </footer> -->
             </div>
 
 
@@ -301,7 +301,7 @@
 
         <!-- Post button --><br><br>
          <button type="button" class="post-btn">
-            +<i class="fas fa-feather-alt"></i>Post
+            + </i>Post
          </button>
 
         <!-- Post Modal -->
@@ -361,20 +361,20 @@
             </div>
             <div class="sidebar-user">
                 <div class="sidebar-user-img">
-                    <img src="images/user1.jpg">
+                    <img id="useimage-sidebar" src="images/user1.jpg">
                 </div>
                 <span>+</span>
             </div>
             <div class="sidebar-user-info">
-                <h4>Sanjai Ragul</h4>
-                <p>@sanjairagul25</p>
+                <h4 id="username-sidebar">Sanjai Ragul</h4>
+                <p id="puserid-sidebar">@sanjairagul25</p>
             </div>
             <div class="following">
                 <p class="following-paragraph">
-                    <span>811</span> Following
+                    <span  id="userfollowing-sidebar">811</span> Following
                 </p>
                 <p class="following-paragraph">
-                    <span>8.8k</span> Followers
+                    <span id="userfollowers-sidebar">8.8k</span> Followers
                 </p>
             </div>
             <div class="sidebar-list-1">

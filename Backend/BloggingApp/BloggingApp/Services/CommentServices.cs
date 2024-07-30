@@ -21,9 +21,14 @@ namespace BloggingApp.Services
         private readonly RetweetCommentRequestforRepliesRepository _RetweetCommentRequestForRepliesRepository;
         private readonly IRepository<int, RetweetComment> _RetweetCommentRepository;
         private readonly IRepository<int, RetweetCommentReply> _RetweetCommentReplyRepository;
+        private readonly IRepository<int, TweetCommentLikes> _TweetCommentLikesRepository;
+        private readonly IRepository<int, TweetReplyLikes> _TweetCommentReplyLikesRepository;
+        private readonly IRepository<int, RetweetCommentLikes> _RetweetCommentLikesRepository;
+        private readonly IRepository<int, RetweetCommentReplyLikes> _RetweetCommentReplyLikesReposioryl;
         public CommentServices(IRepository<int, Comment> commentRepository, IRepository<int, Reply> replyRepository, IRepository<int, User> userRepository,
             CommentRequestForRepliesRepository commentRequestForRepliesRepository, IRepository<int, RetweetComment> retweetCommentRepository, IRepository<int, RetweetCommentReply> retweetCommentReplyRepository,
-            RetweetCommentRequestforRepliesRepository retweetCommentRequestForRepliesRepository)
+            RetweetCommentRequestforRepliesRepository retweetCommentRequestForRepliesRepository, IRepository<int, TweetCommentLikes> tweetCommentsLikesRepository,
+            IRepository<int, TweetReplyLikes> tweetReplyLikesRepository, IRepository<int, RetweetCommentLikes> retweetCommentLikesRepository, IRepository<int, RetweetCommentReplyLikes> retweetCommentReplyLikesReposioryl)
         {
             _CommentRepository = commentRepository;
             _UserRepository = userRepository;
@@ -32,6 +37,10 @@ namespace BloggingApp.Services
             _RetweetCommentReplyRepository = retweetCommentReplyRepository;
             CommentRequestForRepliesRepository = commentRequestForRepliesRepository;
             _RetweetCommentRequestForRepliesRepository = retweetCommentRequestForRepliesRepository;
+            _TweetCommentLikesRepository = tweetCommentsLikesRepository;
+            _TweetCommentReplyLikesRepository = tweetReplyLikesRepository;
+            _RetweetCommentLikesRepository = retweetCommentLikesRepository;
+            _RetweetCommentReplyLikesReposioryl = retweetCommentReplyLikesReposioryl;
         }
 
         // Function to add Tweet Comment - Starts
@@ -116,6 +125,25 @@ namespace BloggingApp.Services
                         commentDetailsReturnDTO.UserName = userdetails.UserName;
                         commentDetailsReturnDTO.PUserId = userdetails.UserId;
                         commentDetailsReturnDTO.UserProfileLink = userdetails.UserProfileImgLink;
+
+                        var commentlikescount = ((await _TweetCommentLikesRepository.Get()).Where(l => l.CommentId == comment.Id)).ToList();
+                        commentDetailsReturnDTO.LikesCount = commentlikescount.Count;
+
+                        int flag1 = 0;
+                        foreach(var like in commentlikescount)
+                        {
+                            if(like.LikedUserId == tweetCommentDetails.UserId)
+                            {
+                                commentDetailsReturnDTO.IsLikedByUser = "Yes";
+                                flag1 = 1;
+                                break;
+                                
+                            }
+                        }
+                        if(flag1 == 0)
+                        {
+                            commentDetailsReturnDTO.IsLikedByUser = "No";
+                        }
                         //commentDetailsReturnDTOs.Add(commentDetailsReturnDTO);
 
                         List<ReplyDetailsReturnDTO> ReplyList = new List<ReplyDetailsReturnDTO>();
@@ -138,7 +166,27 @@ namespace BloggingApp.Services
                                     replyDetailsReturnDTO.PUserId = user.UserId;
                                     replyDetailsReturnDTO.UserName = user.UserName;
                                     replyDetailsReturnDTO.UserProfileImageLink = user.UserProfileImgLink;
+
+                                    var ReplyLikescount = ((await _TweetCommentReplyLikesRepository.Get()).Where(l => l.ReplyId == reply.Id)).ToList();
+                                    replyDetailsReturnDTO.LikedCount = ReplyLikescount.Count;
+                                    int flag2 = 0;
+
+                                    foreach(var like in ReplyLikescount)
+                                    {
+                                        if(like.LikedUserId == tweetCommentDetails.UserId)
+                                        {
+                                            replyDetailsReturnDTO.IsLikedByUser = "Yes";
+                                            flag2 = 1;
+                                            break;
+                                        }
+                                    }
+                                    if (flag2 == 0)
+                                    {
+                                        replyDetailsReturnDTO.IsLikedByUser = "No";
+                                    }
+
                                     ReplyList.Add(replyDetailsReturnDTO);
+
 
                                     if (ReplyList.Count > 0)
                                     {
@@ -166,6 +214,25 @@ namespace BloggingApp.Services
                                                     replyDetailsReturnDTO2.PUserId = user1.UserId;
                                                     replyDetailsReturnDTO2.UserName = user1.UserName;
                                                     replyDetailsReturnDTO2.UserProfileImageLink = user1.UserProfileImgLink;
+
+                                                    var ReplyLikescount1 = ((await _TweetCommentReplyLikesRepository.Get()).Where(l => l.ReplyId == r.Id)).ToList();
+                                                    replyDetailsReturnDTO2.LikedCount = ReplyLikescount1.Count;
+                                                    int flag5 = 0;
+
+                                                    foreach (var like in ReplyLikescount1)
+                                                    {
+                                                        if (like.LikedUserId == tweetCommentDetails.UserId)
+                                                        {
+                                                            replyDetailsReturnDTO2.IsLikedByUser = "Yes";
+                                                            flag5 = 1;
+                                                            break;
+                                                        }
+                                                    }
+                                                    if (flag5 == 0)
+                                                    {
+                                                        replyDetailsReturnDTO2.IsLikedByUser = "No";
+                                                    }
+
                                                     ReplyList.Add(replyDetailsReturnDTO2);
                                                 }
                                             }
@@ -338,6 +405,25 @@ namespace BloggingApp.Services
                         commentDetailsReturnDTO1.UserName = userdetails.UserName;
                         commentDetailsReturnDTO1.PUserId = userdetails.UserId;
                         commentDetailsReturnDTO1.UserProfileLink = userdetails.UserProfileImgLink;
+
+                        var commentlikescount1 = ((await _RetweetCommentLikesRepository.Get()).Where(l => l.RetweetCommentId == comment.Id)).ToList();
+                        commentDetailsReturnDTO1.LikesCount = commentlikescount1.Count;
+
+                        int flag1 = 0;
+                        foreach (var like in commentlikescount1)
+                        {
+                            if (like.LikedUserId == retweetCommentDetails.UserId)
+                            {
+                                commentDetailsReturnDTO1.IsLikedByUser = "Yes";
+                                flag1 = 1;
+                                break;
+
+                            }
+                        }
+                        if (flag1 == 0)
+                        {
+                            commentDetailsReturnDTO1.IsLikedByUser = "No";
+                        }
                         //commentDetailsReturnDTOs.Add(commentDetailsReturnDTO);
 
                         List<RetweetReplyDetailsReturnDTO> ReplyList = new List<RetweetReplyDetailsReturnDTO>();
@@ -360,6 +446,25 @@ namespace BloggingApp.Services
                                     replyDetailsReturnDTO1.PUserId = user.UserId;
                                     replyDetailsReturnDTO1.UserName = user.UserName;
                                     replyDetailsReturnDTO1.UserProfileImageLink = user.UserProfileImgLink;
+
+                                    var ReplyLikescount = ((await _RetweetCommentReplyLikesReposioryl.Get()).Where(l => l.ReplyCommentReplyId == reply.Id)).ToList();
+                                    replyDetailsReturnDTO1.LikedCount = ReplyLikescount.Count;
+                                    int flag2 = 0;
+
+                                    foreach (var like in ReplyLikescount)
+                                    {
+                                        if (like.LikedUserId == retweetCommentDetails.UserId)
+                                        {
+                                            replyDetailsReturnDTO1.IsLikedByUser = "Yes";
+                                            flag2 = 1;
+                                            break;
+                                        }
+                                    }
+                                    if (flag2 == 0)
+                                    {
+                                        replyDetailsReturnDTO1.IsLikedByUser = "No";
+                                    }
+
                                     ReplyList.Add(replyDetailsReturnDTO1);
 
                                     if (ReplyList.Count > 0)
@@ -388,6 +493,24 @@ namespace BloggingApp.Services
                                                     replyDetailsReturnDTO3.PUserId = user1.UserId;
                                                     replyDetailsReturnDTO3.UserName = user1.UserName;
                                                     replyDetailsReturnDTO3.UserProfileImageLink = user1.UserProfileImgLink;
+
+                                                    var ReplyLikescount8 = ((await _RetweetCommentReplyLikesReposioryl.Get()).Where(l => l.ReplyCommentReplyId == r.Id)).ToList();
+                                                    replyDetailsReturnDTO3.LikedCount = ReplyLikescount8.Count;
+                                                    int flag8 = 0;
+
+                                                    foreach (var like in ReplyLikescount8)
+                                                    {
+                                                        if (like.LikedUserId == retweetCommentDetails.UserId)
+                                                        {
+                                                            replyDetailsReturnDTO3.IsLikedByUser = "Yes";
+                                                            flag8 = 1;
+                                                            break;
+                                                        }
+                                                    }
+                                                    if (flag8 == 0)
+                                                    {
+                                                        replyDetailsReturnDTO3.IsLikedByUser = "No";
+                                                    }
                                                     ReplyList.Add(replyDetailsReturnDTO3);
                                                 }
                                             }

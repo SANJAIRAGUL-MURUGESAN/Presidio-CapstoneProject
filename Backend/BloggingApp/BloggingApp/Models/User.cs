@@ -20,5 +20,6 @@ namespace BloggingApp.Models
         public string UserProfileImgLink { get; set; }
         public ICollection<Tweet> UserTweets { get; set; }//No effect on the table
         public ICollection<Retweet> UserRetweets { get; set; }//No effect on the table
+        public ICollection<Follow> Followers { get; set; }//No effect on the table
     }
 }

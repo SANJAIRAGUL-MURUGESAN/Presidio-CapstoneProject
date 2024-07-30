@@ -10,6 +10,53 @@ namespace BloggingApp.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
+                name: "RetweetHashTags",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    HashTagTitle = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    RetweetId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_RetweetHashTags", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "RetweetMentions",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    MentionerId = table.Column<int>(type: "int", nullable: false),
+                    MentionedByUserId = table.Column<int>(type: "int", nullable: false),
+                    MentionedDateTime = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    RetweetId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_RetweetMentions", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "UserNotifications",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    NotificatioContent = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    NotificationPost = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    IsUserSeen = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    UserId = table.Column<int>(type: "int", nullable: false),
+                    ContentDateTime = table.Column<DateTime>(type: "datetime2", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_UserNotifications", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Users",
                 columns: table => new
                 {
@@ -31,6 +78,26 @@ namespace BloggingApp.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Users", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Follows",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    UserId = table.Column<int>(type: "int", nullable: false),
+                    FollowerId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Follows", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Follows_Users_UserId",
+                        column: x => x.UserId,
+                        principalTable: "Users",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -238,6 +305,26 @@ namespace BloggingApp.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "TweetCommentLikes",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    LikedUserId = table.Column<int>(type: "int", nullable: false),
+                    CommentId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_TweetCommentLikes", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_TweetCommentLikes_Comments_CommentId",
+                        column: x => x.CommentId,
+                        principalTable: "Comments",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "RetweetComments",
                 columns: table => new
                 {
@@ -280,6 +367,46 @@ namespace BloggingApp.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "TweetReplyLikes",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    LikedUserId = table.Column<int>(type: "int", nullable: false),
+                    ReplyId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_TweetReplyLikes", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_TweetReplyLikes_Replies_ReplyId",
+                        column: x => x.ReplyId,
+                        principalTable: "Replies",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "RetweetCommentLikes",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    LikedUserId = table.Column<int>(type: "int", nullable: false),
+                    RetweetCommentId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_RetweetCommentLikes", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_RetweetCommentLikes_RetweetComments_RetweetCommentId",
+                        column: x => x.RetweetCommentId,
+                        principalTable: "RetweetComments",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "RetweetCommentReplies",
                 columns: table => new
                 {
@@ -303,10 +430,35 @@ namespace BloggingApp.Migrations
                         onDelete: ReferentialAction.Restrict);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "RetweetCommentReplyLikes",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    LikedUserId = table.Column<int>(type: "int", nullable: false),
+                    ReplyCommentReplyId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_RetweetCommentReplyLikes", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_RetweetCommentReplyLikes_RetweetCommentReplies_ReplyCommentReplyId",
+                        column: x => x.ReplyCommentReplyId,
+                        principalTable: "RetweetCommentReplies",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_Comments_TweetId",
                 table: "Comments",
                 column: "TweetId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Follows_UserId",
+                table: "Follows",
+                column: "UserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_HashTags_UserId",
@@ -319,9 +471,19 @@ namespace BloggingApp.Migrations
                 column: "CommentId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_RetweetCommentLikes_RetweetCommentId",
+                table: "RetweetCommentLikes",
+                column: "RetweetCommentId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_RetweetCommentReplies_RetweetCommentId",
                 table: "RetweetCommentReplies",
                 column: "RetweetCommentId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_RetweetCommentReplyLikes_ReplyCommentReplyId",
+                table: "RetweetCommentReplyLikes",
+                column: "ReplyCommentReplyId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_RetweetComments_RetweetId",
@@ -344,6 +506,11 @@ namespace BloggingApp.Migrations
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_TweetCommentLikes_CommentId",
+                table: "TweetCommentLikes",
+                column: "CommentId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_TweetFiles_TweetId",
                 table: "TweetFiles",
                 column: "TweetId");
@@ -364,6 +531,11 @@ namespace BloggingApp.Migrations
                 column: "TweetId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_TweetReplyLikes_ReplyId",
+                table: "TweetReplyLikes",
+                column: "ReplyId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Tweets_UserId",
                 table: "Tweets",
                 column: "UserId");
@@ -372,16 +544,28 @@ namespace BloggingApp.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
+                name: "Follows");
+
+            migrationBuilder.DropTable(
                 name: "HashTags");
 
             migrationBuilder.DropTable(
-                name: "Replies");
+                name: "RetweetCommentLikes");
 
             migrationBuilder.DropTable(
-                name: "RetweetCommentReplies");
+                name: "RetweetCommentReplyLikes");
+
+            migrationBuilder.DropTable(
+                name: "RetweetHashTags");
 
             migrationBuilder.DropTable(
                 name: "RetweetLikes");
+
+            migrationBuilder.DropTable(
+                name: "RetweetMentions");
+
+            migrationBuilder.DropTable(
+                name: "TweetCommentLikes");
 
             migrationBuilder.DropTable(
                 name: "TweetFiles");
@@ -396,10 +580,22 @@ namespace BloggingApp.Migrations
                 name: "TweetMentions");
 
             migrationBuilder.DropTable(
-                name: "Comments");
+                name: "TweetReplyLikes");
+
+            migrationBuilder.DropTable(
+                name: "UserNotifications");
+
+            migrationBuilder.DropTable(
+                name: "RetweetCommentReplies");
+
+            migrationBuilder.DropTable(
+                name: "Replies");
 
             migrationBuilder.DropTable(
                 name: "RetweetComments");
+
+            migrationBuilder.DropTable(
+                name: "Comments");
 
             migrationBuilder.DropTable(
                 name: "Retweets");

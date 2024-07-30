@@ -68,8 +68,8 @@ document.querySelector('.modal-header button').addEventListener('click', functio
       // Extract comments and add to comments array
       comments = commentMatches.map(match => match.substring(1)); // Remove "#" from the match
     }
-    console.log(mentions)
-    console.log(comments)
+    // console.log(mentions)
+    // console.log(comments)
 
     var isCommentEnabled = 1;
     if(document.getElementById('commentenable').style.display=='none'){
@@ -86,8 +86,11 @@ document.querySelector('.modal-header button').addEventListener('click', functio
       console.log(uploadedFiles[i])
         formData.append('Images', uploadedFiles[i]);
     }
+
     
     async function addFeedContent(){
+      console.log(mentions)
+      console.log(comments)
 
       await fetch('https://localhost:7186/api/Tweet/AddTweetContent', {
           method: 'POST',
@@ -132,7 +135,9 @@ document.querySelector('.modal-header button').addEventListener('click', functio
             "retweetContent": postContent,
             "isCommentEnable": "Yes",
             "actualTweetId": actualtweetid,
-            "userId": localStorage.getItem('userid')
+            "userId": localStorage.getItem('userid'),
+            "retweetMentions": mentions,
+            "retweetHashTags" : comments
         })
     })
     .then(async res => {
@@ -171,7 +176,6 @@ document.querySelector('.modal-header button').addEventListener('click', functio
   const isNormalTweet = localStorage.getItem('actualtweetid')
 
   if(isNormalTweet == undefined){
-    console.log("NormalTweet")
     addFeedContent()
   }else{
     console.log("Retweet",isNormalTweet)
@@ -264,7 +268,7 @@ document.addEventListener('DOMContentLoaded', function () {
           console.log(hashtag)
           if (hashtag.length > 0) {
               // Use dummy data for hashtags
-              const dummyHashtags = ['sanjai','ragul','gayathri','ritika','presidio','genspark'];
+              const dummyHashtags = ['sanjai25','ragul','gayathri03','ritika','presidio','genspark'];
               const filteredHashtags = dummyHashtags.filter(tag => tag.startsWith(hashtag));
               console.log(filteredHashtags.length)
               if(filteredHashtags.length>0){

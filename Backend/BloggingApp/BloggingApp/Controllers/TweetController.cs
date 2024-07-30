@@ -1,6 +1,8 @@
 ﻿using BloggingApp.Exceptions.TweetExceptions;
 using BloggingApp.Interfaces;
 using BloggingApp.Models;
+using BloggingApp.Models.CRLikesDTOs;
+using BloggingApp.Models.NewFolder;
 using BloggingApp.Models.UserDTOs;
 using BloggingApp.Services;
 using Microsoft.AspNetCore.Cors;
@@ -296,6 +298,194 @@ namespace BloggingApp.Controllers
         }
 
         // Function  Function to Return Retweet Details - Ends
+
+        // Function to Add Tweet Comment Likes - Starts
+        [Route("AddTweetCommentLike")]
+        [HttpPost]
+        [ProducesResponseType(typeof(string), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ErrorModel), StatusCodes.Status409Conflict)]
+        [ProducesResponseType(typeof(ErrorModel), StatusCodes.Status500InternalServerError)]
+        [ProducesErrorResponseType(typeof(ErrorModel))]
+        public async Task<ActionResult<string>> AddTweetCommentLike([FromBody] AddTweetCommentLikesDTO addTweetCommentLikesDTO)
+        {
+            try
+            {
+                var tweetcommentlikeDetails = await _TweetLikesServices.AddTweetCommentLikes(addTweetCommentLikesDTO);
+                return Ok(tweetcommentlikeDetails);
+
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                return StatusCode(StatusCodes.Status500InternalServerError, new ErrorModel(500, ex.Message));
+            }
+        }
+        // Function to Add Tweet Comment Like - Ends
+
+        // Function to Add Tweet Comment Dislike - Starts
+        [Route("AddTweetCommentDislike")]
+        [HttpPost]
+        [ProducesResponseType(typeof(string), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ErrorModel), StatusCodes.Status409Conflict)]
+        [ProducesResponseType(typeof(ErrorModel), StatusCodes.Status500InternalServerError)]
+        [ProducesErrorResponseType(typeof(ErrorModel))]
+        public async Task<ActionResult<string>> AddTweetCommentDislikeLike([FromBody] AddTweetCommentDislikeDTO addTweetCommentDislikeDTO)
+        {
+            try
+            {
+                var tweetcommentlikeDetails = await _TweetLikesServices.AddTweetCommentDislike(addTweetCommentDislikeDTO);
+                return Ok(tweetcommentlikeDetails);
+
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                return StatusCode(StatusCodes.Status500InternalServerError, new ErrorModel(500, ex.Message));
+            }
+        }
+        // Function to Add Tweet Comment Dislike - Ends
+
+        // Function to Add Tweet Comment reply Likes - Starts
+        [Route("AddTweetCommentReplyLike")]
+        [HttpPost]
+        [ProducesResponseType(typeof(string), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ErrorModel), StatusCodes.Status409Conflict)]
+        [ProducesResponseType(typeof(ErrorModel), StatusCodes.Status500InternalServerError)]
+        [ProducesErrorResponseType(typeof(ErrorModel))]
+        public async Task<ActionResult<string>> AddTweetCommentReplyLike([FromBody] AddTweetCommentReplyLikeDTO addTweetCommentReplyLikeDTO)
+        {
+            try
+            {
+                var tweetcommentreplylikeDetails = await _TweetLikesServices.AddTweetCommentReplyLikes(addTweetCommentReplyLikeDTO);
+                return Ok(tweetcommentreplylikeDetails);
+
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                return StatusCode(StatusCodes.Status500InternalServerError, new ErrorModel(500, ex.Message));
+            }
+        }
+        // Function to Add Tweet Comment reply Like - Ends
+
+        // Function to Add Tweet Comment Reply Dislike - Starts
+        [Route("AddTweetCommentReplyDislike")]
+        [HttpPost]
+        [ProducesResponseType(typeof(string), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ErrorModel), StatusCodes.Status409Conflict)]
+        [ProducesResponseType(typeof(ErrorModel), StatusCodes.Status500InternalServerError)]
+        [ProducesErrorResponseType(typeof(ErrorModel))]
+        public async Task<ActionResult<string>> AddTweetCommentReplyDislikeLike([FromBody] AddTweetCommentReplyDislikeDTO addTweetCommentReplyDislikeDTO)
+        {
+            try
+            {
+                var tweetcommentlikeDetails = await _TweetLikesServices.AddTweetCommentReplyDislike(addTweetCommentReplyDislikeDTO);
+                return Ok(tweetcommentlikeDetails);
+
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                return StatusCode(StatusCodes.Status500InternalServerError, new ErrorModel(500, ex.Message));
+            }
+        }
+        // Function to Add Tweet Comment Reply Dislike - Ends
+
+        // Retweets comments and reply likes
+
+        // Function to Add Retweet Comment Likes - Starts
+        [Route("AddRetweetCommentLike")]
+        [HttpPost]
+        [ProducesResponseType(typeof(string), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ErrorModel), StatusCodes.Status409Conflict)]
+        [ProducesResponseType(typeof(ErrorModel), StatusCodes.Status500InternalServerError)]
+        [ProducesErrorResponseType(typeof(ErrorModel))]
+        public async Task<ActionResult<string>> AddRetweetCommentLike([FromBody] AddRetweetCommentLikeDTO addRetweetCommentLikeDTO)
+        {
+            try
+            {
+                var RetweetcommentlikeDetails = await _TweetLikesServices.AddRetweetCommentLikes(addRetweetCommentLikeDTO);
+                return Ok(RetweetcommentlikeDetails);
+
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                return StatusCode(StatusCodes.Status500InternalServerError, new ErrorModel(500, ex.Message));
+            }
+        }
+        // Function to Add Retweet Comment Like - Ends
+
+        // Function to Add Retweet Comment Dislike - Starts
+        [Route("AddRetweetCommentDislike")]
+        [HttpPost]
+        [ProducesResponseType(typeof(string), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ErrorModel), StatusCodes.Status409Conflict)]
+        [ProducesResponseType(typeof(ErrorModel), StatusCodes.Status500InternalServerError)]
+        [ProducesErrorResponseType(typeof(ErrorModel))]
+        public async Task<ActionResult<string>> AddRetweetCommentDislikeLike([FromBody] AddRetweetCommentDislikeDTO addRetweetCommentDislikeDTO)
+        {
+            try
+            {
+                var RetweetcommentlikeDetails = await _TweetLikesServices.AddRetweetCommentDislike(addRetweetCommentDislikeDTO);
+                return Ok(RetweetcommentlikeDetails);
+
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                return StatusCode(StatusCodes.Status500InternalServerError, new ErrorModel(500, ex.Message));
+            }
+        }
+        // Function to Add Retweet Comment Dislike - Ends
+
+        // Function to Add Retweet Reply like - Starts
+        [Route("AddRetweetCommentReplyLike")]
+        [HttpPost]
+        [ProducesResponseType(typeof(string), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ErrorModel), StatusCodes.Status409Conflict)]
+        [ProducesResponseType(typeof(ErrorModel), StatusCodes.Status500InternalServerError)]
+        [ProducesErrorResponseType(typeof(ErrorModel))]
+        public async Task<ActionResult<string>> AddRetweetCommentReplyLike([FromBody] AddRetweetCommentReplyLikeDTO addRetweetCommentReplyLikeDTO)
+        {
+            try
+            {
+                var RetweetcommentreplylikeDetails = await _TweetLikesServices.AddRetweetCommentReplyLikes(addRetweetCommentReplyLikeDTO);
+                return Ok(RetweetcommentreplylikeDetails);
+
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                return StatusCode(StatusCodes.Status500InternalServerError, new ErrorModel(500, ex.Message));
+            }
+        }
+        // Function to Add Retweet Reply like - Ends
+
+
+        // Function to Add Retweet Reply Dislike - Starts
+        [Route("AddRetweetCommentReplyDisLike")]
+        [HttpPost]
+        [ProducesResponseType(typeof(string), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ErrorModel), StatusCodes.Status409Conflict)]
+        [ProducesResponseType(typeof(ErrorModel), StatusCodes.Status500InternalServerError)]
+        [ProducesErrorResponseType(typeof(ErrorModel))]
+        public async Task<ActionResult<string>> AddRetweetCommentReplyDisLike([FromBody] AddRetweetCommentReplyDislikeDTO addRetweetCommentReplyDislikeDTO)
+        {
+            try
+            {
+                var RetweetcommentreplylikeDetails = await _TweetLikesServices.AddRetweetCommentReplyDislike(addRetweetCommentReplyDislikeDTO);
+                return Ok(RetweetcommentreplylikeDetails);
+
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                return StatusCode(StatusCodes.Status500InternalServerError, new ErrorModel(500, ex.Message));
+            }
+        }
+        // Function to Add Retweet Reply Dislike - Ends
+
 
     }
 }

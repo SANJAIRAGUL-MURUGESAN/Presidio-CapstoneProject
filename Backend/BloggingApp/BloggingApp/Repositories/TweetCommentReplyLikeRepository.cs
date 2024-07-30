@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace BloggingApp.Repositories
 {
-    public class TweetCommentReplyLikeRepository : IRepository<int, TweetCommentReplyLikeRepository>
+    public class TweetCommentReplyLikeRepository : IRepository<int, TweetReplyLikes>
     {
         private readonly BloggingAppContext _context;
         public TweetCommentReplyLikeRepository(BloggingAppContext context)

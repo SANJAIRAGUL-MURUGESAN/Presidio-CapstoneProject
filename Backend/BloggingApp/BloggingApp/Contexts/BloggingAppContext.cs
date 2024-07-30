@@ -26,6 +26,11 @@ namespace BloggingApp.Contexts
         public DbSet<TweetReplyLikes> TweetReplyLikes { get; set; }
         public DbSet<RetweetCommentLikes> RetweetCommentLikes { get; set; }
         public DbSet<RetweetCommentReplyLikes> RetweetCommentReplyLikes { get; set; }
+        public DbSet<Follow> Follows { get; set; }
+
+        public DbSet<RetweetMentions> RetweetMentions { get; set; }
+        public DbSet<RetweetHashTags> RetweetHashTags { get; set; }
+        public DbSet<UserNotification> UserNotifications { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -33,6 +38,14 @@ namespace BloggingApp.Contexts
             modelBuilder.Entity<Tweet>()
               .HasOne(r => r.User)
               .WithMany(e => e.UserTweets)
+              .HasForeignKey(r => r.UserId)
+              .OnDelete(DeleteBehavior.Restrict)
+              .IsRequired();
+
+            // Mapping Users and their Follows
+            modelBuilder.Entity<Follow>()
+              .HasOne(r => r.User)
+              .WithMany(e => e.Followers)
               .HasForeignKey(r => r.UserId)
               .OnDelete(DeleteBehavior.Restrict)
               .IsRequired();

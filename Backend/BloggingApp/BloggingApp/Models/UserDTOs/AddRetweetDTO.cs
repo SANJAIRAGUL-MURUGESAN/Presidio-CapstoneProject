@@ -6,5 +6,7 @@
         public string IsCommentEnable { get; set; }
         public int ActualTweetId { get; set; }
         public int UserId { get; set; }
+        public List<string> RetweetMentions { get; set; }
+        public List<string> RetweetHashTags { get; set; }
     }
 }

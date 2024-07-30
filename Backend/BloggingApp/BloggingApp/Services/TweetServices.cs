@@ -24,12 +24,16 @@ namespace BloggingApp.Services
         private readonly IRepository<int, Retweet> _RetweetRepository;
         private readonly IRepository<int, TweetLikes> _TweetLikesRepository;
         private readonly IRepository<int, RetweetLikes> _RetweetLikesRepository;
+        private readonly IRepository<int, RetweetMentions> _RetweetMentionsRepository;
+        private readonly IRepository<int, RetweetHashTags> _RetweetHashTagsRepository;
+        private readonly IRepository<int, UserNotification> _UserNotificationRepository;
         private readonly TweetRequestForTweetFilesRepository _TweetRequestForTweetFilesRepository; //To get Tweet Files for a Tweet
 
         public TweetServices(IRepository<int, Tweet> tweetRepository, IRepository<int, TweetMentions> tweetMentionsRepository, IRepository<int, User> userRepository,
             IRepository<int, TweetHashTags> tweetHashTagsRepository, IRepository<int,HashTags> hashTagsRepository,IRepository<int,TweetFiles> tweetFilesRepository,
             TweetRequestForTweetFilesRepository tweetRequestForTweetFiles, IRepository<int, Retweet> retweetRepository, IRepository<int, TweetLikes> tweetLikesRepository,
-            IRepository<int, RetweetLikes> reTweetLikesRepository)
+            IRepository<int, RetweetLikes> reTweetLikesRepository, IRepository<int, RetweetMentions> retweetMentionsRepository,IRepository<int, RetweetHashTags> retweetHashTagsRepository,
+            IRepository<int, UserNotification> userNotificationRepository)
         {
             _TweetRepository = tweetRepository;
             _TweetMentionsRepository = tweetMentionsRepository;
@@ -41,6 +45,9 @@ namespace BloggingApp.Services
             _TweetRequestForTweetFilesRepository = tweetRequestForTweetFiles;
             _TweetLikesRepository = tweetLikesRepository;
             _RetweetLikesRepository = reTweetLikesRepository;
+            _RetweetMentionsRepository = retweetMentionsRepository;
+            _RetweetHashTagsRepository = retweetHashTagsRepository;
+            _UserNotificationRepository = userNotificationRepository;
         }
 
         // Function to Add Tweet to database - Starts
@@ -73,9 +80,14 @@ namespace BloggingApp.Services
                     }
                 }
             }
+            return "success";
+           
+        }
 
+        public async Task<string> AddHashtags(AddUserTweetContent addUserTweetContent, Tweet tweet)
+        {
             List<string> hashtags = addUserTweetContent.TweetHashtags;
-            foreach( string hashtag in hashtags)
+            foreach (string hashtag in hashtags)
             {
                 HashTags hashtag1 = new HashTags();
                 hashtag1.HashTagTitle = hashtag;
@@ -93,16 +105,25 @@ namespace BloggingApp.Services
             }
             return "success";
         }
-
+        public async Task<string> AddTweetNotification(AddUserTweetContent addUserTweetContent, Tweet tweet)
+        {
+            UserNotification userNotification = new UserNotification();
+            userNotification.UserId = 
+        }
         public async Task<AddTweetContentReturnDTO> AddTweetContentByUser(AddUserTweetContent addUserTweetContent)
         {
             try
             {
                 var MappedTweet = MapAddTweetContentByUserToTweet(addUserTweetContent);
+                Console.WriteLine("counts",addUserTweetContent.TweetMentions.Count);
                 var AddedTweet = await _TweetRepository.Add(MappedTweet);
-                if(addUserTweetContent.TweetMentions.Count > 0)
+                if (addUserTweetContent.TweetMentions.Count > 0)
                 {
                     string result1 = await AddMentionsHashTags(addUserTweetContent, AddedTweet);
+                }
+                if (addUserTweetContent.TweetHashtags.Count > 0)
+                {
+                    string result1 = await AddHashtags(addUserTweetContent, AddedTweet);
                 }
                 AddTweetContentReturnDTO addTweetContentReturnDTO = new AddTweetContentReturnDTO();
                 addTweetContentReturnDTO.TweetId = AddedTweet.Id;
@@ -307,6 +328,50 @@ namespace BloggingApp.Services
             retweet.UserId = addRetweetDTO.UserId;
             return retweet;
         }
+        public async Task<string> AddRetweetMentions(AddRetweetDTO addUserRetweetContent, Retweet retweet)
+        {
+            List<string> mentions = addUserRetweetContent.RetweetMentions;
+            foreach (string mention in mentions)
+            {
+                var UserResult = await _UserRepository.Get();
+                foreach (var user in UserResult)
+                {
+                    if (user.UserId == mention)
+                    {
+                        RetweetMentions retweetMentions = new RetweetMentions();
+                        retweetMentions.MentionerId = user.Id;
+                        retweetMentions.MentionedByUserId = addUserRetweetContent.UserId;
+                        retweetMentions.RetweetId = retweet.Id;
+                        retweetMentions.MentionedDateTime = DateTime.Now;
+                        var AddedTweetMentions = await _RetweetMentionsRepository.Add(retweetMentions);
+                    }
+                }
+            }
+            return "success";
+
+        }
+
+        public async Task<string> AddRetweetHashtags(AddRetweetDTO addUserTweetContent, Retweet retweet)
+        {
+            List<string> hashtags = addUserTweetContent.RetweetHashTags;
+            foreach (string hashtag in hashtags)
+            {
+                HashTags hashtag1 = new HashTags();
+                hashtag1.HashTagTitle = hashtag;
+                hashtag1.CountInPosts = 1;
+                hashtag1.CountInComments = 0;
+                hashtag1.TweetLikes = 0;
+                hashtag1.HashTagCreatedDateTime = DateTime.Now;
+                hashtag1.UserId = addUserTweetContent.UserId;
+                var AddedHastag = await _HashTagsRepository.Add(hashtag1);
+
+                RetweetHashTags retweetHashTags = new RetweetHashTags();
+                retweetHashTags.RetweetId = retweet.Id;
+                retweetHashTags.HashTagTitle = hashtag;
+                var AddedTweetHashtags = await _RetweetHashTagsRepository.Add(retweetHashTags);
+            }
+            return "success";
+        }
 
         public async Task<string> AddRetweetContent(AddRetweetDTO addRetweetDTO)
         {
@@ -314,6 +379,14 @@ namespace BloggingApp.Services
             {
                 var retweet = MapAddRetweetDTOtoRetweet(addRetweetDTO);
                 var AddedRetweet = await _RetweetRepository.Add(retweet);
+                if(addRetweetDTO.RetweetMentions.Count > 0)
+                {
+                    var addedmention = await AddRetweetMentions(addRetweetDTO,AddedRetweet);
+                }
+                if(addRetweetDTO.RetweetHashTags.Count > 0)
+                {
+                    var addedmention = await AddRetweetHashtags(addRetweetDTO, AddedRetweet);
+                }
                 if(AddedRetweet != null)
                 {
                     return "success";

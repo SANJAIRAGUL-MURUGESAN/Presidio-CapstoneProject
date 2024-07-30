@@ -13,5 +13,7 @@
         public string UserName { get; set; }
         public string PUserId { get; set; }
         public string UserProfileImageLink { get; set; }
+        public int LikedCount { get; set; }
+        public string IsLikedByUser { get; set; }
     }
 }

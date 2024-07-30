@@ -5,6 +5,7 @@ using BloggingApp.Services;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using BloggingApp.Models.FollowDTOs;
 
 namespace BloggingApp.Controllers
 {
@@ -50,6 +51,95 @@ namespace BloggingApp.Controllers
             try
             {
                 var user = await _UserServices.UserLogin(userLoginDTO);
+                return Ok(user);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, new ErrorModel(500, ex.Message));
+            }
+        }
+       
+        // Function to show trending users - Starts
+
+        [Route("TopUsers")]
+        [HttpPost]
+        [ProducesResponseType(typeof(List<TopUsersReturnDTO>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ErrorModel), StatusCodes.Status409Conflict)]
+        [ProducesResponseType(typeof(ErrorModel), StatusCodes.Status500InternalServerError)]
+        [ProducesErrorResponseType(typeof(ErrorModel))]
+        public async Task<ActionResult<List<TopUsersReturnDTO>>> ReturnTop5Users([FromBody] int userid)
+        {
+            try
+            {
+                var user = await _UserServices.ShowFollowers(userid);
+                return Ok(user);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, new ErrorModel(500, ex.Message));
+            }
+        }
+
+        // Function to show trending users - Ends
+
+        // Function to Add Follow Request - Starts
+
+
+        [Route("AddFollow")]
+        [HttpPost]
+        [ProducesResponseType(typeof(string), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ErrorModel), StatusCodes.Status409Conflict)]
+        [ProducesResponseType(typeof(ErrorModel), StatusCodes.Status500InternalServerError)]
+        [ProducesErrorResponseType(typeof(ErrorModel))]
+        public async Task<ActionResult<string>> AddFollow([FromBody] AddFollowerDTO addFollowerDTO)
+        {
+            try
+            {
+                var user = await _UserServices.AddFollower(addFollowerDTO);
+                return Ok(user);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, new ErrorModel(500, ex.Message));
+            }
+        }
+
+        // Function to Add Follow Request - Starts
+
+        // Function to Add Remove Request - Starts
+
+        [Route("RemoveFollow")]
+        [HttpPost]
+        [ProducesResponseType(typeof(string), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ErrorModel), StatusCodes.Status409Conflict)]
+        [ProducesResponseType(typeof(ErrorModel), StatusCodes.Status500InternalServerError)]
+        [ProducesErrorResponseType(typeof(ErrorModel))]
+        public async Task<ActionResult<string>> RemoveFollow([FromBody] RemoveFollowerDTO removeFollowerDTO)
+        {
+            try
+            {
+                var user = await _UserServices.RemoveFollower(removeFollowerDTO);
+                return Ok(user);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, new ErrorModel(500, ex.Message));
+            }
+        }
+
+        // Function to Add Remove Request - Ends
+
+        [Route("UserSideBarInfo")]
+        [HttpPost]
+        [ProducesResponseType(typeof(SideBarUserInfoReturnDTO), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ErrorModel), StatusCodes.Status409Conflict)]
+        [ProducesResponseType(typeof(ErrorModel), StatusCodes.Status500InternalServerError)]
+        [ProducesErrorResponseType(typeof(ErrorModel))]
+        public async Task<ActionResult<SideBarUserInfoReturnDTO>> UserSideBarInfoReturn([FromBody] int userid)
+        {
+            try
+            {
+                var user = await _UserServices.ReturnSideBarUserInfo(userid);
                 return Ok(user);
             }
             catch (Exception ex)

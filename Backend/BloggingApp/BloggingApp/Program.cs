@@ -104,6 +104,14 @@ namespace BloggingApp
             builder.Services.AddScoped<IRepository<int, RetweetComment>, RetweetCommentRepository>();
             builder.Services.AddScoped<IRepository<int, RetweetCommentReply>, RetweetCommentReplyRepository>();
             builder.Services.AddScoped<IRepository<int, TweetCommentLikes>, TweetCommentLikeRepository>();
+            builder.Services.AddScoped<IRepository<int, TweetReplyLikes>, TweetCommentReplyLikeRepository>();
+            builder.Services.AddScoped<IRepository<int, RetweetCommentLikes>, RetweetCommentLikesRepository>();
+            builder.Services.AddScoped<IRepository<int, RetweetCommentReplyLikes>, RetweetCommentReplyLikesRepository>();
+            builder.Services.AddScoped<IRepository<int, Follow>, FollowRepository>();
+            builder.Services.AddScoped<IRepository<int, RetweetMentions>, RetweetMentionRepository>();
+            builder.Services.AddScoped<IRepository<int, RetweetHashTags>, RetweetHashTagRepository>();
+            builder.Services.AddScoped<IRepository<int, UserNotification>, UserNotificationRepository>();
+
             // Repository for getting TweetFiles for a particular tweet
             builder.Services.AddScoped<TweetRequestForTweetFilesRepository>();
             builder.Services.AddScoped<CommentRequestForRepliesRepository>();

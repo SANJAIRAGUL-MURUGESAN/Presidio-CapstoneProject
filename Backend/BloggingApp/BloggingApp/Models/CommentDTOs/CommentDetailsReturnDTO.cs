@@ -16,5 +16,7 @@ namespace BloggingApp.Models.CommentDTOs
         // ForeignKey - User ID
         public int RetweetId { get; set; }
         public List<ReplyDetailsReturnDTO> Replies { get; set; }
+        public int LikesCount { get; set; }
+        public string IsLikedByUser { get; set; }
     }
 }

@@ -1,3 +1,8 @@
+document.getElementById('usernamenav').innerHTML = localStorage.getItem('username')
+document.getElementById('userprofileimgnav').src = localStorage.getItem('userprofileimglink')
+document.getElementById('userprofileimgnav2').src = localStorage.getItem('userprofileimglink')
+document.getElementById('userimagemodal').src = localStorage.getItem('userprofileimglink')
+
 function timeAgo(date) {
     const now = new Date();
     const tweetDate = new Date(date);
@@ -594,7 +599,6 @@ function rendertweet(tweet,comments){
     inputContainer.innerHTML = ''; // Clear existing posts
 
     comments.forEach(post => {
-        console.log('data',post.userName,post.replyDateTime)
         // Create postc div
         const postcDiv = document.createElement('div');
         postcDiv.className = 'postc';
@@ -637,7 +641,32 @@ function rendertweet(tweet,comments){
 
 
         const likeIcon = document.createElement('i');
-        likeIcon.className = 'far fa-heart';
+        likeIcon.className = 'fa-regular fa-heart';
+        likeIcon.style.color = '#3e6f6f'
+        likeIcon.style.cursor = 'pointer'
+        const likeText = document.createElement('h6');
+        likeText.style.fontSize = '8px';
+        likeText.textContent = `${post.likesCount} Likes`;
+        likeText.style.color  = 'grey'
+        likeIcon.appendChild(likeText);
+
+        if(post.isLikedByUser == 'Yes'){
+            likeIcon.className = 'fa-solid fa-heart';
+            likeIcon.style.color = '#ed0c0c'
+        }
+
+
+        likeIcon.addEventListener('click', async function() {
+            if (likeIcon.classList.contains('fa-regular')) {
+              likeIcon.className = 'fa-solid fa-heart';
+              likeIcon.style.color = '#ed0c0c'
+                await updateTweetCommentLikeStatus(post.commentId);
+            }else if(likeIcon.classList.contains('fa-heart')){
+              likeIcon.className = 'fa-regular fa-heart';
+              likeIcon.style.color = '#3e6f6f'
+              updateTweetCommentDisLikeStatus(post.commentId)
+            }
+        });
 
 
         postIconsDiv.appendChild(commentIcon);
@@ -688,7 +717,40 @@ function rendertweet(tweet,comments){
         const commentIconr = document.createElement('i');
         commentIconr.className = 'fa fa-reply';
         commentIconr.style.cursor = 'pointer';
+        
+        const likeIconr = document.createElement('i');
+        likeIconr.className = 'fa-regular fa-heart';
+        likeIconr.style.color = '#3e6f6f'
+        likeIconr.style.cursor = 'pointer'
+        const likeTextr = document.createElement('h6');
+        likeTextr.style.fontSize = '8px';
+        likeTextr.textContent = `${post.likedCount} Likes`;
+        likeTextr.style.color  = 'grey'
+        likeIconr.appendChild(likeTextr);
+
+        console.log(post.isLikedByUser)
+        if(post.isLikedByUser == 'Yes'){
+            likeIconr.className = 'fa-solid fa-heart';
+            likeIconr.style.color = '#ed0c0c'
+        }
+
+        likeIconr.addEventListener('click', async function() {
+            if (likeIconr.classList.contains('fa-regular')) {
+              likeIconr.className = 'fa-solid fa-heart';
+              likeIconr.style.color = '#ed0c0c'
+                await updateTweetCommentReplyLikeStatus(post.id);
+            }else if(likeIconr.classList.contains('fa-heart')){
+              likeIconr.className = 'fa-regular fa-heart';
+              likeIconr.style.color = '#3e6f6f'
+              updateTweetCommentReplyDisLikeStatus(post.id)
+            //   updateTweetCommentDisLikeStatus(post.commentId)
+            }
+        });
+
+
+
         postIconsDivr.appendChild(commentIconr);
+        postIconsDivr.appendChild(likeIconr);
 
         commentIconr.addEventListener('click', async function() {
             localStorage.setItem('BackendTo','ReplyReply')
@@ -966,7 +1028,33 @@ function renderRetweet(tweet,comments) {
 
 
         const likeIcon = document.createElement('i');
-        likeIcon.className = 'far fa-heart';
+        likeIcon.className = 'fa-regular fa-heart';
+        likeIcon.style.color = '#3e6f6f'
+        likeIcon.style.cursor = 'pointer'
+        const likeText = document.createElement('h6');
+        likeText.style.fontSize = '8px';
+        likeText.textContent = `${post.likesCount} Likes`;
+        likeText.style.color  = 'grey'
+        likeIcon.appendChild(likeText);
+
+        if(post.isLikedByUser == 'Yes'){
+            likeIcon.className = 'fa-solid fa-heart';
+            likeIcon.style.color = '#ed0c0c'
+        }
+
+        likeIcon.addEventListener('click', async function() {
+            if (likeIcon.classList.contains('fa-regular')) {
+              likeIcon.className = 'fa-solid fa-heart';
+              likeIcon.style.color = '#ed0c0c'
+              await updateRetweetCommentLikeStatus(post.commentId)
+                // await updateTweetCommentLikeStatus(post.commentId);
+            }else if(likeIcon.classList.contains('fa-heart')){
+              likeIcon.className = 'fa-regular fa-heart';
+              likeIcon.style.color = '#3e6f6f'
+              await updateRetweetCommentDislikeLikeStatus(post.commentId)
+            //   updateTweetCommentDisLikeStatus(post.commentId)
+            }
+        });
 
 
         postIconsDiv.appendChild(commentIcon);
@@ -1014,9 +1102,40 @@ function renderRetweet(tweet,comments) {
 
         const postIconsDivr = document.createElement('div');
         postIconsDivr.className = 'post-icons';
+
+        const likeIconr = document.createElement('i');
+        likeIconr.className = 'fa-regular fa-heart';
+        likeIconr.style.color = '#3e6f6f'
+        likeIconr.style.cursor = 'pointer'
+        const likeTextr = document.createElement('h6');
+        likeTextr.style.fontSize = '8px';
+        likeTextr.textContent = `${post.likedCount} Likes`;
+        likeTextr.style.color  = 'grey'
+        likeIconr.appendChild(likeTextr);
+
+        if(post.isLikedByUser == 'Yes'){
+            likeIconr.className = 'fa-solid fa-heart';
+            likeIconr.style.color = '#ed0c0c'
+        }
+
+        likeIconr.addEventListener('click', async function() {
+            if (likeIconr.classList.contains('fa-regular')) {
+              likeIconr.className = 'fa-solid fa-heart';
+              likeIconr.style.color = '#ed0c0c'
+              updateRetweetCommentReplyLikeStatus(post.id);
+                // await updateTweetCommentReplyLikeStatus(post.id);
+            }else if(likeIconr.classList.contains('fa-heart')){
+              likeIconr.className = 'fa-regular fa-heart';
+              likeIconr.style.color = '#3e6f6f'
+              await updateRetweetCommentReplyDisLikeStatus(post.id)
+            //   updateTweetCommentReplyDisLikeStatus(post.id)
+            }
+        });
+
         const commentIconr = document.createElement('i');
         commentIconr.className = 'fa fa-reply';
         commentIconr.style.cursor = 'pointer';
+        postIconsDivr.appendChild(likeIconr);
         postIconsDivr.appendChild(commentIconr);
 
         commentIconr.addEventListener('click', async function() {
@@ -1144,3 +1263,202 @@ async function updateTweetDisLikeStatus(tweetId) {
         console.error(error);
     });
   }
+
+//   TweetComment Like starts
+
+async function updateTweetCommentLikeStatus(commentId) {
+    await fetch('https://localhost:7186/api/Tweet/AddTweetCommentLike', {
+        method: 'POST',
+        headers: {
+            'Authorization': 'Bearer ' + localStorage.getItem('token'),
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          "likedUserId": localStorage.getItem('userid'),
+          "commentId": commentId
+      })
+    }).then(response => {
+        if (!response.ok) {
+            throw new Error('Failed to update like status');
+        }else{
+          alert('Comment - Like Added Successfully')
+        }
+    }).catch(error => {
+        console.error(error);
+    });
+  }
+
+  //   TweetComment Like Ends
+
+  //   TweetComment Dislike starts
+  async function updateTweetCommentDisLikeStatus(commentId) {
+    await fetch('https://localhost:7186/api/Tweet/AddTweetCommentDislike', {
+        method: 'POST',
+        headers: {
+            'Authorization': 'Bearer ' + localStorage.getItem('token'),
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          "likedUserId": localStorage.getItem('userid'),
+          "commentId": commentId
+      })
+    }).then(response => {
+        if (!response.ok) {
+            throw new Error('Failed to update like status');
+        }else{
+          alert('Comment - Dislike Added Successfully')
+        }
+    }).catch(error => {
+        console.error(error);
+    });
+  }
+  //   TweetComment Dislike ends
+
+  async function updateTweetCommentReplyLikeStatus(replyid) {
+    await fetch('https://localhost:7186/api/Tweet/AddTweetCommentReplyLike', {
+        method: 'POST',
+        headers: {
+            'Authorization': 'Bearer ' + localStorage.getItem('token'),
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          "likedUserId": localStorage.getItem('userid'),
+          "replyId": replyid
+      })
+    }).then(response => {
+        if (!response.ok) {
+            throw new Error('Failed to update like status');
+        }else{
+          alert('Reply - Like Added Successfully')
+        }
+    }).catch(error => {
+        console.error(error);
+    });
+  }
+
+   //   TweetComment Reply Dislike starts
+   async function updateTweetCommentReplyDisLikeStatus(replyid) {
+    await fetch('https://localhost:7186/api/Tweet/AddTweetCommentReplyDislike', {
+        method: 'POST',
+        headers: {
+            'Authorization': 'Bearer ' + localStorage.getItem('token'),
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          "likedUserId": localStorage.getItem('userid'),
+          "replyId": replyid
+      })
+    }).then(response => {
+        if (!response.ok) {
+            throw new Error('Failed to update like status');
+        }else{
+          alert('Reply- Dislike Added Successfully')
+        }
+    }).catch(error => {
+        console.error(error);
+    });
+  }
+  //   TweetComment Reply Dislike ends
+
+  // Retweet comments and Reply Likes starts
+
+  // Retweet comments Likes starts
+
+  async function updateRetweetCommentLikeStatus(commentId) {
+    await fetch('https://localhost:7186/api/Tweet/AddRetweetCommentLike', {
+        method: 'POST',
+        headers: {
+            'Authorization': 'Bearer ' + localStorage.getItem('token'),
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          "likedUserId": localStorage.getItem('userid'),
+          "retweetCommentId": commentId
+      })
+    }).then(response => {
+        if (!response.ok) {
+            throw new Error('Failed to update like status');
+        }else{
+          alert('Comment - Like Added Successfully')
+        }
+    }).catch(error => {
+        console.error(error);
+    });
+  }
+
+  // Retweet comments  Likes Ends
+
+  // Retweet comments DisLikes Starts
+
+  async function updateRetweetCommentDislikeLikeStatus(commentId) {
+    await fetch('https://localhost:7186/api/Tweet/AddRetweetCommentDislike', {
+        method: 'POST',
+        headers: {
+            'Authorization': 'Bearer ' + localStorage.getItem('token'),
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          "likedUserId": localStorage.getItem('userid'),
+          "retweetCommentId": commentId
+      })
+    }).then(response => {
+        if (!response.ok) {
+            throw new Error('Failed to update like status');
+        }else{
+          alert('Comment - DisLike Added Successfully')
+        }
+    }).catch(error => {
+        console.error(error);
+    });
+  }
+  // Retweet comments DisLikes Starts
+
+  // Retweet comments Reply DisLikes Starts
+
+  async function updateRetweetCommentReplyLikeStatus(replyid) {
+    await fetch('https://localhost:7186/api/Tweet/AddRetweetCommentReplyLike', {
+        method: 'POST',
+        headers: {
+            'Authorization': 'Bearer ' + localStorage.getItem('token'),
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          "likedUserId": localStorage.getItem('userid'),
+          "replyCommentReplyId": replyid
+      })
+    }).then(response => {
+        if (!response.ok) {
+            throw new Error('Failed to update like status');
+        }else{
+          alert('Reply - Like Added Successfully')
+        }
+    }).catch(error => {
+        console.error(error);
+    });
+  }
+   // Retweet comments Reply DisLikes Ends
+
+    // Retweet comments Reply DisLikes Starts
+
+  async function updateRetweetCommentReplyDisLikeStatus(replyid) {
+    await fetch('https://localhost:7186/api/Tweet/AddRetweetCommentReplyDisLike', {
+        method: 'POST',
+        headers: {
+            'Authorization': 'Bearer ' + localStorage.getItem('token'),
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          "likedUserId": localStorage.getItem('userid'),
+          "replyCommentReplyId": replyid
+      })
+    }).then(response => {
+        if (!response.ok) {
+            throw new Error('Failed to update like status');
+        }else{
+          alert('Reply - Dislike Added Successfully')
+        }
+    }).catch(error => {
+        console.error(error);
+    });
+  }
+   // Retweet comments Reply DisLikes Ends

@@ -89,6 +89,7 @@ const changeOpacity = (x) =>{
 
 postModalX.addEventListener('click',()=>{
     localStorage.removeItem('BackendTo')
+    localStorage.removeItem('actualtweetid')
     modal.style.display = 'none'
     modalWrapper.classList.remove('modal-wrapper-display')
 })
