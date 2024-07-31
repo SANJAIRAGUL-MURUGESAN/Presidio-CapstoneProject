@@ -138,9 +138,9 @@
      <section class="feeds-page">
         <nav class="feeds-nav dark-mode-1">
             <div class="icons">
-                <a href="#" class="active"><i class="fas fa-home"></i></a>
+                <a href="index.html" class="active"><i class="fas fa-home"></i></a>
                 <a href=""><i class="fas fa-hashtag"></i></a>
-                <a href=""><i class="far fa-bell"></i></a>
+                <a href="Notification.html"><i class="fa-solid fa-bell" id="notifi"></i></a>
                 <a href=""><i class="far fa-envelope"></i></a>
             </div>
 
@@ -161,15 +161,15 @@
         <div class="feeds-content">
             <div class="feeds-header dark-mode-1">
                 <div class="header-top">
-                    <h4>Home</h4>
+                    <h4>Tweet Details</h4>
                     <i class="far fa-star"></i>
                 </div>
 
-                <div class="header-post dark-mode-1">
+                <div class="header-post dark-mode-1" style="display: none;">
                     <div class="header-img-wrapper">
                         <img src="" alt="" id="userprofileimgnav2">
                     </div>
-                    <input type="text" placeholder="whats happening?" />
+                    <input type="text" placeholder="whats happening?" id="homesearch"/>
                     <i class="far fa-image"></i>
                     <i class="fas fa-camera"></i>
                     <i class="far fa-chart-bar"></i>
@@ -300,7 +300,7 @@
         </div>
 
         <!-- Post button --><br><br>
-         <button type="button" class="post-btn">
+         <button type="button" class="post-btn" style="display: none;">
             + </i>Post
          </button>
 
@@ -326,7 +326,7 @@
                 <!-- ReplyComment -->
                 <div class="modal-body">
                     <div class="modal-img">
-                        <img src="images/user1.jpg" id="userimagemodal">
+                        <img src="images/user1.jpg" id="userimagemodal2">
                     </div>
                     <input type="text" placeholder="Add your comment" class="modal-input" id="tweetcontentinput">
                     <div id="emojiContainer" class="emoji-container">

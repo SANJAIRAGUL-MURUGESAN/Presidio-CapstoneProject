@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BloggingApp.Migrations
 {
     [DbContext(typeof(BloggingAppContext))]
-    [Migration("20240730134442_Initial")]
+    [Migration("20240731140719_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -594,6 +594,13 @@ namespace BloggingApp.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("NotificationPost")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("TweetId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("TweetType")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 

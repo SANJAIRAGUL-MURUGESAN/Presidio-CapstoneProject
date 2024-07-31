@@ -24,6 +24,7 @@
         public string RetweetUserProfileImgLink { get; set; }
         public int RetweetLikesCount { get; set; }
         public string IsRetweetLikedByUser { get; set; }
+        public int CommentsCount { get; set; }
 
     }
 }

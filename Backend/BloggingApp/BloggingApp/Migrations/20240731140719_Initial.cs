@@ -49,7 +49,9 @@ namespace BloggingApp.Migrations
                     NotificationPost = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     IsUserSeen = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     UserId = table.Column<int>(type: "int", nullable: false),
-                    ContentDateTime = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    ContentDateTime = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    TweetType = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    TweetId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {

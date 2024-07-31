@@ -22,10 +22,16 @@ namespace BloggingApp.Services
         private readonly IRepository<int, RetweetCommentLikes> _RetweetCommentLikesRepository;
         private readonly IRepository<int, RetweetCommentReplyLikes> _RetweetCommentReplyLikesRepository;
 
+        private readonly IRepository<int, User> _UserRepository;
+        private readonly IRepository<int, UserNotification> _UserNotificationRepository;
+        private readonly IRepository<int, Tweet> _TweetRepository;
+        private readonly IRepository<int, Retweet> _RetweetRepository;
 
         public TweetLikesServices(IRepository<int, TweetLikes> tweetLikesRepository, IRepository<int, RetweetLikes> reTweetLikesRepository,
             IRepository<int, TweetCommentLikes> tweetcommentLikesRepository,IRepository<int, TweetReplyLikes> tweetcommentReplyLikesRepository,
-            IRepository<int, RetweetCommentLikes> retweetcommentLikesRepository, IRepository<int, RetweetCommentReplyLikes> retweetcommentReplyLikesRepository)
+            IRepository<int, RetweetCommentLikes> retweetcommentLikesRepository, IRepository<int, RetweetCommentReplyLikes> retweetcommentReplyLikesRepository,
+            IRepository<int, User> userRepository, IRepository<int, UserNotification> userNotoficationRepository, IRepository<int, Tweet> tweetRepository,
+             IRepository<int, Retweet> retweetRepository)
         {
             _TweetLikesRepository = tweetLikesRepository;
             _RetweetLikesRepository = reTweetLikesRepository;
@@ -33,6 +39,10 @@ namespace BloggingApp.Services
             _TweetReplyLikesRepository = tweetcommentReplyLikesRepository;
             _RetweetCommentLikesRepository = retweetcommentLikesRepository;
             _RetweetCommentReplyLikesRepository = retweetcommentReplyLikesRepository;
+            _UserNotificationRepository = userNotoficationRepository;
+            _UserRepository = userRepository;
+            _TweetRepository = tweetRepository;
+            _RetweetRepository = retweetRepository;
         }
 
         // Function to Add Tweet Likes to database - Starts
@@ -44,13 +54,33 @@ namespace BloggingApp.Services
             tweetLikes.TweetId = addTweetLikesDTO.TweetId;
             return tweetLikes;
         }
+
+        public async Task<string> AddLikeNotification(TweetLikes tweetLikes) 
+        {
+            var likedUserDetails = await _UserRepository.GetbyKey(tweetLikes.LikedUserId);
+            var likedUserame = likedUserDetails.UserName;
+            var tweetdetails = await _TweetRepository.GetbyKey(tweetLikes.TweetId);
+            var tweetownerUserDetails = await _UserRepository.GetbyKey(tweetdetails.UserId);
+            UserNotification userNotification = new UserNotification();
+            userNotification.UserId = tweetownerUserDetails.Id;
+            userNotification.NotificationPost = likedUserDetails.UserProfileImgLink;
+            userNotification.IsUserSeen = "No";
+            userNotification.ContentDateTime = DateTime.Now;
+            userNotification.TweetType = "Tweet";
+            userNotification.TweetId = tweetLikes.TweetId;
+            userNotification.NotificatioContent = likedUserame + " Liked your Tweet";
+            var addedNotification = await _UserNotificationRepository.Add(userNotification);
+            return "success";
+
+        }
         public async Task<string> AddTweetLikes(AddTweetLikesDTO addTweetLikesDTO)
         {
             try
             {
                 var tweetlike = MapTweetLikeDTOtoTweetLike(addTweetLikesDTO);
                 var addedtweetlike = await _TweetLikesRepository.Add(tweetlike);
-                if(addedtweetlike != null)
+                string addedlikenoti = await AddLikeNotification(addedtweetlike);
+                if (addedtweetlike != null)
                 {
                     return "success";
                 }
@@ -76,6 +106,24 @@ namespace BloggingApp.Services
             retweetLikes.RetweetId = addRetweekLikeDTO.RetweetId;
             return retweetLikes;
         }
+        public async Task<string> AddRetweetLikeNotification(AddRetweekLikeDTO addRetweekLikeDTO, RetweetLikes retweetLikes)
+        {
+            var likedUserDetails = await _UserRepository.GetbyKey(retweetLikes.LikedUserId);
+            var likedUserame = likedUserDetails.UserName;
+            var tweetdetails = await _RetweetRepository.GetbyKey(retweetLikes.RetweetId);
+            var tweetownerUserDetails = await _UserRepository.GetbyKey(tweetdetails.UserId);
+            UserNotification userNotification = new UserNotification();
+            userNotification.UserId = tweetownerUserDetails.Id;
+            userNotification.NotificationPost = likedUserDetails.UserProfileImgLink;
+            userNotification.IsUserSeen = "No";
+            userNotification.ContentDateTime = DateTime.Now;
+            userNotification.TweetType = "Retweet";
+            userNotification.TweetId = retweetLikes.RetweetId;
+            userNotification.NotificatioContent = likedUserame + " Liked your Retweet";
+            var addedNotification = await _UserNotificationRepository.Add(userNotification);
+            return "success";
+
+        }
 
         public async Task<string> AddRetweetLikes(AddRetweekLikeDTO addRetweekLikeDTO)
         {
@@ -83,6 +131,7 @@ namespace BloggingApp.Services
             {
                 var tweetlike = MapTweetLikeDTOtoReTweetLike(addRetweekLikeDTO);
                 var addedtweetlike = await _RetweetLikesRepository.Add(tweetlike);
+                string addedretweetnotifi = await AddRetweetLikeNotification(addRetweekLikeDTO, tweetlike);
                 if (addedtweetlike != null)
                 {
                     return "success";

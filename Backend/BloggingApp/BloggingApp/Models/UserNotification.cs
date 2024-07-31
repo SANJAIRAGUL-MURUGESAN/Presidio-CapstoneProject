@@ -8,5 +8,7 @@
         public string IsUserSeen { get; set; }
         public int UserId { get; set; }
         public DateTime ContentDateTime {get;set;}
+        public string TweetType { get; set; }
+        public int TweetId { get; set; }
     }
 }

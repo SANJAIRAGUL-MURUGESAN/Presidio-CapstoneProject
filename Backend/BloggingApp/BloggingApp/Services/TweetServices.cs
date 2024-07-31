@@ -4,6 +4,7 @@ using BloggingApp.Interfaces;
 using BloggingApp.Models;
 using BloggingApp.Models.UserDTOs;
 using BloggingApp.Repositories;
+using BloggingApp.Repositories.CommentRequest;
 using BloggingApp.Repositories.TweetRequest;
 using Microsoft.Extensions.Configuration;
 using System.Diagnostics;
@@ -14,7 +15,10 @@ namespace BloggingApp.Services
 {
     public class TweetServices : ITweetServices
     {
-
+        private readonly IRepository<int, Comment> _TweetCommentRepository;
+        private readonly IRepository<int, Reply> _TweetReplyRepository;
+        private readonly IRepository<int, RetweetComment> _RetweetCommentRepository;
+        private readonly IRepository<int, RetweetCommentReply> _RetweetCommentReplyRepository;
         private readonly IRepository<int, Tweet> _TweetRepository;
         private readonly IRepository<int, TweetMentions> _TweetMentionsRepository;
         private readonly IRepository<int, TweetHashTags> _TweetHashTagsRepository;
@@ -27,13 +31,15 @@ namespace BloggingApp.Services
         private readonly IRepository<int, RetweetMentions> _RetweetMentionsRepository;
         private readonly IRepository<int, RetweetHashTags> _RetweetHashTagsRepository;
         private readonly IRepository<int, UserNotification> _UserNotificationRepository;
+        private readonly IRepository<int, Follow> _FollowRepository;
         private readonly TweetRequestForTweetFilesRepository _TweetRequestForTweetFilesRepository; //To get Tweet Files for a Tweet
 
         public TweetServices(IRepository<int, Tweet> tweetRepository, IRepository<int, TweetMentions> tweetMentionsRepository, IRepository<int, User> userRepository,
             IRepository<int, TweetHashTags> tweetHashTagsRepository, IRepository<int,HashTags> hashTagsRepository,IRepository<int,TweetFiles> tweetFilesRepository,
             TweetRequestForTweetFilesRepository tweetRequestForTweetFiles, IRepository<int, Retweet> retweetRepository, IRepository<int, TweetLikes> tweetLikesRepository,
             IRepository<int, RetweetLikes> reTweetLikesRepository, IRepository<int, RetweetMentions> retweetMentionsRepository,IRepository<int, RetweetHashTags> retweetHashTagsRepository,
-            IRepository<int, UserNotification> userNotificationRepository)
+            IRepository<int, UserNotification> userNotificationRepository, IRepository<int, Follow> followRepository, IRepository<int, Comment> commentRepository, IRepository<int, Reply> replyRepository,
+            IRepository<int, RetweetComment> retweetCommentRepository, IRepository<int, RetweetCommentReply> retweetCommentReplyRepository)
         {
             _TweetRepository = tweetRepository;
             _TweetMentionsRepository = tweetMentionsRepository;
@@ -48,6 +54,11 @@ namespace BloggingApp.Services
             _RetweetMentionsRepository = retweetMentionsRepository;
             _RetweetHashTagsRepository = retweetHashTagsRepository;
             _UserNotificationRepository = userNotificationRepository;
+            _FollowRepository = followRepository;
+            _TweetCommentRepository = commentRepository;
+            _TweetReplyRepository = replyRepository;
+            _RetweetCommentRepository = retweetCommentRepository;
+            _RetweetCommentReplyRepository = retweetCommentReplyRepository;
         }
 
         // Function to Add Tweet to database - Starts
@@ -77,6 +88,18 @@ namespace BloggingApp.Services
                         tweetMentions.TweetId = tweet.Id;
                         tweetMentions.MentionedDateTime = DateTime.Now;
                         var AddedTweetMentions = await _TweetMentionsRepository.Add(tweetMentions);
+
+                        var userdetails = await _UserRepository.GetbyKey(tweet.UserId);
+                        var username = userdetails.UserName;
+                        UserNotification userNotificationm = new UserNotification();
+                        userNotificationm.UserId = user.Id;
+                        userNotificationm.NotificationPost = userdetails.UserProfileImgLink;
+                        userNotificationm.IsUserSeen = "No";
+                        userNotificationm.ContentDateTime = DateTime.Now;
+                        userNotificationm.TweetType = "Tweet";
+                        userNotificationm.TweetId = tweet.Id;
+                        userNotificationm.NotificatioContent = username + " Mentioned you in a Post";
+                        var addedNotification = await _UserNotificationRepository.Add(userNotificationm);
                     }
                 }
             }
@@ -94,7 +117,7 @@ namespace BloggingApp.Services
                 hashtag1.CountInPosts = 1;
                 hashtag1.CountInComments = 0;
                 hashtag1.TweetLikes = 0;
-                hashtag1.HashTagCreatedDateTime = DateTime.Now;
+                hashtag1.HashTagCreatedDateTime = tweet.TweetDateTime;
                 hashtag1.UserId = addUserTweetContent.UserId;
                 var AddedHastag = await _HashTagsRepository.Add(hashtag1);
 
@@ -107,8 +130,21 @@ namespace BloggingApp.Services
         }
         public async Task<string> AddTweetNotification(AddUserTweetContent addUserTweetContent, Tweet tweet)
         {
-            UserNotification userNotification = new UserNotification();
-            userNotification.UserId = 
+            var followers = (await _FollowRepository.Get()).Where(f => f.FollowerId == tweet.UserId);
+            var userdetails = await _UserRepository.GetbyKey(tweet.UserId);
+            var username = userdetails.UserName;
+            foreach (var followeruser in followers) {
+                UserNotification userNotification = new UserNotification();
+                userNotification.UserId = followeruser.UserId;
+                userNotification.NotificationPost = userdetails.UserProfileImgLink;
+                userNotification.IsUserSeen = "No";
+                userNotification.ContentDateTime = tweet.TweetDateTime;
+                userNotification.TweetType = "Tweet";
+                userNotification.TweetId = tweet.Id;
+                userNotification.NotificatioContent = username + " Posted a Tweet";
+                var addedNotification = await _UserNotificationRepository.Add(userNotification);
+            }
+            return "success";
         }
         public async Task<AddTweetContentReturnDTO> AddTweetContentByUser(AddUserTweetContent addUserTweetContent)
         {
@@ -125,6 +161,7 @@ namespace BloggingApp.Services
                 {
                     string result1 = await AddHashtags(addUserTweetContent, AddedTweet);
                 }
+                string addednotification = await AddTweetNotification(addUserTweetContent, AddedTweet);
                 AddTweetContentReturnDTO addTweetContentReturnDTO = new AddTweetContentReturnDTO();
                 addTweetContentReturnDTO.TweetId = AddedTweet.Id;
                 return addTweetContentReturnDTO;
@@ -174,6 +211,8 @@ namespace BloggingApp.Services
             retweetsFeederResponseDTO.TweetOwnerUserName = user.UserName;
             retweetsFeederResponseDTO.TweetOwnerUserId = user.UserId;
             retweetsFeederResponseDTO.TweetOwnerProfileImgLink = user.UserProfileImgLink;
+
+
             if (Files1.Count == 1)
             {
                 foreach (TweetFiles tweetfile in Files1)
@@ -205,6 +244,17 @@ namespace BloggingApp.Services
             retweetsFeederResponseDTO.RetweetUserProfileImgLink = retweetuserdetails.UserProfileImgLink;
             retweetsFeederResponseDTO.RetweetUserId = retweetuserdetails.UserId;
             var RetweetLikes = ((await _RetweetLikesRepository.Get()).Where(l => l.RetweetId == retweet.Id)).ToList();
+
+            var retweetcomments = ((await _RetweetCommentRepository.Get()).Where(c => c.RetweetId == retweet.Id)).ToList();
+            retweetsFeederResponseDTO.CommentsCount = retweetcomments.Count;
+
+            foreach (var c in retweetcomments)
+            {
+                var replies = ((await _RetweetCommentReplyRepository.Get()).Where(r => r.RetweetCommentId == c.Id)).ToList();
+                retweetsFeederResponseDTO.CommentsCount = retweetsFeederResponseDTO.CommentsCount + replies.Count;
+
+            }
+
             var IsUSerLikedRetweet = (await _RetweetLikesRepository.Get()).Where(l => l.RetweetId == retweet.Id && l.LikedUserId == userid).ToList();
             if(IsUSerLikedRetweet.Count > 0)
             {
@@ -244,6 +294,20 @@ namespace BloggingApp.Services
                     tweetsFeederDTO.TweetOwnerUserId = user.UserId;
                     tweetsFeederDTO.TweetOwnerProfileImgLink = user.UserProfileImgLink;
                     tweetsFeederDTO.TweetLikesCount = TweetLikes.Count;
+
+                    var tweetcomments = ((await _TweetCommentRepository.Get()).Where(c => c.TweetId == tweet.Id)).ToList();
+                    tweetsFeederDTO.CommentsCount = tweetcomments.Count;
+
+                    foreach(var c in tweetcomments)
+                    {
+                        var replies = ((await _TweetReplyRepository.Get()).Where(r=>r.CommentId==c.Id)).ToList();
+                        tweetsFeederDTO.CommentsCount = tweetsFeederDTO.CommentsCount + replies.Count;
+
+                    }
+
+
+                    var Retweetscount = ((await _RetweetRepository.Get()).Where(r => r.ActualTweetId == tweet.Id)).ToList();
+                    tweetsFeederDTO.RetweetsCount = Retweetscount.Count;
 
                     var IsTweetLikedByUser = ((await _TweetLikesRepository.Get()).Where(l => l.TweetId == tweet.Id && l.LikedUserId == userid)).ToList();
                     if(IsTweetLikedByUser.Count > 0)
@@ -344,6 +408,18 @@ namespace BloggingApp.Services
                         retweetMentions.RetweetId = retweet.Id;
                         retweetMentions.MentionedDateTime = DateTime.Now;
                         var AddedTweetMentions = await _RetweetMentionsRepository.Add(retweetMentions);
+
+                        var userdetails = await _UserRepository.GetbyKey(retweet.UserId);
+                        var username = userdetails.UserName;
+                        UserNotification userNotificationrm = new UserNotification();
+                        userNotificationrm.UserId = user.Id;
+                        userNotificationrm.NotificationPost = userdetails.UserProfileImgLink;
+                        userNotificationrm.IsUserSeen = "No";
+                        userNotificationrm.ContentDateTime = retweet.RetweetDateTime;
+                        userNotificationrm.TweetType = "Retweet";
+                        userNotificationrm.TweetId = retweet.Id;
+                        userNotificationrm.NotificatioContent = username + " Mentioned you in a Retweet";
+                        var addedNotification = await _UserNotificationRepository.Add(userNotificationrm);
                     }
                 }
             }
@@ -373,6 +449,27 @@ namespace BloggingApp.Services
             return "success";
         }
 
+        public async Task<string> AddRetweetNotification(AddRetweetDTO addRetweetDTO, Retweet AddedRetweet)
+        {
+            var followers = (await _FollowRepository.Get()).Where(f => f.FollowerId == AddedRetweet.UserId);
+            var userdetails = await _UserRepository.GetbyKey(AddedRetweet.UserId);
+            var username = userdetails.UserName;
+            foreach (var followeruser in followers)
+            {
+                UserNotification userNotification = new UserNotification();
+                userNotification.UserId = followeruser.UserId;
+                userNotification.NotificationPost = userdetails.UserProfileImgLink;
+                userNotification.IsUserSeen = "No";
+                userNotification.ContentDateTime = AddedRetweet.RetweetDateTime;
+                userNotification.TweetType = "Reweet";
+                userNotification.TweetId = AddedRetweet.Id;
+                userNotification.NotificatioContent = username + " Reposted a Tweet";
+                var addedNotification = await _UserNotificationRepository.Add(userNotification);
+            }
+            return "success";
+
+        }
+
         public async Task<string> AddRetweetContent(AddRetweetDTO addRetweetDTO)
         {
             try
@@ -387,7 +484,8 @@ namespace BloggingApp.Services
                 {
                     var addedmention = await AddRetweetHashtags(addRetweetDTO, AddedRetweet);
                 }
-                if(AddedRetweet != null)
+                var addednoti = await AddRetweetNotification(addRetweetDTO, AddedRetweet);
+                if (AddedRetweet != null)
                 {
                     return "success";
                 }
@@ -426,6 +524,20 @@ namespace BloggingApp.Services
                         tweetDetailsReturnDTO.TweetOwnerUserId = user.UserId;
                         tweetDetailsReturnDTO.TweetOwnerProfileImgLink = user.UserProfileImgLink;
                         tweetDetailsReturnDTO.TweetLikesCount = TweetLikes.Count;
+
+                        var tweetcomments = ((await _TweetCommentRepository.Get()).Where(c => c.TweetId == tweet.Id)).ToList();
+                        tweetDetailsReturnDTO.CommentsCount = tweetcomments.Count;
+
+                        foreach (var c in tweetcomments)
+                        {
+                            var replies = ((await _TweetReplyRepository.Get()).Where(r => r.CommentId == c.Id)).ToList();
+                            tweetDetailsReturnDTO.CommentsCount = tweetDetailsReturnDTO.CommentsCount + replies.Count;
+
+                        }
+
+                        var Retweetscount = ((await _RetweetRepository.Get()).Where(r => r.ActualTweetId == tweet.Id)).ToList();
+                        tweetDetailsReturnDTO.RetweetsCount = Retweetscount.Count;
+
                         var IsTweetLikedByUser = ((await _TweetLikesRepository.Get()).Where(l => l.TweetId == tweet.Id && l.LikedUserId == tweetDetailsDTO.UserId)).ToList();
                         if (IsTweetLikedByUser.Count > 0)
                         {
@@ -530,6 +642,17 @@ namespace BloggingApp.Services
                 retweetDetailsReturnDTO.RetweetUserId = retweetuserdetails.UserId;
                 var RetweetLikes = ((await _RetweetLikesRepository.Get()).Where(l => l.RetweetId == retweet.Id)).ToList();
                 var IsUSerLikedRetweet = (await _RetweetLikesRepository.Get()).Where(l => l.RetweetId == retweet.Id && l.LikedUserId == retweetDetailsDTO.UserId).ToList();
+
+                var retweetcomments = ((await _RetweetCommentRepository.Get()).Where(c => c.RetweetId == retweet.Id)).ToList();
+                retweetDetailsReturnDTO.CommentsCount = retweetcomments.Count;
+
+                foreach (var c in retweetcomments)
+                {
+                    var replies = ((await _RetweetCommentReplyRepository.Get()).Where(r => r.RetweetCommentId == c.Id)).ToList();
+                    retweetDetailsReturnDTO.CommentsCount = retweetDetailsReturnDTO.CommentsCount + replies.Count;
+
+                }
+
                 if (IsUSerLikedRetweet.Count > 0)
                 {
                     retweetDetailsReturnDTO.IsRetweetLikedByUser = "Yes";

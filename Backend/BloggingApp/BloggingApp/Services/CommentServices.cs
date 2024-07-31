@@ -2,6 +2,7 @@
 using BloggingApp.Interfaces;
 using BloggingApp.Models;
 using BloggingApp.Models.CommentDTOs;
+using BloggingApp.Models.FollowDTOs;
 using BloggingApp.Models.ReplyDTOs;
 using BloggingApp.Models.UserDTOs;
 using BloggingApp.Repositories;
@@ -14,6 +15,8 @@ namespace BloggingApp.Services
 {
     public class CommentServices : ICommentServices
     {
+        private readonly IRepository<int, Tweet> _TweetRepository;
+        private readonly IRepository<int, Retweet> _RetweetRepository;
         private readonly IRepository<int, Comment> _CommentRepository;
         private readonly IRepository<int, Reply> _ReplyRepository;
         private readonly IRepository<int, User> _UserRepository;
@@ -24,12 +27,15 @@ namespace BloggingApp.Services
         private readonly IRepository<int, TweetCommentLikes> _TweetCommentLikesRepository;
         private readonly IRepository<int, TweetReplyLikes> _TweetCommentReplyLikesRepository;
         private readonly IRepository<int, RetweetCommentLikes> _RetweetCommentLikesRepository;
+        private readonly IRepository<int, UserNotification> _UserNotificationRepository;
         private readonly IRepository<int, RetweetCommentReplyLikes> _RetweetCommentReplyLikesReposioryl;
-        public CommentServices(IRepository<int, Comment> commentRepository, IRepository<int, Reply> replyRepository, IRepository<int, User> userRepository,
+        public CommentServices(IRepository<int, Comment> commentRepository, IRepository<int, Reply> replyRepository, IRepository<int, User> userRepository,IRepository<int,Tweet> tweetRepository, IRepository<int, Retweet> retweetRepository,
             CommentRequestForRepliesRepository commentRequestForRepliesRepository, IRepository<int, RetweetComment> retweetCommentRepository, IRepository<int, RetweetCommentReply> retweetCommentReplyRepository,
             RetweetCommentRequestforRepliesRepository retweetCommentRequestForRepliesRepository, IRepository<int, TweetCommentLikes> tweetCommentsLikesRepository,
-            IRepository<int, TweetReplyLikes> tweetReplyLikesRepository, IRepository<int, RetweetCommentLikes> retweetCommentLikesRepository, IRepository<int, RetweetCommentReplyLikes> retweetCommentReplyLikesReposioryl)
+            IRepository<int, TweetReplyLikes> tweetReplyLikesRepository, IRepository<int, RetweetCommentLikes> retweetCommentLikesRepository, IRepository<int, RetweetCommentReplyLikes> retweetCommentReplyLikesReposioryl, IRepository<int, UserNotification> userNotificationRepository)
         {
+            _RetweetRepository = retweetRepository;
+            _TweetRepository = tweetRepository;
             _CommentRepository = commentRepository;
             _UserRepository = userRepository;
             _ReplyRepository = replyRepository;
@@ -41,6 +47,7 @@ namespace BloggingApp.Services
             _TweetCommentReplyLikesRepository = tweetReplyLikesRepository;
             _RetweetCommentLikesRepository = retweetCommentLikesRepository;
             _RetweetCommentReplyLikesReposioryl = retweetCommentReplyLikesReposioryl;
+            _UserNotificationRepository = userNotificationRepository;
         }
 
         // Function to add Tweet Comment - Starts
@@ -59,6 +66,21 @@ namespace BloggingApp.Services
             {
                 var comment = MapAddCommentDTOToComment(addCommentDTO);
                 var addedcomment = await _CommentRepository.Add(comment);
+
+                var TweetDetails = await _TweetRepository.GetbyKey(addedcomment.TweetId);
+                var TweetOwnerDetails = await _UserRepository.GetbyKey(TweetDetails.UserId);
+
+                var CommentUserDetails = await _UserRepository.GetbyKey(addedcomment.UserId);
+                var CommentedUsername = CommentUserDetails.UserName;
+                UserNotification userNotification = new UserNotification();
+                userNotification.UserId = TweetOwnerDetails.Id;
+                userNotification.NotificationPost = CommentUserDetails.UserProfileImgLink;
+                userNotification.IsUserSeen = "No";
+                userNotification.ContentDateTime = addedcomment.CommentDateTime;
+                userNotification.TweetType = "Tweet";
+                userNotification.TweetId = TweetDetails.Id;
+                userNotification.NotificatioContent = CommentedUsername + " Commented on your Tweet";
+                var addedNotification = await _UserNotificationRepository.Add(userNotification);
                 if (addCommentDTO != null)
                 {
                     return "success";
@@ -91,6 +113,22 @@ namespace BloggingApp.Services
             {
                 var reply = MapAddReplyDTOToReply(addReplyDTO);
                 var addedreply = await _ReplyRepository.Add(reply);
+
+                var CommentDetails = await _CommentRepository.GetbyKey(addedreply.CommentId);
+                var CommentOwnerDetails = await _UserRepository.GetbyKey(CommentDetails.UserId);
+
+                var ReplyUserDetails = await _UserRepository.GetbyKey(addedreply.UserId);
+
+                UserNotification userNotification = new UserNotification();
+                userNotification.UserId = CommentOwnerDetails.Id;
+                userNotification.NotificationPost = ReplyUserDetails.UserProfileImgLink;
+                userNotification.IsUserSeen = "No";
+                userNotification.ContentDateTime = addedreply.ReplyDateTime;
+                userNotification.TweetType = "Tweet";
+                userNotification.TweetId = CommentDetails.TweetId;
+                userNotification.NotificatioContent = ReplyUserDetails.UserName+" Replied to your Comment";
+                var addedNotification = await _UserNotificationRepository.Add(userNotification);
+
                 if (addedreply != null)
                 {
                     return "success";
@@ -305,6 +343,23 @@ namespace BloggingApp.Services
             {
                 RetweetComment AddedRetweetComment = MapAddRetweetCommentDTOToComment(addRetweetCommentDTO);
                 var Retweetcomment = await _RetweetCommentRepository.Add(AddedRetweetComment);
+
+
+                var RetweetDetails = await _RetweetRepository.GetbyKey(Retweetcomment.RetweetId);
+                var RetweetOwnerDetails = await _UserRepository.GetbyKey(RetweetDetails.UserId);
+
+                var CommentUserDetails = await _UserRepository.GetbyKey(Retweetcomment.UserId);
+                var CommentedUsername = CommentUserDetails.UserName;
+                UserNotification userNotification = new UserNotification();
+                userNotification.UserId = RetweetOwnerDetails.Id;
+                userNotification.NotificationPost = CommentUserDetails.UserProfileImgLink;
+                userNotification.IsUserSeen = "No";
+                userNotification.ContentDateTime = Retweetcomment.CommentDateTime;
+                userNotification.TweetType = "Retweet";
+                userNotification.TweetId = RetweetDetails.Id;
+                userNotification.NotificatioContent = CommentedUsername + " Commented on your Retweet";
+                var addedNotification = await _UserNotificationRepository.Add(userNotification);
+
                 if (Retweetcomment != null)
                 {
                     return "success";
@@ -340,6 +395,21 @@ namespace BloggingApp.Services
             {
                 var reply = MapAddCommentReplyDTOToRetweetCommentReply(addRetweetCommentReplyDTO);
                 var addedreply = await _RetweetCommentReplyRepository.Add(reply);
+
+                var CommentDetails = await _RetweetCommentRepository.GetbyKey(addedreply.RetweetCommentId);
+                var CommentOwnerDetails = await _UserRepository.GetbyKey(CommentDetails.UserId);
+
+                var ReplyUserDetails = await _UserRepository.GetbyKey(addedreply.UserId);
+
+                UserNotification userNotification = new UserNotification();
+                userNotification.UserId = CommentOwnerDetails.Id;
+                userNotification.NotificationPost = ReplyUserDetails.UserProfileImgLink;
+                userNotification.IsUserSeen = "No";
+                userNotification.ContentDateTime = addedreply.ReplyDateTime;
+                userNotification.TweetType = "Retweet";
+                userNotification.TweetId = CommentDetails.RetweetId;
+                userNotification.NotificatioContent = ReplyUserDetails.UserName + " Replied to your Comment";
+                var addedNotification = await _UserNotificationRepository.Add(userNotification);
                 if (addedreply != null)
                 {
                     return "success";

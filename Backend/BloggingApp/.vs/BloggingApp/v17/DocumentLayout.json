@@ -3,10 +3,6 @@
   "WorkspaceRootPath": "C:\\Users\\VC\\Desktop\\BloggingApp\\Backend\\BloggingApp\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{C50B6094-9E49-4F01-907B-8A218B009A14}|BloggingApp\\BloggingApp.csproj|c:\\users\\vc\\desktop\\bloggingapp\\backend\\bloggingapp\\bloggingapp\\models\\usernotification.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{C50B6094-9E49-4F01-907B-8A218B009A14}|BloggingApp\\BloggingApp.csproj|solutionrelative:bloggingapp\\models\\usernotification.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{C50B6094-9E49-4F01-907B-8A218B009A14}|BloggingApp\\BloggingApp.csproj|c:\\users\\vc\\desktop\\bloggingapp\\backend\\bloggingapp\\bloggingapp\\services\\tweetservices.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{C50B6094-9E49-4F01-907B-8A218B009A14}|BloggingApp\\BloggingApp.csproj|solutionrelative:bloggingapp\\services\\tweetservices.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
@@ -27,27 +23,14 @@
             {
               "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "UserNotification.cs",
-              "DocumentMoniker": "C:\\Users\\VC\\Desktop\\BloggingApp\\Backend\\BloggingApp\\BloggingApp\\Models\\UserNotification.cs",
-              "RelativeDocumentMoniker": "BloggingApp\\Models\\UserNotification.cs",
-              "ToolTip": "C:\\Users\\VC\\Desktop\\BloggingApp\\Backend\\BloggingApp\\BloggingApp\\Models\\UserNotification.cs",
-              "RelativeToolTip": "BloggingApp\\Models\\UserNotification.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-07-30T13:52:13.697Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
               "Title": "TweetServices.cs",
               "DocumentMoniker": "C:\\Users\\VC\\Desktop\\BloggingApp\\Backend\\BloggingApp\\BloggingApp\\Services\\TweetServices.cs",
               "RelativeDocumentMoniker": "BloggingApp\\Services\\TweetServices.cs",
               "ToolTip": "C:\\Users\\VC\\Desktop\\BloggingApp\\Backend\\BloggingApp\\BloggingApp\\Services\\TweetServices.cs",
               "RelativeToolTip": "BloggingApp\\Services\\TweetServices.cs",
-              "ViewState": "AQIAAF4AAAAAAAAAAAAkwG4AAAAmAAAA",
+              "ViewState": "AQIAAHwAAAAAAAAAAAAkwAAAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-07-30T13:48:36.575Z",
+              "WhenOpened": "2024-07-31T14:19:59.667Z",
               "EditorCaption": ""
             }
           ]

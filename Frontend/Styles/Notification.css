@@ -1072,6 +1072,10 @@ body{
     border-color: #444;
 }
 
+.notifi-time{
+    padding-left: 430px;
+}
+
 
 /* Responsive */
 
@@ -1362,6 +1366,10 @@ body{
     .input{
         width: 310px;
     }
+    .notifi-time{
+        padding-left: 240px;
+    }
+
 
 }
 
@@ -1412,6 +1420,9 @@ body{
     }
     .postc{
         width: 50%;
+    }
+    .notifi-time{
+        padding-left: 1000px;
     }
 
 }

@@ -147,5 +147,52 @@ namespace BloggingApp.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, new ErrorModel(500, ex.Message));
             }
         }
+
+        // Function to Add Remove Request - Ends
+
+        // Function to Add Send Notifications - Starts
+
+        [Route("UserNotifications")]
+        [HttpPost]
+        [ProducesResponseType(typeof(List<NotificationUserDetailsDTO>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ErrorModel), StatusCodes.Status409Conflict)]
+        [ProducesResponseType(typeof(ErrorModel), StatusCodes.Status500InternalServerError)]
+        [ProducesErrorResponseType(typeof(ErrorModel))]
+        public async Task<ActionResult<List<NotificationUserDetailsDTO>>> NotificationSender([FromBody] NotificationUserDetailsDTO notificationUserDetailsDTO)
+        {
+            try
+            {
+                var notification = await _UserServices.NotificationSender(notificationUserDetailsDTO);
+                return Ok(notification);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, new ErrorModel(500, ex.Message));
+            }
+        }
+
+        // Function to Add Send Notifications - Starts
+
+        // Function to Add Update Notifications - Starts
+
+        [Route("UpdateUserNotifications")]
+        [HttpPost]
+        [ProducesResponseType(typeof(List<NotificationUserDetailsDTO>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ErrorModel), StatusCodes.Status409Conflict)]
+        [ProducesResponseType(typeof(ErrorModel), StatusCodes.Status500InternalServerError)]
+        [ProducesErrorResponseType(typeof(ErrorModel))]
+        public async Task<ActionResult<string>> UpdateNotification([FromBody] int UserId)
+        {
+            try
+            {
+                var notification = await _UserServices.UpdateNotification(UserId);
+                return Ok(notification);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, new ErrorModel(500, ex.Message));
+            }
+        }
+        // Function to Add Update Notifications - Ends
     }
 }

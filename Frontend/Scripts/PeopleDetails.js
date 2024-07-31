@@ -1,3 +1,9 @@
+document.getElementById('usernamenav').innerHTML = localStorage.getItem('username')
+document.getElementById('userprofileimgnav').src = localStorage.getItem('userprofileimglink')
+// document.getElementById('userprofileimgnav2').src = localStorage.getItem('userprofileimglink')
+document.getElementById('userimagemodal').src = localStorage.getItem('userprofileimglink')
+
+
 document.addEventListener('DOMContentLoaded', async function() {
 
     async function fetchPeoples() {
@@ -51,6 +57,7 @@ document.addEventListener('DOMContentLoaded', async function() {
     }
     await fetchPeoples()
     await fetchUserSideBarInfo()
+    await NotificationInfo()
 })
 
 function renderfollowpeopledate(users) {
@@ -209,3 +216,64 @@ async function RemoveFollowRequest(followerid) {
 }
 
 // Sidebar Info
+
+async function NotificationInfo() {
+    var flag=0;
+    await fetch('https://localhost:7186/api/User/UserNotifications', {
+        method: 'POST',
+        headers: {
+            'Authorization': 'Bearer '+localStorage.getItem('token'),
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            "userId": localStorage.getItem('userid')
+        })
+    }).then(async (response) => {
+        if (!response.ok) {
+            throw new Error('Failed to update Dislike status');
+        }else{
+            var data = await response.json();
+            console.log(data)
+            const reverseddata =data.reverse();
+            reverseddata.forEach(async notification => {
+                if(notification.isUserSeen == "No"){
+                    flag=1;
+                }
+            })
+        }
+    }).catch(error => {
+        console.error(error);
+    });
+    console.log("flag",flag)
+    if(flag==1){
+        var n = document.getElementById('notifi')
+        n.style.color = '#1aa1f5'
+    }
+}
+
+// function renderUserNotificatio(notification) {
+
+//     const head = document.getElementById('header-notifi')
+
+//     const header = document.createElement('div');
+//     header.classList = 'header-post '
+
+//     const imgdiv = document.createElement('div');
+//     imgdiv.classList = 'header-img-wrapper'
+
+//     const img = document.createElement('img')
+//     img.src = notification.notificationPost
+
+//     imgdiv.appendChild(img)
+
+//     const Content = document.createElement('div');
+//     Content.classList = 'input'
+//     Content.innerHTML = notification.notificatioContent
+
+//     header.appendChild(imgdiv)
+//     header.appendChild(Content)
+
+//     head.appendChild(header)
+
+// }
+

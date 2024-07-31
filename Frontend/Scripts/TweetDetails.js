@@ -1,7 +1,8 @@
 document.getElementById('usernamenav').innerHTML = localStorage.getItem('username')
 document.getElementById('userprofileimgnav').src = localStorage.getItem('userprofileimglink')
-document.getElementById('userprofileimgnav2').src = localStorage.getItem('userprofileimglink')
-document.getElementById('userimagemodal').src = localStorage.getItem('userprofileimglink')
+// document.getElementById('userprofileimgnav2').src = localStorage.getItem('userprofileimglink')
+document.getElementById('userimagemodal2').src = localStorage.getItem('userprofileimglink')
+
 
 function timeAgo(date) {
     const now = new Date();
@@ -511,7 +512,12 @@ function rendertweet(tweet,comments){
     commentIcon.style.cursor = 'pointer'
     const commentText = document.createElement('h6');
     commentText.style.fontSize = '8px';
-    commentText.textContent = '12 Comments';
+    // commentText.textContent = '12 Comments';
+    if(tweet.commentsCount==0 || tweet.commentsCount==1){
+        commentText.textContent =`${tweet.commentsCount} Comment`;
+      }else{
+        commentText.textContent =`${tweet.commentsCount} Comments`
+    }
     commentIcon.appendChild(commentText);
 
     commentIcon.addEventListener('click', async function(){
@@ -525,7 +531,12 @@ function rendertweet(tweet,comments){
     retweetIcon.style.cursor = 'pointer'
     const retweetText = document.createElement('h6');
     retweetText.style.fontSize = '8px';
-    retweetText.textContent = '3 Retweets';
+    // retweetText.textContent = '3 Retweets';
+    if(tweet.retweetsCount == 0 || tweet.retweetsCount == 1){
+        retweetText.textContent = `${tweet.retweetsCount} Retweet`;
+      }else{
+        retweetText.textContent = `${tweet.retweetsCount} Retweets`;
+      }
     retweetIcon.appendChild(retweetText);
 
     retweetIcon.addEventListener('click', async function() {
@@ -574,6 +585,10 @@ function rendertweet(tweet,comments){
 
     const shareIcon = document.createElement('i');
     shareIcon.className = 'fas fa-share-alt';
+    const shareText = document.createElement('h6');
+    shareText.style.fontSize = '8px';
+    shareText.textContent = 'share'
+    shareIcon.appendChild(shareText)
 
     postIconsDiv.appendChild(commentIcon);
     postIconsDiv.appendChild(retweetIcon);
@@ -614,12 +629,13 @@ function rendertweet(tweet,comments){
 
         const postUserInfoDiv = document.createElement('div');
         postUserInfoDiv.className = 'post-user-info';
-        const userNameH4 = document.createElement('h4');
-        userNameH4.textContent = `${post.userName} . ${timeAgo(post.commentDateTime)}`;
+        const userNameH4 = document.createElement('div');
+        userNameH4.innerHTML = `<span style="font-size:14px; font-weight:bold"> ${post.userName} </span>. ${timeAgo(post.commentDateTime)}`;
         postUserInfoDiv.appendChild(userNameH4);
 
         const commentTextP = document.createElement('p');
         commentTextP.className = 'commenttext';
+        commentTextP.style.fontSize = "14px"
         commentTextP.textContent = post.commentContent;
 
         const postIconsDiv = document.createElement('div');
@@ -634,9 +650,12 @@ function rendertweet(tweet,comments){
             const reply = document.getElementById('replyshowmodal')
             reply.style.display = "flex"
             const replycontent = document.getElementById('tweetcontentinput2')
+            replycontent.style.fontSize = "15px"
+            document.getElementById('userimagemodal').src = post.userProfileLink
             replycontent.innerHTML = post.commentContent
             modal.style.display = 'block'
             modalWrapper.classList.add('modal-wrapper-display')
+
         })
 
 
@@ -646,7 +665,12 @@ function rendertweet(tweet,comments){
         likeIcon.style.cursor = 'pointer'
         const likeText = document.createElement('h6');
         likeText.style.fontSize = '8px';
-        likeText.textContent = `${post.likesCount} Likes`;
+        if(post.likesCount ==0 || post.likesCount==1){
+            likeText.textContent = `${post.likesCount} Like`;
+        }else{
+            likeText.textContent = `${post.likesCount} Likes`;
+        }
+        // likeText.textContent = `${post.likesCount} Likes`;
         likeText.style.color  = 'grey'
         likeIcon.appendChild(likeText);
 
@@ -703,12 +727,14 @@ function rendertweet(tweet,comments){
 
         const postUserInfoDiv2 = document.createElement('div');
         postUserInfoDiv2.className = 'post-user-info';
-        const userNameH42 = document.createElement('h4');
-        userNameH42.textContent = `${post.userName} . ${timeAgo(post.replyDateTime)}`;
+        const userNameH42 = document.createElement('div');
+        userNameH42.innerHTML = `<span style="font-size:14px; font-weight:bold"> ${post.userName} </span>. ${timeAgo(post.replyDateTime)}`;
+        // userNameH42.textContent = `${post.userName} . ${timeAgo(post.replyDateTime)}`;
         postUserInfoDiv2.appendChild(userNameH42);
 
         const commentTextP2 = document.createElement('p');
         commentTextP2.className = 'commenttext';
+        commentTextP2.style.fontSize = "14px"
         commentTextP2.textContent = post.replyContent;
 
 
@@ -724,7 +750,12 @@ function rendertweet(tweet,comments){
         likeIconr.style.cursor = 'pointer'
         const likeTextr = document.createElement('h6');
         likeTextr.style.fontSize = '8px';
-        likeTextr.textContent = `${post.likedCount} Likes`;
+        if(post.likedCount ==0 || post.likedCount==1){
+            likeTextr.textContent = `${post.likedCount} Like`;
+        }else{
+            likeTextr.textContent = `${post.likedCount} Likes`;
+        }
+        // likeTextr.textContent = `${post.likedCount} Likes`;
         likeTextr.style.color  = 'grey'
         likeIconr.appendChild(likeTextr);
 
@@ -759,6 +790,7 @@ function rendertweet(tweet,comments){
             const reply = document.getElementById('replyshowmodal')
             reply.style.display = "flex"
             const replycontent = document.getElementById('tweetcontentinput2')
+            replycontent.style.fontSize = "15px"
             replycontent.innerHTML = post.replyContent
             modal.style.display = 'block'
             modalWrapper.classList.add('modal-wrapper-display')
@@ -886,9 +918,15 @@ function renderRetweet(tweet,comments) {
   
         const commentIcon = document.createElement('i');
         commentIcon.className = 'far fa-comment';
+        commentIcon.style.cursor = 'pointer'
         const commentText = document.createElement('h6');
         commentText.style.fontSize = '8px';
-        commentText.textContent = '12 Comments';
+        // commentText.textContent = '12 Comments';
+        if(tweet.commentsCount==0 || tweet.commentsCount==1){
+            commentText.textContent =`${tweet.commentsCount} Comment`;
+          }else{
+            commentText.textContent =`${tweet.commentsCount} Comments`
+        }
         commentIcon.appendChild(commentText);
 
         commentIcon.addEventListener('click', async function(){
@@ -1001,12 +1039,14 @@ function renderRetweet(tweet,comments) {
 
         const postUserInfoDiv = document.createElement('div');
         postUserInfoDiv.className = 'post-user-info';
-        const userNameH4 = document.createElement('h4');
-        userNameH4.textContent = post.userName;
+        const userNameH4 = document.createElement('div');
+        userNameH4.innerHTML = `<span style="font-size:14px; font-weight:bold"> ${post.userName} </span>. ${timeAgo(post.commentDateTime)}`;
+        // userNameH4.textContent = post.userName;
         postUserInfoDiv.appendChild(userNameH4);
 
         const commentTextP = document.createElement('p');
         commentTextP.className = 'commenttext';
+        commentTextP.style.fontSize = "14px"
         commentTextP.textContent = post.commentContent;
 
         const postIconsDiv = document.createElement('div');
@@ -1021,6 +1061,7 @@ function renderRetweet(tweet,comments) {
             const reply = document.getElementById('replyshowmodal')
             reply.style.display = "flex"
             const replycontent = document.getElementById('tweetcontentinput2')
+            replycontent.style.fontSize = "15px"
             replycontent.innerHTML = post.commentContent
             modal.style.display = 'block'
             modalWrapper.classList.add('modal-wrapper-display')
@@ -1033,7 +1074,11 @@ function renderRetweet(tweet,comments) {
         likeIcon.style.cursor = 'pointer'
         const likeText = document.createElement('h6');
         likeText.style.fontSize = '8px';
-        likeText.textContent = `${post.likesCount} Likes`;
+        if(post.likesCount==1 || post.likesCount==0){
+            likeText.textContent = `${post.likesCount} Like`;
+        }else{
+            likeText.textContent = `${post.likesCount} Likes`;
+        }
         likeText.style.color  = 'grey'
         likeIcon.appendChild(likeText);
 
@@ -1091,12 +1136,14 @@ function renderRetweet(tweet,comments) {
 
         const postUserInfoDiv2 = document.createElement('div');
         postUserInfoDiv2.className = 'post-user-info';
-        const userNameH42 = document.createElement('h4');
-        userNameH42.textContent = post.userName;
+        const userNameH42 = document.createElement('div');
+        userNameH42.innerHTML = `<span style="font-size:14px; font-weight:bold"> ${post.userName} </span>. ${timeAgo(post.replyDateTime)}`;
+        // userNameH42.textContent = post.userName;
         postUserInfoDiv2.appendChild(userNameH42);
 
         const commentTextP2 = document.createElement('p');
         commentTextP2.className = 'commenttext';
+        commentTextP2.style.fontSize = "14px"
         commentTextP2.textContent = post.replyContent;
 
 
@@ -1109,7 +1156,11 @@ function renderRetweet(tweet,comments) {
         likeIconr.style.cursor = 'pointer'
         const likeTextr = document.createElement('h6');
         likeTextr.style.fontSize = '8px';
-        likeTextr.textContent = `${post.likedCount} Likes`;
+        if(post.likedCount ==0 || post.likedCount==1){
+            likeTextr.textContent = `${post.likedCount} Like`;
+        }else{
+            likeTextr.textContent = `${post.likedCount} Likes`;
+        }
         likeTextr.style.color  = 'grey'
         likeIconr.appendChild(likeTextr);
 
@@ -1135,8 +1186,8 @@ function renderRetweet(tweet,comments) {
         const commentIconr = document.createElement('i');
         commentIconr.className = 'fa fa-reply';
         commentIconr.style.cursor = 'pointer';
-        postIconsDivr.appendChild(likeIconr);
         postIconsDivr.appendChild(commentIconr);
+        postIconsDivr.appendChild(likeIconr);
 
         commentIconr.addEventListener('click', async function() {
             localStorage.setItem('BackendTo','ReplyReply')
@@ -1145,6 +1196,7 @@ function renderRetweet(tweet,comments) {
             const reply = document.getElementById('replyshowmodal')
             reply.style.display = "flex"
             const replycontent = document.getElementById('tweetcontentinput2')
+             replycontent.style.fontSize = "15px"
             replycontent.innerHTML = post.replyContent
             modal.style.display = 'block'
             modalWrapper.classList.add('modal-wrapper-display')

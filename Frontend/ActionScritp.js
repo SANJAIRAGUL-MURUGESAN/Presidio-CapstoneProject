@@ -492,7 +492,7 @@ function renderRetweets(retweets,tweets) {
     
       const postDiv = document.createElement('div');
       postDiv.className = 'post';
-
+     
       const userAvatarDiv = document.createElement('div');
       userAvatarDiv.className = 'user-avatar';
       const userAvatarImg = document.createElement('img');
@@ -588,7 +588,13 @@ function renderRetweets(retweets,tweets) {
       commentIcon.style.cursor = 'pointer'
       const commentText = document.createElement('h6');
       commentText.style.fontSize = '8px';
-      commentText.textContent = '12 Comments';
+      // commentText.textContent = '12 Comments';
+
+      if(tweet.commentsCount==0 || tweet.commentsCount==1){
+        commentText.textContent =`${tweet.commentsCount} Comment`;
+      }else{
+        commentText.textContent =`${tweet.commentsCount} Comments`
+      }
       commentIcon.appendChild(commentText);
 
       commentIcon.addEventListener('click', async function() {
@@ -603,20 +609,21 @@ function renderRetweets(retweets,tweets) {
       retweetIcon.style.cursor = 'pointer'
       const retweetText = document.createElement('h6');
       retweetText.style.fontSize = '8px';
-      retweetText.textContent = '3 Retweets';
+      retweetText.textContent = 'Retweet';
+
       retweetIcon.appendChild(retweetText);
 
-      retweetIcon.addEventListener('click', async function() {
-        modal.style.display = 'block'
-        modalWrapper.classList.add('modal-wrapper-display')
+    //   retweetIcon.addEventListener('click', async function() {
+    //     modal.style.display = 'block'
+    //     modalWrapper.classList.add('modal-wrapper-display')
     
-        if(modalInput.value !== ''){
-            modalInput.value = '';
-            changeOpacity(0.5)
-        }
+    //     if(modalInput.value !== ''){
+    //         modalInput.value = '';
+    //         changeOpacity(0.5)
+    //     }
 
-        localStorage.setItem("actualtweetid",tweet.tweetId);
-    });
+    //     localStorage.setItem("actualtweetid",tweet.tweetId);
+    // });
 
       const likeIcon = document.createElement('i');
       likeIcon.className = 'fa-regular fa-heart';
@@ -624,7 +631,14 @@ function renderRetweets(retweets,tweets) {
       likeIcon.style.cursor = 'pointer'
       const likeText = document.createElement('h6');
       likeText.style.fontSize = '8px';
-      likeText.textContent = `${tweet.retweetLikesCount} Likes`;
+
+      if(tweet.retweetLikesCount==0 || tweet.retweetLikesCount==1){
+        likeText.textContent = `${tweet.retweetLikesCount} Like`;
+      }else{
+          likeText.textContent = `${tweet.retweetLikesCount} Likes`;
+      }
+
+      // likeText.textContent = `${tweet.retweetLikesCount} Likes`;
       likeText.style.color  = 'grey'
       likeIcon.appendChild(likeText);
 
@@ -648,6 +662,10 @@ function renderRetweets(retweets,tweets) {
 
       const shareIcon = document.createElement('i');
       shareIcon.className = 'fas fa-share-alt';
+      const shareText = document.createElement('h6');
+      shareText.style.fontSize = '8px';
+      shareText.textContent = 'share'
+      shareIcon.appendChild(shareText)
 
       postIconsDiv.appendChild(commentIcon);
       postIconsDiv.appendChild(retweetIcon);
@@ -730,7 +748,12 @@ function renderRetweets(retweets,tweets) {
     commentIcon.className = 'far fa-comment';
     const commentText = document.createElement('h6');
     commentText.style.fontSize = '8px';
-    commentText.textContent = '12 Comments';
+    // commentText.textContent = '12 Comments';
+    if(tweet.commentsCount==0 || tweet.commentsCount==1){
+      commentText.textContent =`${tweet.commentsCount} Comment`;
+    }else{
+      commentText.textContent =`${tweet.commentsCount} Comments`
+    }
     commentIcon.appendChild(commentText);
 
     commentIcon.addEventListener('click', async function() {
@@ -743,10 +766,17 @@ function renderRetweets(retweets,tweets) {
     retweetIcon.id = 'retweet-icon'; 
     retweetIcon.className = 'fas fa-retweet';
     retweetIcon.style.cursor = 'pointer'
-    const retweetText = document.createElement('h6');
-    retweetText.style.fontSize = '8px';
-    retweetText.textContent = '3 Retweets';
-    retweetIcon.appendChild(retweetText);
+    const retweetText1 = document.createElement('h6');
+    retweetText1.style.fontSize = '8px';
+
+    if(tweet.retweetsCount == 0 || tweet.retweetsCount == 1){
+      retweetText1.textContent = `${tweet.retweetsCount} Retweet`;
+    }else{
+      retweetText1.textContent = `${tweet.retweetsCount} Retweets`;
+    }
+
+    
+    retweetIcon.appendChild(retweetText1);
 
     retweetIcon.addEventListener('click', async function() {
       modal.style.display = 'block'
@@ -766,7 +796,14 @@ function renderRetweets(retweets,tweets) {
     likeIcon.style.cursor = 'pointer'
     const likeText = document.createElement('h6');
     likeText.style.fontSize = '8px';
-    likeText.textContent = `${tweet.tweetLikesCount} Likes`;
+
+    if(tweet.tweetLikesCount==0 || tweet.tweetLikesCount==1){
+      likeText.textContent = `${tweet.tweetLikesCount} Like`;
+    }else{
+        likeText.textContent = `${tweet.tweetLikesCount} Likes`;
+    }
+
+    // likeText.textContent = `${tweet.tweetLikesCount} Likes`;
     likeText.style.color  = 'grey'
     likeIcon.appendChild(likeText);
 
@@ -789,6 +826,10 @@ function renderRetweets(retweets,tweets) {
 
     const shareIcon = document.createElement('i');
     shareIcon.className = 'fas fa-share-alt';
+    const shareText = document.createElement('h6');
+      shareText.style.fontSize = '8px';
+      shareText.textContent = 'share'
+      shareIcon.appendChild(shareText)
 
     postIconsDiv.appendChild(commentIcon);
     postIconsDiv.appendChild(retweetIcon);

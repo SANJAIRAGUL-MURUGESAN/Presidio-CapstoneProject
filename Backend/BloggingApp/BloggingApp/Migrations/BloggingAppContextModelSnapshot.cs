@@ -595,6 +595,13 @@ namespace BloggingApp.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("TweetId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("TweetType")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int>("UserId")
                         .HasColumnType("int");
 

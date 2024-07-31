@@ -18,13 +18,16 @@ namespace BloggingApp.Services
         private readonly ITokenServices _TokenService;
         private readonly IRepository<int, User> _UserRepository;
         private readonly IRepository<int, Follow> _FollowRepository;
+        private readonly IRepository<int, UserNotification> _UserNotificationRepository;
 
-        public UserServices(BloggingAppContext context,IRepository<int, User> userRepository, ITokenServices tokenService, IRepository<int, Follow> followRepository)
+        public UserServices(BloggingAppContext context,IRepository<int, User> userRepository, ITokenServices tokenService, IRepository<int, Follow> followRepository,
+            IRepository<int, UserNotification> userNotificationRepository)
         {
             _context = context;
             _UserRepository = userRepository;
             _TokenService = tokenService;
             _FollowRepository = followRepository;
+            _UserNotificationRepository = userNotificationRepository;
         }
 
         // Function for User Registration - Starts
@@ -177,7 +180,21 @@ namespace BloggingApp.Services
             {
                 Follow MappedFollow = MapAddFollowDTOtoFollow(addFollowerDTO);
                 var AddedResult = await _FollowRepository.Add(MappedFollow);
-                if(AddedResult != null)
+
+                var originoluser = await _UserRepository.GetbyKey(addFollowerDTO.UserId);
+                var originoluserName = originoluser.UserName;
+
+                UserNotification userNotification = new UserNotification();
+                userNotification.UserId = addFollowerDTO.FollowerId;
+                userNotification.NotificationPost = originoluser.UserProfileImgLink;
+                userNotification.IsUserSeen = "No";
+                userNotification.ContentDateTime = DateTime.Now;
+                userNotification.TweetType = "Follow";
+                userNotification.TweetId = originoluser.Id;
+                userNotification.NotificatioContent = originoluserName + " Started Following you";
+                var addedNotification = await _UserNotificationRepository.Add(userNotification);
+
+                if (AddedResult != null)
                 {
                     return "success";
                 }
@@ -243,6 +260,39 @@ namespace BloggingApp.Services
         }
         // Function for Add Return User Sidebar info - Ends
 
+        // Function to send all notification to users - starts
+
+        public async Task<List<UserNotification>> NotificationSender(NotificationUserDetailsDTO notificationUserDetailsDTO)
+        {
+            try
+            {
+                var notificationdetails = (await _UserNotificationRepository.Get()).Where(u => u.UserId == notificationUserDetailsDTO.UserId).ToList();
+                return notificationdetails;
+            }
+            catch (Exception)
+            {
+                throw new Exception();
+            }
+        }
+        // Function to send all notification to users - Ends
+
+        public async Task<string> UpdateNotification(int UserId)
+        {
+            try
+            {
+                var notificationdetails1 = (await _UserNotificationRepository.Get()).Where(u => u.UserId == UserId).ToList();
+                foreach(var user in notificationdetails1)
+                {
+                    user.IsUserSeen = "Yes";
+                    await _UserNotificationRepository.Update(user);
+                }
+                return "success";
+            }
+            catch (Exception)
+            {
+                throw new Exception();
+            }
+        }
 
     }
 }

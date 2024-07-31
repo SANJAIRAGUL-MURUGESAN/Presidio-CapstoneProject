@@ -17,7 +17,8 @@
     <!-- <link rel="stylesheet" href="ActionStyle.css"> -->
 
 
-    <!-- <script src="script.js" defer></script> -->
+    <script src="script.js" defer></script>
+    <script src="./Scripts/Notification.js" defer></script>
 
     <script src="./Scripts/PeopleDetails.js" defer></script>
 </head>
@@ -140,9 +141,9 @@
      <section class="feeds-page">
         <nav class="feeds-nav dark-mode-1">
             <div class="icons">
-                <a href="#" class="active"><i class="fas fa-home"></i></a>
+                <a href="index.html" class="active"><i class="fas fa-home"></i></a>
                 <a href=""><i class="fas fa-hashtag"></i></a>
-                <a href=""><i class="far fa-bell"></i></a>
+                <a href="Notification.html"><i class="far fa-bell" id="notifi"></i></a>
                 <a href=""><i class="far fa-envelope"></i></a>
             </div>
 
@@ -161,22 +162,32 @@
         </nav>
 
         <div class="feeds-content">
-            <div class="feeds-header dark-mode-1">
+            <div class="feeds-header dark-mode-1" id="header-notifi">
                 <div class="header-top">
                     <h4>Home</h4>
                     <i class="far fa-star"></i>
                 </div>
-
-                <div class="header-post dark-mode-1">
+                
+                <div class="header-post dark-mode-1" style="display: none;">
                     <div class="header-img-wrapper">
-                        <img src="./images/user1.jpg" alt="" id="userprofileimgnav2" >
+                        <img src="" alt="" id="userprofileimgnav2">
                     </div>
-                    <div class="input">Lorem ipsum dolor sit amet consectetur adipisicing elit. Iusto quod aliquam consequuntur maxime expedita nam. Fugit commodi dicta animi, porro blanditiis quas debitis dolorum laboriosam doloremque deleniti alias dolor labore</div>
-                    <!-- <input type="text" placeholder="whats happening?" /> -->
-                    <!-- <i class="far fa-image"></i>
+                    <input type="text" placeholder="whats happening?" id="homesearch"/>
+                    <i class="far fa-image"></i>
                     <i class="fas fa-camera"></i>
-                    <i class="far fa-chart-bar"></i> -->
+                    <i class="far fa-chart-bar"></i>
                 </div>
+
+                <!-- <div class="header-post dark-mode-1">
+                    <div class="header-img-wrapper">
+                        <img src="./images/user1.jpg" alt="" id="userprofileimgnav2">
+                    </div>
+                    <div class="input">Lorem ipsum dolor sit amet consectetur adipisicing elit.</div>
+                    <input type="text" placeholder="whats happening?" />
+                    <i class="far fa-image"></i>
+                    <i class="fas fa-camera"></i>
+                    <i class="far fa-chart-bar"></i>
+                </div> -->
             </div>
 
             <!-- <div class="posts dark-mode-1" id="post-container"> -->
@@ -358,11 +369,55 @@
         </div>
 
         <!-- Post button --><br><br>
-         <!-- <button type="button" class="post-btn">
+         <button type="button" class="post-btn" style="display: none;">
             + </i>Post
-         </button> -->
+         </button>
 
         <!-- Post Modal -->
+
+        <div class="modal-wrapper" style="display: none;">
+            <div class="modal dark-mode-1">
+                <div class="modal-header">
+                    <i class="fas fa-times"></i>
+                    <button type="button" id="commentsubmit">Post</button>
+                </div>
+                <!-- ReplyComment -->
+                <div class="modal-body" style="display: none;" id="replyshowmodal">
+                    <div class="modal-img">
+                        <img src="images/user1.jpg" id="userimagemodal">
+                    </div>
+                    <div type="text" placeholder="Add your comment" class="modal-input"><h6 id="tweetcontentinput2"></h6></div>
+                    <div id="emojiContainer" class="emoji-container">
+                        <!-- <div>HI Hello</div> -->
+                    </div>
+                    <div id="emojiContainer1" class="emoji-container"></div>
+                    <i class="far fa-smile" id="emojiButton"></i>
+                </div>
+                <!-- ReplyComment -->
+                <div class="modal-body">
+                    <div class="modal-img">
+                        <img src="images/user1.jpg" id="userimagemodal">
+                    </div>
+                    <input type="text" placeholder="Add your comment" class="modal-input" id="tweetcontentinput">
+                    <div id="emojiContainer" class="emoji-container">
+                        <!-- <div>HI Hello</div> -->
+                    </div>
+                    <div id="emojiContainer1" class="emoji-container"></div>
+                    <i class="far fa-smile" id="emojiButton"></i>
+                </div>
+                <div class="modal-footer">
+                    <div class="modal-icons">
+                        <i class="far fa-image" id="imageIcon"></i>
+                        <input type="file" id="fileInput" accept="image/*" multiple style="display: none;">
+                        <i class="fas fa-camera"></i>
+                        <i class="fas fa-comment" id="commentenable" class="commentenable"></i>
+                        <i class="fas fa-comment-slash commentdisable" id="commentdisable"></i>
+                        <span>+</span>
+                    </div>
+                    <div id="imagePreviewContainer" class="image-preview-container"></div>
+                </div>
+            </div>
+        </div>
         
         
 

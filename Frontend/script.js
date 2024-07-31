@@ -76,10 +76,10 @@ postBtn.addEventListener('click',()=>{
     modal.style.display = 'block'
     modalWrapper.classList.add('modal-wrapper-display')
 
-    if(modalInput.value !== ''){
-        modalInput.value = '';
-        changeOpacity(0.5)
-    }
+    // if(modalInput.value !== ''){
+    //     modalInput.value = '';
+    //     changeOpacity(0.5)
+    // }
 })
 
 const changeOpacity = (x) =>{
@@ -90,9 +90,15 @@ const changeOpacity = (x) =>{
 postModalX.addEventListener('click',()=>{
     localStorage.removeItem('BackendTo')
     localStorage.removeItem('actualtweetid')
+    if(document.getElementById('replyshowmodal').style.display = 'flex'){
+        document.getElementById('replyshowmodal').style.display = 'none'
+    }
+    document.getElementById('tweetcontentinput').value =''
     modal.style.display = 'none'
     modalWrapper.classList.remove('modal-wrapper-display')
 })
+
+
 
 modalInput.addEventListener('keypress',(e)=>{
     if(e.target.value !== ''){
@@ -104,6 +110,14 @@ modalInput.addEventListener('blur',(e)=>{
     if(e.target.value === ''){
         changeOpacity(0.5);
     }
+})
+
+//input-post-modal
+
+
+document.getElementById('homesearch').addEventListener('click',()=>{
+    modal.style.display = 'block'
+    modalWrapper.classList.add('modal-wrapper-display')
 })
 
 

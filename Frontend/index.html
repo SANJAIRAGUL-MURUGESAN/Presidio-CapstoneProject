@@ -140,15 +140,15 @@
      <section class="feeds-page">
         <nav class="feeds-nav dark-mode-1">
             <div class="icons">
-                <a href="#" class="active"><i class="fas fa-home"></i></a>
+                <a href="index.html" class="active"><i class="fas fa-home"></i></a>
                 <a href=""><i class="fas fa-hashtag"></i></a>
-                <a href=""><i class="far fa-bell"></i></a>
+                <a href="Notification.html" id="notifi"><i class="fa-solid fa-bell"></i></a>
                 <a href=""><i class="far fa-envelope"></i></a>
             </div>
 
             <div class="search-bar">
                 <i class="fas fa-search"></i>
-                <input type="text" placeholder="Search Twitter" class="search-bar-input">
+                <input type="text" placeholder="Search PresidioShare" class="search-bar-input">
             </div>
 
             <div class="user">
@@ -171,7 +171,7 @@
                     <div class="header-img-wrapper">
                         <img src="" alt="" id="userprofileimgnav2">
                     </div>
-                    <input type="text" placeholder="whats happening?" />
+                    <input type="text" placeholder="whats happening?" id="homesearch" />
                     <i class="far fa-image"></i>
                     <i class="fas fa-camera"></i>
                     <i class="far fa-chart-bar"></i>
@@ -358,7 +358,7 @@
 
         <!-- Post button --><br><br>
          <button type="button" class="post-btn">
-            + </i>Post
+            + </i>Tweet
          </button>
 
         <!-- Post Modal -->
@@ -367,6 +367,16 @@
                 <div class="modal-header">
                     <i class="fas fa-times"></i>
                     <button type="button">Post</button>
+                </div>
+                <div class="modal-body" style="display: none;" id="replyshowmodal">
+                    <div class="modal-img">
+                        <img src="images/user1.jpg" id="userimagemodal2">
+                    </div>
+                    <div type="text" placeholder="Add your commentss" class="modal-input"><h6 id="tweetcontentinput2"></h6></div>
+                    <!-- <div id="emojiContainer" class="emoji-container">
+                    </div>
+                    <div id="emojiContainer1" class="emoji-container"></div> -->
+                    <i class="far fa-smile" id="emojiButton"></i>
                 </div>
                 <div class="modal-body">
                     <div class="modal-img">
