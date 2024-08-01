@@ -1,0 +1,33 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Hotspots>
+  <Hotspot>
+    <Assembly>BloggingApp</Assembly>
+    <Class>BloggingApp.Services.CommentServices</Class>
+    <MethodName>ReturnComments()</MethodName>
+    <ShortName />
+    <Line>148</Line>
+    <FileIndex>0</FileIndex>
+    <Metrics>
+      <Metric>
+        <Name>Cyclomatic complexity</Name>
+        <Exceeded>true</Exceeded>
+        <Value>40</Value>
+      </Metric>
+    </Metrics>
+  </Hotspot>
+  <Hotspot>
+    <Assembly>BloggingApp</Assembly>
+    <Class>BloggingApp.Services.CommentServices</Class>
+    <MethodName>ReturnRetweetComments()</MethodName>
+    <ShortName />
+    <Line>460</Line>
+    <FileIndex>0</FileIndex>
+    <Metrics>
+      <Metric>
+        <Name>Cyclomatic complexity</Name>
+        <Exceeded>true</Exceeded>
+        <Value>40</Value>
+      </Metric>
+    </Metrics>
+  </Hotspot>
+</Hotspots>

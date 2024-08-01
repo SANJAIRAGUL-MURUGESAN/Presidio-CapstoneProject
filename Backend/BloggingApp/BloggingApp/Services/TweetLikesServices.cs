@@ -15,13 +15,10 @@ namespace BloggingApp.Services
     {
         private readonly IRepository<int, TweetLikes> _TweetLikesRepository;
         private readonly IRepository<int, RetweetLikes> _RetweetLikesRepository;
-
         private readonly IRepository<int, TweetCommentLikes> _TweetCommentLikesRepository;
         private readonly IRepository<int, TweetReplyLikes> _TweetReplyLikesRepository;
-
         private readonly IRepository<int, RetweetCommentLikes> _RetweetCommentLikesRepository;
         private readonly IRepository<int, RetweetCommentReplyLikes> _RetweetCommentReplyLikesRepository;
-
         private readonly IRepository<int, User> _UserRepository;
         private readonly IRepository<int, UserNotification> _UserNotificationRepository;
         private readonly IRepository<int, Tweet> _TweetRepository;

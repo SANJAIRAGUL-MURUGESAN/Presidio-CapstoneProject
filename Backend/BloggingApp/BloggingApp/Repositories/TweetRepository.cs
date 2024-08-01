@@ -31,7 +31,7 @@ namespace BloggingApp.Repositories
                 await _context.SaveChangesAsync(true);
                 return tweet;
             }
-            throw new NoSuchRetweetFoundException();
+            throw new NoSuchTweetFoundException();
         }
         public async virtual Task<Tweet> GetbyKey(int key)
         {
@@ -40,7 +40,7 @@ namespace BloggingApp.Repositories
             {
                 return tweet;
             }
-            throw new NoSuchRetweetFoundException();
+            throw new NoSuchTweetFoundException();
         }
         public async Task<IEnumerable<Tweet>> Get()
         {
@@ -49,7 +49,7 @@ namespace BloggingApp.Repositories
             {
                 return tweets;
             }
-            throw new NoRetweetsFoundException();
+            throw new NoTweetsFoundException();
         }
         public async Task<Tweet> Update(Tweet item)
         {
@@ -60,7 +60,7 @@ namespace BloggingApp.Repositories
                 await _context.SaveChangesAsync();
             }
             return tweet;
-            throw new NoSuchRetweetFoundException();
+            throw new NoSuchTweetFoundException();
         }
     }
 }

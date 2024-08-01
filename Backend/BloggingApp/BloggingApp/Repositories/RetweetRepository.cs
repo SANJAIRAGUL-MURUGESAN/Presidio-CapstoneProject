@@ -1,4 +1,5 @@
 ﻿using BloggingApp.Contexts;
+using BloggingApp.Exceptions.RetweetExceptions;
 using BloggingApp.Exceptions.TweetExceptions;
 using BloggingApp.Interfaces;
 using BloggingApp.Models;
@@ -28,7 +29,7 @@ namespace BloggingApp.Repositories
                 await _context.SaveChangesAsync(true);
                 return tweet;
             }
-            throw new NoSuchTweetFoundException();
+            throw new NoSuchRetweetFoundException();
         }
         public async virtual Task<Retweet> GetbyKey(int key)
         {
@@ -37,7 +38,7 @@ namespace BloggingApp.Repositories
             {
                 return tweet;
             }
-            throw new NoSuchTweetFoundException();
+            throw new NoSuchRetweetFoundException();
         }
         public async Task<IEnumerable<Retweet>> Get()
         {
@@ -46,7 +47,7 @@ namespace BloggingApp.Repositories
             {
                 return tweets;
             }
-            throw new NoTweetsFoundException();
+            throw new NoRetweetsFoundException();
         }
         public async Task<Retweet> Update(Retweet item)
         {
@@ -57,7 +58,7 @@ namespace BloggingApp.Repositories
                 await _context.SaveChangesAsync();
             }
             return tweet;
-            throw new NoSuchTweetFoundException();
+            throw new NoSuchRetweetFoundException();
         }
     }
 }
