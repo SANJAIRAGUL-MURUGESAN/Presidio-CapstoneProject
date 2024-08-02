@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BloggingApp.Migrations
 {
     [DbContext(typeof(BloggingAppContext))]
-    [Migration("20240801035101_initial")]
-    partial class initial
+    [Migration("20240802143508_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -522,9 +522,6 @@ namespace BloggingApp.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<int>("Age")
-                        .HasColumnType("int");
-
                     b.Property<string>("BioDescription")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -536,6 +533,9 @@ namespace BloggingApp.Migrations
                     b.Property<string>("IsPremiumHolder")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("JoinedDate")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("Location")
                         .IsRequired()

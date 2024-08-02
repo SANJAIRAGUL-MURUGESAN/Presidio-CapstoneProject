@@ -65,7 +65,7 @@ namespace BloggingAppTest.ServicesTest
             user.Location = "string";
             user.IsPremiumHolder = "string";
             user.DateOfBirth = "string";
-            user.Age = 22;
+            user.JoinedDate = DateTime.Now;
             user.BioDescription = "string";
             user.UserProfileImgLink = "string";
             var AddedUser = userRepository.Add(user);

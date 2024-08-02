@@ -16,6 +16,8 @@
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="ActionStyle.css">
 
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
 
     <script src="script.js" defer></script>
     <script src="ActionScritp.js" defer></script>
@@ -147,8 +149,8 @@
             </div>
 
             <div class="search-bar">
-                <i class="fas fa-search"></i>
-                <input type="text" placeholder="Search PresidioShare" class="search-bar-input">
+                <i id="search-icon" class="fas fa-search"></i>
+                <input id="search-p-user-input" type="text" placeholder="Search PresidioShare" class="search-bar-input" >
             </div>
 
             <div class="user">
@@ -179,6 +181,7 @@
             </div>
 
             <div class="posts dark-mode-1" id="post-container">
+                <h1 style="text-align: center; margin-top: 100px; display: none;" id="NotweetText">No Tweets Found!</h1>
 <!-- 
                 <div class="post">
                     <div class="user-avatar">
@@ -433,7 +436,7 @@
             </div>
             <div class="sidebar-list-1">
                 <ul>
-                    <li><a href="#"><i class="fas fa-user"></i>Profile</a></li>
+                    <li id="profilepagedisplayer"><a href="#"><i class="fas fa-user"></i>Profile</a></li>
                     <li><a href="#"><i class="far fa-list-alt"></i>Lists</a></li>
                     <li><a href="#"><i class="fab fa-adversal"></i>Adds</a></li>
                     <li><a href="#"><i class="fas fa-chart-line"></i>Analytics</a></li> 
@@ -441,14 +444,14 @@
             </div>
             <div class="sidebar-list-2">
                 <ul>
-                    <li><a href="#">Settings and Privacy</a></li>
-                    <li><a href="#">Help Center</a></li>
-                    <li><a href="#">Logout</a></li>
+                    <!-- <li><a href="#">Settings and Privacy</a></li>
+                    <li><a href="#">Help Center</a></li> -->
+                    <li><a href="#" id="logout">Logout</a></li>
                 </ul>
             </div>
 
             <!-- DarkMode -->
-             <div class="dark-mode">
+             <div class="dark-mode" style="display: none;">
                 <p>Dark Mode</p>
                 <div class="toggle">
                     <div class="circle"></div>

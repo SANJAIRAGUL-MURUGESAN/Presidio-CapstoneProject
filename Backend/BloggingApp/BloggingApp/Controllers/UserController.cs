@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using BloggingApp.Models.FollowDTOs;
+using BloggingApp.Exceptions.UserNotifications;
 
 namespace BloggingApp.Controllers
 {
@@ -15,10 +16,50 @@ namespace BloggingApp.Controllers
     public class UserController : ControllerBase
     {
         private readonly IUserServices _UserServices;
+        private readonly IAzureBlobService _blobService;
 
-        public UserController(IUserServices userServices)
+        public UserController(IUserServices userServices, IAzureBlobService blobService)
         {
             _UserServices = userServices;
+            _blobService = blobService;
+        }
+
+        [Route("AddTweetImage")]
+        [HttpPost]
+        [ProducesResponseType(typeof(string), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ErrorModel), StatusCodes.Status409Conflict)]
+        [ProducesResponseType(typeof(ErrorModel), StatusCodes.Status500InternalServerError)]
+        [ProducesErrorResponseType(typeof(ErrorModel))]
+        public async Task<ActionResult<User>> AddProfileImage([FromForm] AddProfileImageDTO userAddTweetDTO)
+        {
+            try
+            {
+                var imageUrls = new List<string>();
+                Console.WriteLine("helo");
+                foreach (var image in userAddTweetDTO.Images)
+                {
+                    if (image.Length > 0)
+                    {
+                        using (var stream = image.OpenReadStream())
+                        {
+                            var fileName = Guid.NewGuid().ToString() + Path.GetExtension(image.FileName);
+                            var imageUrl = await _blobService.UploadAsync(stream, fileName);
+                            imageUrls.Add(imageUrl);
+                        }
+                    }
+                }
+                Console.WriteLine(imageUrls[0]);
+                Console.WriteLine(userAddTweetDTO.UserId);
+                UpdateUserProfileImageDTO userimage = new UpdateUserProfileImageDTO();
+                userimage.ProfileImageUrl = imageUrls[0];
+                userimage.UserId = userAddTweetDTO.UserId;
+                var Addeduserimage = await _UserServices.UserProfileImageUpdate(userimage);
+                return Addeduserimage;
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, new ErrorModel(500, ex.Message));
+            }
         }
 
         [Route("RegisterUser")]
@@ -33,6 +74,10 @@ namespace BloggingApp.Controllers
             {
                 var user = await _UserServices.RegisterUser(registerUserDTO);
                 return Ok(user);
+            }
+            catch (UserEmailAlreadyExistsException utre)
+            {
+                return StatusCode(StatusCodes.Status409Conflict, new ErrorModel(409, utre.Message));
             }
             catch (Exception ex)
             {
@@ -194,5 +239,49 @@ namespace BloggingApp.Controllers
             }
         }
         // Function to Add Update Notifications - Ends
+
+        // Function to Add Provide User Profile Details - Starts
+
+        [Route("UserProfileDetails")]
+        [HttpPost]
+        [ProducesResponseType(typeof(User), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ErrorModel), StatusCodes.Status409Conflict)]
+        [ProducesResponseType(typeof(ErrorModel), StatusCodes.Status500InternalServerError)]
+        [ProducesErrorResponseType(typeof(ErrorModel))]
+        public async Task<ActionResult<User>> UserProfile([FromBody] int UserId)
+        {
+            try
+            {
+                var notification = await _UserServices.UserProfile(UserId);
+                return Ok(notification);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, new ErrorModel(500, ex.Message));
+            }
+        }
+
+        // Function to Add Provide User Profile Details - Ends
+
+
+        [Route("UserSerachProfiles")]
+        [HttpPost]
+        [ProducesResponseType(typeof(List<User>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ErrorModel), StatusCodes.Status409Conflict)]
+        [ProducesResponseType(typeof(ErrorModel), StatusCodes.Status500InternalServerError)]
+        [ProducesErrorResponseType(typeof(ErrorModel))]
+        public async Task<ActionResult<List<User>>> UserSerachProfile([FromBody] string username)
+        {
+            try
+            {
+                var users = await _UserServices.UserProfileSearch(username);
+                return Ok(users);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, new ErrorModel(500, ex.Message));
+            }
+        }
+
     }
 }

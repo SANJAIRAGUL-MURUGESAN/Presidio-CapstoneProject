@@ -461,7 +461,7 @@ namespace BloggingApp.Services
                 userNotification.NotificationPost = userdetails.UserProfileImgLink;
                 userNotification.IsUserSeen = "No";
                 userNotification.ContentDateTime = AddedRetweet.RetweetDateTime;
-                userNotification.TweetType = "Reweet";
+                userNotification.TweetType = "Retweet";
                 userNotification.TweetId = AddedRetweet.Id;
                 userNotification.NotificatioContent = username + " Reposted a Tweet";
                 var addedNotification = await _UserNotificationRepository.Add(userNotification);

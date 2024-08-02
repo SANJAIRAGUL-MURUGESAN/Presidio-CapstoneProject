@@ -19,8 +19,9 @@
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
 
-    <!-- <script src="script.js" defer></script> -->
-    <script src="./Scripts/UserLogin.js" defer></script>
+
+    <script src="./Scripts/Register.js" defer></script>
+    <!-- <script src="./Scripts/UserLogin.js" defer></script> -->
     <!-- <script src="ActionScritp.js" defer></script> -->
 </head>
 <body>
@@ -42,14 +43,55 @@
 
         <div class="login">
             <div class="login-content">
-                <h2>Login to PresidioShare</h2>
-                <form class="login-form">
-                    <input type="text" class="login-form-info" placeholder="Email" id="useremail">
-                    <input type="password" class="login-password" placeholder="Password" id="password"> 
+                
+                <h2>Register to PresidioShare</h2>
+
+                <form class="login-form" id="formr">
+
+                    <h3>Enter your Full Name</h3>
+                    <input type="text" class="login-form-info" placeholder="Full Name" required id="namer">
+                    <br>
+
+                    <h3>How we need to call you?</h3>
+                    <input type="text" class="login-form-info" placeholder="User Name" required id="usernamer">
+                    <br>
+
+                    <h3>Enter your Email</h3>
+                    <input type="text" class="login-form-info" placeholder="Email" required id="useremailr">
+                    <br>
+
+                    <h3>Enter your Password</h3>
+                    <input type="password" class="login-form-info" placeholder="Password" required  id="userpasswordr">
+                    <br>
+
+                    <h3>Enter your Location</h3>
+                    <input type="text" class="login-form-info" placeholder="Location" required id="userlocationr">
+                    <br>
+
+                    <h3>Enter your Mobile Number</h3>
+                    <input type="text" class="login-form-info" placeholder="Phone" required id="userphoner">
+                    <br>
+
+                    <h3>Give a Brief Bio About you</h3>
+                    <input type="text" class="login-form-info" placeholder="Bio" required id="userbior">
+                    <br>
+
+                    <h3>Give your Date of Birth</h3>
+                    <input type="date" class="login-form-info" placeholder="Bio" required id="userdobr">
+                    <br>
+
+                    <h3>Enter your Gender</h3>
+                        <select class="login-form-info" id="gender" name="gender" required>
+                        <option value="Male" >Male</option>
+                        <option value="Female">Female</option>
+                        <option value="Other">Other</option>
+                        </select>
+                    <br>
+
                     
                     <div>
                         <button type="button" class="login-form-btn">
-                            Login
+                            Register
                         </button>
                         <input type="checkbox" class="login-form-checkbox" id="check">
                         <label for="check">Remember Me</label>
@@ -60,8 +102,8 @@
                 </form>
             </div>
             <footer class="login-footer">
-                <p>New To PresidioShare? <a href="#">Sign-Up Now</a></p>
-                <p>Already using PresidioShare via text message? <a href="#">Activate your Account</a></p>
+                <!-- <p>New To PresidioShare? <a href="#">Sign-Up Now</a></p>
+                <p>Already using PresidioShare via text message? <a href="#">Activate your Account</a></p> -->
             </footer>
         </div>
 
@@ -72,6 +114,7 @@
             <i class="fas fa-times"></i>
             <p>The username and password you entered did not match our records. Please double check and try again</p>
         </div>
+
         <!-- End of Login Modal -->
 
      </section>

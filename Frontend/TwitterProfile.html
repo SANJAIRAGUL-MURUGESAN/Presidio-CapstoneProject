@@ -20,9 +20,12 @@
 
     <link rel='stylesheet' type='text/css' media='screen' href='./Styles/profilestyle.css'>
 
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+
 
     <script src="script.js" defer></script>
-    <!-- <script src="ActionScritp.js" defer></script> -->
+    <script src="./Scripts/ProfileDetails.js" defer></script>
     <script src="./Scripts/PeopleDetails.js" defer></script>
 </head>
 <body>
@@ -144,15 +147,15 @@
      <section class="feeds-page">
         <nav class="feeds-nav dark-mode-1">
             <div class="icons">
-                <a href="#" class="active"><i class="fas fa-home"></i></a>
+                <a href="index.html" class="active"><i class="fas fa-home"></i></a>
                 <a href=""><i class="fas fa-hashtag"></i></a>
-                <a href=""><i class="far fa-bell"></i></a>
+                <a href="Notification.html" id="notifi"><i class="fa-solid fa-bell"></i></a>
                 <a href=""><i class="far fa-envelope"></i></a>
             </div>
 
             <div class="search-bar">
-                <i class="fas fa-search"></i>
-                <input type="text" placeholder="Search Twitter" class="search-bar-input">
+                <i id="search-icon" class="fas fa-search"></i>
+                <input id="search-p-user-input" type="text" placeholder="Search PresidioShare" class="search-bar-input" >
             </div>
 
             <div class="user">
@@ -167,15 +170,15 @@
         <div class="feeds-content">
             <div class="feeds-header dark-mode-1">
                 <div class="header-top">
-                    <h4>Home</h4>
+                    <h4>Profile</h4>
                     <i class="far fa-star"></i>
                 </div>
 
-                <div class="header-post dark-mode-1">
+                <div class="header-post dark-mode-1" style="display: none;">
                     <div class="header-img-wrapper">
                         <img src="" alt="" id="userprofileimgnav2">
                     </div>
-                    <input type="text" placeholder="whats happening?" />
+                    <input type="text" placeholder="whats happening?" id="homesearch"/>
                     <i class="far fa-image"></i>
                     <i class="fas fa-camera"></i>
                     <i class="far fa-chart-bar"></i>
@@ -188,28 +191,39 @@
 
                 <section class="twitterprofile">
                     <div class="headerprofileimage">
-                        <img src="https://res.cloudinary.com/dowrygm9b/image/upload/v1570267399/laptop-3174729_yiprzu.jpg" alt="header" id="headerimage">
+                        <img src="./images/backslider.jfif" alt="header" id="headerimage">
                         <img src="https://res.cloudinary.com/dowrygm9b/image/upload/v1570267399/laptop-3174729_yiprzu.jpg" alt="profile pic" id="profilepic">
                         <div class="editprofile">Edit Profile</div>
+                        <div id="pimage"  class="editprofile">Upload Image</div>
+                        <input type="file" id="fileInput1" accept="image/*" multiple style="display: none;">
                     </div>
                     <div class="bio">
                         <div class="handle" style="padding-top: 15px;">
-                            <h3>Soy Segun</h3>
-                            <span>@segun_OS</span>
+                            <h3 id="username-profile"></h3>
+                            <span id="username-pid"></span>
                         </div>
-                        <p>Business Administration Student |</p>
-                        <p>Front-end web developer |</p>
+                        <p id="desc"></p>
+                        <!-- <p>Front-end web developer |</p>
                         <p>Barça fan |</p>
-                        <span>@Awelagos @4topsports</span> <br>
-                        <span> <i class="fa fa-location-arrow "></i> Lagos, Nigeria.  <i
-                                class="fa fa-birthday-cake" aria-hidden="true"></i> Born November 10</span>
-                        <br> <span><i class="fa fa-calendar"></i> Joined May 2013</span>
-                        <div class="nawa">
+                        <span>@Awelagos @4topsports</span> <br> -->
+                        <span id="userdob"><i class="fa fa-birthday-cake" aria-hidden="true"></i></span><br>
+                        <span id="userlocation"> <i class="fa fa-location-arrow "></i></span>
+                        <br> <span><i class="fa fa-calendar"></i></span>
+                        <!-- <div class="nawa">
                             <div class="followers"> 421 <span>Following</span></div>
                             <div>1519<span> Followers</span></div>
-                        </div>
+                        </div> -->
                     </div>
                 </section>
+                <section class="tweets" style="font-size: 15px;">
+                    <div class="heading">
+                        <p>Tweets</p>
+                        <p>Tweets and Replies</p>
+                        <p>Media</p>
+                        <p>Likes</p>
+                    </div>
+                </section>
+                
 <!-- 
                 <div class="post">
                     <div class="user-avatar">
@@ -454,7 +468,7 @@
             </div>
             <div class="sidebar-list-1">
                 <ul>
-                    <li><a href="#"><i class="fas fa-user"></i>Profile</a></li>
+                    <li id="profilepagedisplayer"><a href="#"><i class="fas fa-user"></i>Profile</a></li>
                     <li><a href="#"><i class="far fa-list-alt"></i>Lists</a></li>
                     <li><a href="#"><i class="fab fa-adversal"></i>Adds</a></li>
                     <li><a href="#"><i class="fas fa-chart-line"></i>Analytics</a></li> 
@@ -462,14 +476,14 @@
             </div>
             <div class="sidebar-list-2">
                 <ul>
-                    <li><a href="#">Settings and Privacy</a></li>
-                    <li><a href="#">Help Center</a></li>
-                    <li><a href="#">Logout</a></li>
+                    <!-- <li><a href="#">Settings and Privacy</a></li>
+                    <li><a href="#">Help Center</a></li> -->
+                    <li><a href="#" id="logout">Logout</a></li>
                 </ul>
             </div>
 
             <!-- DarkMode -->
-             <div class="dark-mode">
+             <div class="dark-mode" style="display: none;">
                 <p>Dark Mode</p>
                 <div class="toggle">
                     <div class="circle"></div>

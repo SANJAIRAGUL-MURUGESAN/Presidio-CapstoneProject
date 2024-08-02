@@ -41,7 +41,7 @@ namespace BloggingAppTest.RepositoryTests
             user.Location = "cbe";
             user.IsPremiumHolder = "No";
             user.DateOfBirth = "dob";
-            user.Age = 22;
+            user.JoinedDate = DateTime.Now;
             user.BioDescription = "Engineer";
             user.UserProfileImgLink = "asdddasa";
             var result = await userRepository.Add(user);
@@ -65,7 +65,7 @@ namespace BloggingAppTest.RepositoryTests
             user.Location = "cbe";
             user.IsPremiumHolder = "No";
             user.DateOfBirth = "dob";
-            user.Age = 22;
+            user.JoinedDate = DateTime.Now;
             user.BioDescription = "Engineer";
             user.UserProfileImgLink = "asdddasa";
             var result = await userRepository.Add(user);
@@ -99,7 +99,7 @@ namespace BloggingAppTest.RepositoryTests
             user.Location = "cbe";
             user.IsPremiumHolder = "No";
             user.DateOfBirth = "dob";
-            user.Age = 22;
+            user.JoinedDate = DateTime.Now;
             user.BioDescription = "Engineer";
             user.UserProfileImgLink = "asdddasa";
             var result = await userRepository.Add(user);
@@ -152,7 +152,7 @@ namespace BloggingAppTest.RepositoryTests
             user.Location = "cbe";
             user.IsPremiumHolder = "No";
             user.DateOfBirth = "dob";
-            user.Age = 22;
+            user.JoinedDate = DateTime.Now;
             user.BioDescription = "Engineer";
             user.UserProfileImgLink = "asdddasa";
             var result = await userRepository.Add(user);
@@ -178,7 +178,7 @@ namespace BloggingAppTest.RepositoryTests
             user.Location = "cbe";
             user.IsPremiumHolder = "No";
             user.DateOfBirth = "dob";
-            user.Age = 22;
+            user.JoinedDate = DateTime.Now;
             user.BioDescription = "Engineer";
             user.UserProfileImgLink = "asdddasa";
             var result = await userRepository.Add(user);

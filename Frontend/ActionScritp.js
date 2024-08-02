@@ -1,3 +1,18 @@
+// const isloggedin = localStorage.getItem('token')
+// if(isloggedin){
+//     Toastify({
+//         text: "Hey User! You are already Not logged In, Redirecting...",
+//         style: {
+//             background: "linear-gradient(to right, #00b09b, #96c93d)",
+//         },
+//         callback: function() {
+//             window.location.href = 'Login.html'; // Redirect after toast disappears
+//         }
+//     }).showToast();
+// }
+
+
+
 // Function to set the images url - Starts
 
 document.getElementById('userprofileimgnav').src = localStorage.getItem('userprofileimglink')
@@ -6,9 +21,6 @@ document.getElementById('userimagemodal').src = localStorage.getItem('userprofil
 document.getElementById('usernamenav').innerHTML = localStorage.getItem('username')
 
 // Function to set the images url - Ends
-
-
-
 
 // Function to Upload images and content starts
 let uploadedFiles = [];
@@ -78,7 +90,14 @@ document.querySelector('.modal-header button').addEventListener('click', functio
     console.log(isCommentEnabled)
 
     if (uploadedFiles.length > 2 ) {
-        alert('Please upload between 0 and 2 images.');
+        // alert('Please upload between 0 and 2 images.');
+        Toastify({
+          text: "Hey User, Please upload between 0 and 2 images!",
+          style: {
+              fontSize: "15px",
+              background: "linear-gradient(to right, #00b09b, #96c93d)",
+          }
+         }).showToast();
         return;
     }
 
@@ -115,7 +134,14 @@ document.querySelector('.modal-header button').addEventListener('click', functio
                 formData.append('TweetId', data.tweetId);
                 await addFeedImages();
               }else{
-                alert('Hey User, Your Feed Added Successfully!');
+                // alert('Hey User, Your Feed Added Successfully!');
+                Toastify({
+                  text: "Hey User, Your Tweet Added Successfully!",
+                  style: {
+                      fontSize: "15px",
+                      background: "linear-gradient(to right, #00b09b, #96c93d)",
+                  }
+                 }).showToast();
               }
           }
       })
@@ -146,7 +172,14 @@ document.querySelector('.modal-header button').addEventListener('click', functio
             console.log(data.errorCode)
         }else{
           localStorage.removeItem('actualtweetid');
-          alert('Hey User, Your Repost Added Successfully!');
+          // alert('Hey User, Your Repost Added Successfully!');
+          Toastify({
+            text: "Hey User, Your Retweet Added Successfully!",
+            style: {
+              fontSize: "15px",
+              background: "linear-gradient(to right, #00b09b, #96c93d)",
+            }
+           }).showToast();
         }
     })
     .catch(error => {
@@ -161,7 +194,14 @@ document.querySelector('.modal-header button').addEventListener('click', functio
         })
         .then(data => {
             console.log(data);
-            alert('Hey User, Your Feed Added Successfully!!');
+            // alert('Hey User, Your Feed Added Successfully!!');
+            Toastify({
+              text: "Hey User, Your Tweet Added Successfully!",
+              style: {
+                  fontSize: "15px",
+                  background: "linear-gradient(to right, #00b09b, #96c93d)",
+              }
+             }).showToast();
             // Reset the uploaded files and previews
             uploadedFiles = [];
             document.getElementById('imagePreviewContainer').innerHTML = '';
@@ -342,9 +382,17 @@ async function updateLikeStatus(tweetId) {
     })
   }).then(response => {
       if (!response.ok) {
-          throw new Error('Failed to update like status');
+        Toastify({
+          text: "Hey User, 'Failed to update like status'",
+          style: {
+              fontSize: "15px",
+              background: "linear-gradient(to right, #00b09b, #96c93d)",
+          }
+         }).showToast();
+          // throw new Error('Failed to update like status');
+          
       }else{
-        alert('Like Added Successfully')
+        // alert('Like Added Successfully')
       }
   }).catch(error => {
       console.error(error);
@@ -364,9 +412,17 @@ async function updateTweetDisLikeStatus(tweetId) {
     })
   }).then(response => {
       if (!response.ok) {
-          throw new Error('Failed to update Dislike status');
+        Toastify({
+          text: "Hey User, 'Failed to update Dislike status'",
+          style: {
+              fontSize: "15px",
+              background: "linear-gradient(to right, #00b09b, #96c93d)",
+          }
+         }).showToast();
+          // throw new Error('Failed to update Dislike status');
+          
       }else{
-        alert('Dislike Added Successfully')
+        // alert('Dislike Added Successfully')
       }
   }).catch(error => {
       console.error(error);
@@ -386,9 +442,16 @@ async function updateRetweetLikeStatus(tweetId) {
     })
   }).then(response => {
       if (!response.ok) {
-          throw new Error('Failed to update like status');
+        Toastify({
+          text: "Hey User, 'Failed to update like status'",
+          style: {
+              fontSize: "15px",
+              background: "linear-gradient(to right, #00b09b, #96c93d)",
+          }
+         }).showToast();
+          // throw new Error('Failed to update like status');
       }else{
-        alert('Like Added Successfully')
+        // alert('Like Added Successfully')
       }
   }).catch(error => {
       console.error(error);
@@ -408,9 +471,16 @@ async function updateRetweetDisLikeStatus(tweetId) {
     })
   }).then(response => {
       if (!response.ok) {
-          throw new Error('Failed to update Dislike status');
+        Toastify({
+          text: "Hey User, 'Failed to update Dislike status'",
+          style: {
+              fontSize: "15px",
+              background: "linear-gradient(to right, #00b09b, #96c93d)",
+          }
+         }).showToast();
+          // throw new Error('Failed to update Dislike status');
       }else{
-        alert('Dislike Added Successfully')
+        // alert('Dislike Added Successfully')
       }
   }).catch(error => {
       console.error(error);
@@ -469,7 +539,18 @@ document.addEventListener('DOMContentLoaded', async function() {
           var data = await response.json();
           console.log(data.retweets);
           console.log(data.tweets);
-          renderRetweets(data.retweets,data.tweets)
+          if(data.retweets==undefined && data.tweets==undefined){
+            Toastify({
+              text: "Hey User, No Tweets Found!",
+              style: {
+                  fontSize: "15px",
+                  background: "linear-gradient(to right, #00b09b, #96c93d)",
+              }
+             }).showToast();
+             document.getElementById('NotweetText').style.display = 'block'
+          }else{
+              renderRetweets(data.retweets,data.tweets)
+          }
           // renderTweets(data.tweets) 
           // data.forEach(element => {
           //     console.log(element)
@@ -600,7 +681,8 @@ function renderRetweets(retweets,tweets) {
       commentIcon.addEventListener('click', async function() {
         localStorage.setItem('TweetType-Tweetdetails','Retweet')
         localStorage.setItem('TweetId-Tweetdetails',tweet.retweetId)
-        window.open("TweetDetails.html", "_blank");
+        // window.open("TweetDetails.html", "_blank");
+        window.location.href = "TweetDetails.html"
       })
 
       const retweetIcon = document.createElement('i');
@@ -652,11 +734,21 @@ function renderRetweets(retweets,tweets) {
         if (likeIcon.classList.contains('fa-regular')) {
           likeIcon.className = 'fa-solid fa-heart';
           likeIcon.style.color = '#ed0c0c'
+          if((tweet.retweetLikesCount+1)==1){
+            likeText.textContent = `${tweet.retweetLikesCount+1} Like`;
+          }else{
+              likeText.textContent = `${tweet.retweetLikesCount+1} Likes`;
+          }
             await updateRetweetLikeStatus(tweet.retweetId);
         }else if(likeIcon.classList.contains('fa-heart')){
           likeIcon.className = 'fa-regular fa-heart';
           likeIcon.style.color = '#3e6f6f'
-          updateRetweetDisLikeStatus(tweet.retweetId)
+          if((tweet.retweetLikesCount-1)==0 || (tweet.retweetLikesCount-1)==1){
+            likeText.textContent = `${tweet.retweetLikesCount-1} Like`;
+          }else{
+            likeText.textContent = `${tweet.retweetLikesCount-1} Likes`;
+          }
+          await updateRetweetDisLikeStatus(tweet.retweetId)
         }
     });
 
@@ -759,7 +851,8 @@ function renderRetweets(retweets,tweets) {
     commentIcon.addEventListener('click', async function() {
       localStorage.setItem('TweetType-Tweetdetails','Tweet')
       localStorage.setItem('TweetId-Tweetdetails',tweet.tweetId)
-      window.open("TweetDetails.html", "_blank");
+      // window.open("TweetDetails.html", "_blank");
+      window.location.href = "TweetDetails.html"
     })
 
     const retweetIcon = document.createElement('i');
@@ -816,11 +909,21 @@ function renderRetweets(retweets,tweets) {
       if (likeIcon.classList.contains('fa-regular')) {
         likeIcon.className = 'fa-solid fa-heart';
         likeIcon.style.color = '#ed0c0c'
+        if((tweet.tweetLikesCount+1)==0){
+          likeText.textContent = `${tweet.tweetLikesCount+1} Like`;
+        }else{
+            likeText.textContent = `${tweet.tweetLikesCount+1} Likes`;
+        }
           await updateLikeStatus(tweet.tweetId);
       }else if(likeIcon.classList.contains('fa-heart')){
         likeIcon.className = 'fa-regular fa-heart';
         likeIcon.style.color = '#3e6f6f'
-        updateTweetDisLikeStatus(tweet.tweetId)
+        if((tweet.tweetLikesCount-1)==0 || (tweet.tweetLikesCount-1)==1){
+            likeText.textContent = `${tweet.tweetLikesCount-1} Like`;
+        }else{
+            likeText.textContent = `${tweet.tweetLikesCount-1} Likes`;
+        }
+        await updateTweetDisLikeStatus(tweet.tweetId)
       }
   });
 

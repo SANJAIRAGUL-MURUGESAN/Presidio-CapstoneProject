@@ -1,5 +1,6 @@
 ﻿using BloggingApp.Contexts;
 using BloggingApp.Exceptions.UserExceptions;
+using BloggingApp.Exceptions.UserNotifications;
 using BloggingApp.Interfaces;
 using BloggingApp.Models;
 using BloggingApp.Models.FollowDTOs;
@@ -44,7 +45,7 @@ namespace BloggingApp.Services
             user.Location = registerUserDTO.Location;
             user.IsPremiumHolder = registerUserDTO.IsPremiumHolder;
             user.DateOfBirth = registerUserDTO.DateOfBirth;
-            user.Age = registerUserDTO.Age;
+            user.JoinedDate = DateTime.Now;
             user.BioDescription = registerUserDTO.BioDescription;
             user.UserProfileImgLink = registerUserDTO.UserProfileImgLink;
             return user;
@@ -55,14 +56,40 @@ namespace BloggingApp.Services
             try
             {
                 var user = MapRegisterUserDTOtoUser(registerUserDTO);
-                var AddedUser = await _UserRepository.Add(user);
-                if (AddedUser != null)
+                var AvailableUsers = await _UserRepository.Get();
+                int Flag = 0;
+                foreach(var user1 in AvailableUsers)
                 {
-                    RegisterUserReturnDTO registerUserReturnDTO = new RegisterUserReturnDTO();
-                    registerUserReturnDTO.Result = "Success";
-                    return registerUserReturnDTO;
+                    if(user1.UserEmail == registerUserDTO.UserEmail)
+                    {
+                        Flag = 1;
+                        break;
+                    }
+                    if(user1.UserId == registerUserDTO.UserId)
+                    {
+                        Flag = 1;
+                        break;
+                    }
+                }
+                if (Flag == 0)
+                {
+                    var AddedUser = await _UserRepository.Add(user);
+                    if (AddedUser != null)
+                    {
+                        RegisterUserReturnDTO registerUserReturnDTO = new RegisterUserReturnDTO();
+                        registerUserReturnDTO.Result = "Success";
+                        return registerUserReturnDTO;
+                    }
+                }
+                else
+                {
+                    throw new UserEmailAlreadyExistsException();
                 }
                 throw new Exception();
+            }
+            catch (UserEmailAlreadyExistsException)
+            {
+                throw new UserEmailAlreadyExistsException();
             }
             catch (Exception)
             {
@@ -124,12 +151,12 @@ namespace BloggingApp.Services
         {
             try
             {
-                //var topUsers = await _context.Users
-                //                       .OrderByDescending(u => u.Followers.Count)
-                //                       .Take(2)
-                //                       .ToListAsync();
+                var topUsers = await _context.Users
+                                       .OrderByDescending(u => u.Followers.Count)
+                                       .Take(2)
+                                       .ToListAsync();
 
-                var topUsers = await _UserRepository.Get();
+                //var topUsers = await _UserRepository.Get();
                 List<TopUsersReturnDTO> UsersList = new List<TopUsersReturnDTO>(); 
                 foreach(var user in topUsers)
                 {
@@ -276,6 +303,8 @@ namespace BloggingApp.Services
         }
         // Function to send all notification to users - Ends
 
+        // Function to send update notification - starts
+
         public async Task<string> UpdateNotification(int UserId)
         {
             try
@@ -293,6 +322,75 @@ namespace BloggingApp.Services
                 throw new Exception();
             }
         }
+        // Function to send update notification - ends
+
+        // Function to Provide User Profile Details - starts
+        public async Task<User> UserProfile(int UserId)
+        {
+            try
+            {
+                var user = await _UserRepository.GetbyKey(UserId);
+                if (user != null)
+                {
+                    return user;
+                }
+                throw new Exception();
+            }
+            catch(Exception)
+            {
+                throw new Exception();
+            }
+        }
+        // Function to Provide User Profile Details - ends
+
+        // Function to Update User Profile Image - starts
+        public async Task<User> UserProfileImageUpdate(UpdateUserProfileImageDTO updateUserProfileImageDTO)
+        {
+            try
+            {
+                var user = await _UserRepository.GetbyKey(updateUserProfileImageDTO.UserId);
+                user.UserProfileImgLink = updateUserProfileImageDTO.ProfileImageUrl;
+                var uploadedimage = await _UserRepository.Update(user);
+                if (uploadedimage != null)
+                {
+                    return user;
+                }
+                throw new Exception();
+            }
+            catch (Exception)
+            {
+                throw new Exception();
+            }
+        }
+        // Function to Update User Profile Image - ends
+
+        // Function to search username - starts
+        public async Task<List<User>> UserProfileSearch(string username)
+        {
+            try
+            {
+                Console.WriteLine("Here");
+                Console.WriteLine("Username",username);
+                var user = ((await _UserRepository.Get()).Where(u => u.UserName == username)).ToList();
+                Console.WriteLine(user.Count);
+                if(user.Count == 0)
+                {
+                    Console.WriteLine(username.Length);
+                    var prefix = username.Substring(0, Math.Min(3, username.Length));
+                    Console.Write("prefix",prefix);
+                    user = await _context.Users
+                        .Where(u => u.UserName.StartsWith(prefix))
+                        .ToListAsync();
+                }
+                return user;
+            }
+            catch (Exception)
+            {
+                throw new Exception();
+            }
+        }
+
+        // Function to search username - Ends
 
     }
 }

@@ -15,7 +15,7 @@ namespace BloggingApp.Models
         public string UserGender { get; set; }
         public string IsPremiumHolder { get; set; }
         public string DateOfBirth { get; set; }
-        public int Age { get; set; }
+        public DateTime JoinedDate { get; set; }
         public string BioDescription { get; set; }
         public string UserProfileImgLink { get; set; }
         public ICollection<Tweet> UserTweets { get; set; }//No effect on the table

@@ -1,3 +1,19 @@
+const isloggedin = localStorage.getItem('token')
+if(!isloggedin){
+    Toastify({
+        text: "Hey User! You are already Not logged In, Redirecting...",
+        style: {
+            fontSize: "15px",
+            background: "linear-gradient(to right, #00b09b, #96c93d)",
+        },
+        callback: function() {
+            window.location.href = 'Login.html'; // Redirect after toast disappears
+        }
+    }).showToast();
+}
+
+
+
 document.getElementById('usernamenav').innerHTML = localStorage.getItem('username')
 document.getElementById('userprofileimgnav').src = localStorage.getItem('userprofileimglink')
 // document.getElementById('userprofileimgnav2').src = localStorage.getItem('userprofileimglink')
@@ -83,6 +99,20 @@ function renderfollowpeopledate(users) {
         p.textContent = `@${user.pUserId}`;
         followUserInfoDiv.appendChild(h4);
         followUserInfoDiv.appendChild(p);
+
+        h4.style.cursor = "pointer"
+        h4.addEventListener('mouseenter', function() {
+            h4.style.textDecoration = "underline";
+        });
+        
+        h4.addEventListener('mouseleave', function() {
+            h4.style.textDecoration = "none";
+        });
+        h4.addEventListener('click', async function() {
+            localStorage.setItem('profilepagedisplayeruserid',user.userId)
+            // window.open("TwitterProfile.html");
+            window.location.href = "TwitterProfile.html"
+        })
         
         const followButton = document.createElement('button');
         followButton.type = 'button';
@@ -183,7 +213,14 @@ async function AddFollowRequest(followerid) {
         if (!response.ok) {
             throw new Error('Failed to update Dislike status');
         }else{
-          alert('Following Successfully')
+            Toastify({
+                text: "Following Successfully",
+                style: {
+                    fontSize: "15px",
+                    background: "linear-gradient(to right, #00b09b, #96c93d)",
+                }
+               }).showToast();
+        //   alert('Following Successfully')
 
         }
     }).catch(error => {
@@ -207,7 +244,14 @@ async function RemoveFollowRequest(followerid) {
         if (!response.ok) {
             throw new Error('Failed to update Dislike status');
         }else{
-          alert('Unfollowed Successfully')
+            Toastify({
+                text: "Unfollowed Successfully",
+                style: {
+                    fontSize: "15px",
+                    background: "linear-gradient(to right, #00b09b, #96c93d)",
+                }
+               }).showToast();
+        //   alert('Unfollowed Successfully')
 
         }
     }).catch(error => {
@@ -277,3 +321,43 @@ async function NotificationInfo() {
 
 // }
 
+const profilebutton = document.getElementById('profilepagedisplayer')
+profilebutton.addEventListener('click',async() => {
+    localStorage.setItem('profilepagedisplayeruserid',localStorage.getItem('userid'))
+     window.location.href = "TwitterProfile.html"
+    // window.open("TwitterProfile.html");
+})
+
+// document.getElementById('search-p-user-input').addEventListener("keyup", async function() {
+//     // const value = this.value;
+//     // // Call your function here with the value
+//     // yourFunction(value);
+//     const v = document.getElementById('search-p-user-input')
+//     // console.log()
+//     if(v.value != null){
+//         console.log('yes')
+//     }else{
+//         console.log('no')
+//     }
+//   });
+document.getElementById('search-icon').style.cursor = 'pointer'
+
+document.getElementById('search-icon').addEventListener("click", async function() {
+    localStorage.setItem('serachusername',document.getElementById('search-p-user-input').value)
+    // window.open("PeopleSearch.html");
+    document.getElementById('search-p-user-input').value = ""
+    window.location.href = "PeopleSearch.html"
+})
+
+document.getElementById('logout').addEventListener('click',async()=>{
+    async function clearAllLocalStorage() {
+        const storage = window.localStorage;
+        const keys = Object.keys(storage); // Get all keys as an array
+      
+        for (const key of keys) {
+          storage.removeItem(key);
+        }
+      }
+      await clearAllLocalStorage()
+      window.location.href = "Login.html"
+})

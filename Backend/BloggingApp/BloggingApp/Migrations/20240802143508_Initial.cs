@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace BloggingApp.Migrations
 {
-    public partial class initial : Migration
+    public partial class Initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -73,7 +73,7 @@ namespace BloggingApp.Migrations
                     UserGender = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     IsPremiumHolder = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     DateOfBirth = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Age = table.Column<int>(type: "int", nullable: false),
+                    JoinedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     BioDescription = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     UserProfileImgLink = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },

@@ -1,3 +1,17 @@
+// const isloggedin = localStorage.getItem('token')
+// if(!isloggedin){
+//     Toastify({
+//         text: "Hey User! You are already Not logged In, Redirecting...",
+//         style: {
+//             background: "linear-gradient(to right, #00b09b, #96c93d)",
+//         },
+//         callback: function() {
+//             window.location.href = 'Login.html'; // Redirect after toast disappears
+//         }
+//     }).showToast();
+// }
+
+
 document.getElementById('usernamenav').innerHTML = localStorage.getItem('username')
 document.getElementById('userprofileimgnav').src = localStorage.getItem('userprofileimglink')
 // document.getElementById('userprofileimgnav2').src = localStorage.getItem('userprofileimglink')
@@ -185,7 +199,14 @@ document.addEventListener('DOMContentLoaded', function () {
                 console.log(data.errorCode)
             }else{
                 console.log(res)
-                alert('Hey User, Your Comment Added Successfully!');
+                Toastify({
+                    text: "Hey User, Your Comment Added Successfully!",
+                    style: {
+                        fontSize: "15px",
+                        background: "linear-gradient(to right, #00b09b, #96c93d)",
+                    }
+                   }).showToast();
+                // alert('Hey User, Your Comment Added Successfully!');
             }
         })
         .catch(error => {
@@ -213,7 +234,14 @@ document.addEventListener('DOMContentLoaded', function () {
             }else{
                 console.log(res)
                 localStorage.removeItem('BackendTo')
-                alert('Hey User, Your Reply Added Successfully!');
+                Toastify({
+                    text: "Hey User, Your Reply Added Successfully!",
+                    style: {
+                        fontSize: "15px",
+                        background: "linear-gradient(to right, #00b09b, #96c93d)",
+                    }
+                   }).showToast();
+                // alert('Hey User, Your Reply Added Successfully!');
             }
         })
         .catch(error => {
@@ -241,7 +269,14 @@ document.addEventListener('DOMContentLoaded', function () {
             }else{
                 localStorage.removeItem('BackendTo')
                 console.log(res)
-                alert('Hey User, Your Reply Comment Added Successfully!');
+                Toastify({
+                    text: "Hey User, Your Reply Comment Added Successfully!",
+                    style: {
+                        fontSize: "15px",
+                        background: "linear-gradient(to right, #00b09b, #96c93d)",
+                    }
+                   }).showToast();
+                // alert('Hey User, Your Reply Comment Added Successfully!');
             }
         })
         .catch(error => {
@@ -287,7 +322,14 @@ document.addEventListener('DOMContentLoaded', function () {
                 console.log(res)
             }else{
                 console.log(res)
-                alert('Hey User, Your Comment Added Successfully!');
+                Toastify({
+                    text: "Hey User, Your Comment Added Successfully!",
+                    style: {
+                        fontSize: "15px",
+                        background: "linear-gradient(to right, #00b09b, #96c93d)",
+                    }
+                   }).showToast();
+                // alert('Hey User, Your Comment Added Successfully!');
             }
         })
         .catch(error => {
@@ -315,7 +357,14 @@ document.addEventListener('DOMContentLoaded', function () {
             }else{
                 localStorage.removeItem('BackendTo')
                 console.log(res)
-                alert('Hey User, Your Reply Comment Added Successfully!');
+                Toastify({
+                    text: "Hey User, Your Reply Comment Added Successfully!",
+                    style: {
+                        fontSize: "15px",
+                        background: "linear-gradient(to right, #00b09b, #96c93d)",
+                    }
+                   }).showToast();
+                // alert('Hey User, Your Reply Comment Added Successfully!');
             }
         })
         .catch(error => {
@@ -343,7 +392,14 @@ document.addEventListener('DOMContentLoaded', function () {
             }else{
                 console.log(res)
                 localStorage.removeItem('BackendTo')
-                alert('Hey User, Your Reply Added Successfully!');
+                Toastify({
+                    text: "Hey User, Your Reply Added Successfully!",
+                    style: {
+                        fontSize: "15px",
+                        background: "linear-gradient(to right, #00b09b, #96c93d)",
+                    }
+                   }).showToast();
+                // alert('Hey User, Your Reply Added Successfully!');
             }
         })
         .catch(error => {
@@ -789,6 +845,7 @@ function rendertweet(tweet,comments){
             localStorage.setItem('CommentId',commentID);
             const reply = document.getElementById('replyshowmodal')
             reply.style.display = "flex"
+            document.getElementById('userimagemodal').src = post.userProfileImageLink
             const replycontent = document.getElementById('tweetcontentinput2')
             replycontent.style.fontSize = "15px"
             replycontent.innerHTML = post.replyContent
@@ -1061,6 +1118,7 @@ function renderRetweet(tweet,comments) {
             const reply = document.getElementById('replyshowmodal')
             reply.style.display = "flex"
             const replycontent = document.getElementById('tweetcontentinput2')
+            document.getElementById('userimagemodal').src = post.userProfileLink
             replycontent.style.fontSize = "15px"
             replycontent.innerHTML = post.commentContent
             modal.style.display = 'block'
@@ -1196,6 +1254,7 @@ function renderRetweet(tweet,comments) {
             const reply = document.getElementById('replyshowmodal')
             reply.style.display = "flex"
             const replycontent = document.getElementById('tweetcontentinput2')
+            document.getElementById('userimagemodal').src = post.userProfileImageLink
              replycontent.style.fontSize = "15px"
             replycontent.innerHTML = post.replyContent
             modal.style.display = 'block'
@@ -1241,9 +1300,16 @@ async function updateLikeStatus(tweetId) {
       })
     }).then(response => {
         if (!response.ok) {
-            throw new Error('Failed to update like status');
+            Toastify({
+                text: "Hey User, Failed to update like status!",
+                style: {
+                    fontSize: "15px",
+                    background: "linear-gradient(to right, #00b09b, #96c93d)",
+                }
+               }).showToast();
+            // throw new Error('Failed to update like status');
         }else{
-          alert('Like Added Successfully')
+        //   alert('Like Added Successfully')
         }
     }).catch(error => {
         console.error(error);
@@ -1263,9 +1329,16 @@ async function updateTweetDisLikeStatus(tweetId) {
       })
     }).then(response => {
         if (!response.ok) {
-            throw new Error('Failed to update Dislike status');
+            Toastify({
+                text: "Hey User, Failed to update Dislike status",
+                style: {
+                    fontSize: "15px",
+                    background: "linear-gradient(to right, #00b09b, #96c93d)",
+                }
+               }).showToast();
+            // throw new Error('Failed to update Dislike status');
         }else{
-          alert('Dislike Added Successfully')
+        //   alert('Dislike Added Successfully')
         }
     }).catch(error => {
         console.error(error);
@@ -1285,9 +1358,16 @@ async function updateTweetDisLikeStatus(tweetId) {
       })
     }).then(response => {
         if (!response.ok) {
-            throw new Error('Failed to update like status');
+            Toastify({
+                text: "Hey User, Failed to update like status!",
+                style: {
+                    fontSize: "15px",
+                    background: "linear-gradient(to right, #00b09b, #96c93d)",
+                }
+               }).showToast();
+            // throw new Error('Failed to update like status');
         }else{
-          alert('Like Added Successfully')
+        //   alert('Like Added Successfully')
         }
     }).catch(error => {
         console.error(error);
@@ -1307,9 +1387,16 @@ async function updateTweetDisLikeStatus(tweetId) {
       })
     }).then(response => {
         if (!response.ok) {
-            throw new Error('Failed to update Dislike status');
+            Toastify({
+                text: "Hey User, Failed to update Dislike status",
+                style: {
+                    fontSize: "15px",
+                    background: "linear-gradient(to right, #00b09b, #96c93d)",
+                }
+               }).showToast();
+            // throw new Error('Failed to update Dislike status');
         }else{
-          alert('Dislike Added Successfully')
+        //   alert('Dislike Added Successfully')
         }
     }).catch(error => {
         console.error(error);
@@ -1331,9 +1418,16 @@ async function updateTweetCommentLikeStatus(commentId) {
       })
     }).then(response => {
         if (!response.ok) {
-            throw new Error('Failed to update like status');
+            Toastify({
+                text: "Hey User, Failed to update Like status",
+                style: {
+                    fontSize: "15px",
+                    background: "linear-gradient(to right, #00b09b, #96c93d)",
+                }
+               }).showToast();
+            // throw new Error('Failed to update like status');
         }else{
-          alert('Comment - Like Added Successfully')
+        //   alert('Comment - Like Added Successfully')
         }
     }).catch(error => {
         console.error(error);
@@ -1356,9 +1450,16 @@ async function updateTweetCommentLikeStatus(commentId) {
       })
     }).then(response => {
         if (!response.ok) {
-            throw new Error('Failed to update like status');
+            Toastify({
+                text: "Hey User, Failed to update Like status",
+                style: {
+                    fontSize: "15px",
+                    background: "linear-gradient(to right, #00b09b, #96c93d)",
+                }
+               }).showToast();
+            // throw new Error('Failed to update like status');
         }else{
-          alert('Comment - Dislike Added Successfully')
+        //   alert('Comment - Dislike Added Successfully')
         }
     }).catch(error => {
         console.error(error);
@@ -1379,9 +1480,16 @@ async function updateTweetCommentLikeStatus(commentId) {
       })
     }).then(response => {
         if (!response.ok) {
-            throw new Error('Failed to update like status');
+            Toastify({
+                text: "Hey User, Failed to update Like status",
+                style: {
+                    fontSize: "15px",
+                    background: "linear-gradient(to right, #00b09b, #96c93d)",
+                }
+               }).showToast();
+            // throw new Error('Failed to update like status');
         }else{
-          alert('Reply - Like Added Successfully')
+        //   alert('Reply - Like Added Successfully')
         }
     }).catch(error => {
         console.error(error);
@@ -1402,9 +1510,16 @@ async function updateTweetCommentLikeStatus(commentId) {
       })
     }).then(response => {
         if (!response.ok) {
+            Toastify({
+                text: "Hey User, Failed to update Dislike status",
+                style: {
+                    fontSize: "15px",
+                    background: "linear-gradient(to right, #00b09b, #96c93d)",
+                }
+               }).showToast();
             throw new Error('Failed to update like status');
         }else{
-          alert('Reply- Dislike Added Successfully')
+        //   alert('Reply- Dislike Added Successfully')
         }
     }).catch(error => {
         console.error(error);
@@ -1429,9 +1544,16 @@ async function updateTweetCommentLikeStatus(commentId) {
       })
     }).then(response => {
         if (!response.ok) {
-            throw new Error('Failed to update like status');
+            Toastify({
+                text: "Hey User, Failed to update Like status",
+                style: {
+                    fontSize: "15px",
+                    background: "linear-gradient(to right, #00b09b, #96c93d)",
+                }
+               }).showToast();
+            // throw new Error('Failed to update like status');
         }else{
-          alert('Comment - Like Added Successfully')
+        //   alert('Comment - Like Added Successfully')
         }
     }).catch(error => {
         console.error(error);
@@ -1455,9 +1577,16 @@ async function updateTweetCommentLikeStatus(commentId) {
       })
     }).then(response => {
         if (!response.ok) {
-            throw new Error('Failed to update like status');
+            Toastify({
+                text: "Hey User, Failed to update Dislike status",
+                style: {
+                    fontSize: "15px",
+                    background: "linear-gradient(to right, #00b09b, #96c93d)",
+                }
+               }).showToast();
+            // throw new Error('Failed to update like status');
         }else{
-          alert('Comment - DisLike Added Successfully')
+        //   alert('Comment - DisLike Added Successfully')
         }
     }).catch(error => {
         console.error(error);
@@ -1480,9 +1609,16 @@ async function updateTweetCommentLikeStatus(commentId) {
       })
     }).then(response => {
         if (!response.ok) {
-            throw new Error('Failed to update like status');
+            Toastify({
+                text: "Hey User, Failed to update Like status",
+                style: {
+                    fontSize: "15px",
+                    background: "linear-gradient(to right, #00b09b, #96c93d)",
+                }
+               }).showToast();
+            // throw new Error('Failed to update like status');
         }else{
-          alert('Reply - Like Added Successfully')
+        //   alert('Reply - Like Added Successfully')
         }
     }).catch(error => {
         console.error(error);
@@ -1505,9 +1641,16 @@ async function updateTweetCommentLikeStatus(commentId) {
       })
     }).then(response => {
         if (!response.ok) {
-            throw new Error('Failed to update like status');
+            Toastify({
+                text: "Hey User, Failed to update Dislike status",
+                style: {
+                    fontSize: "15px",
+                    background: "linear-gradient(to right, #00b09b, #96c93d)",
+                }
+               }).showToast();
+            // throw new Error('Failed to update like status');
         }else{
-          alert('Reply - Dislike Added Successfully')
+        //   alert('Reply - Dislike Added Successfully')
         }
     }).catch(error => {
         console.error(error);

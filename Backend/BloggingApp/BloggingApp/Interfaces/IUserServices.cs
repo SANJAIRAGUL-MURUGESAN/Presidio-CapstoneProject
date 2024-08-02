@@ -15,5 +15,9 @@ namespace BloggingApp.Interfaces
         public Task<SideBarUserInfoReturnDTO> ReturnSideBarUserInfo(int userid);
         public Task<List<UserNotification>> NotificationSender(NotificationUserDetailsDTO notificationUserDetailsDTO);
         public Task<string> UpdateNotification(int UserId);
+        public Task<User> UserProfile(int UserId);
+        public Task<User> UserProfileImageUpdate(UpdateUserProfileImageDTO updateUserProfileImageDTO);
+        public Task<List<User>> UserProfileSearch(string username);
     }
+
 }

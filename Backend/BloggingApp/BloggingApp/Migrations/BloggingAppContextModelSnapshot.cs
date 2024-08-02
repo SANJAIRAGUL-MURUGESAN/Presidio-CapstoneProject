@@ -520,9 +520,6 @@ namespace BloggingApp.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<int>("Age")
-                        .HasColumnType("int");
-
                     b.Property<string>("BioDescription")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -534,6 +531,9 @@ namespace BloggingApp.Migrations
                     b.Property<string>("IsPremiumHolder")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("JoinedDate")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("Location")
                         .IsRequired()
