@@ -33,6 +33,7 @@ document.addEventListener('DOMContentLoaded', async function() {
             document.getElementById('username-pid').innerHTML = `@${data.userId}`
             document.getElementById('desc').innerHTML = `${data.bioDescription} |`
             document.getElementById('userlocation').innerHTML =  ` <i class="fa fa-location-arrow "></i>  ${(data.location)}`
+            document.getElementById('joinedon').innerHTML = `<i class="fa fa-calendar" aria-hidden="true"></i> Joined on:  ${formatDate(data.joinedDate)}`
         }
     }).catch(error => {
         console.error(error);

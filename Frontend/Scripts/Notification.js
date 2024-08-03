@@ -22,6 +22,8 @@ document.addEventListener('DOMContentLoaded', async function() {
 
 async function NotificationInfo1() {
     console.log('hi')
+    const spinnerEl = document.querySelector('.spinnerborderindex');
+    spinnerEl.style.display = 'flex';
     await fetch('https://localhost:7186/api/User/UserNotifications', {
         method: 'POST',
         headers: {
@@ -37,6 +39,8 @@ async function NotificationInfo1() {
         }else{
             var data = await response.json();
             console.log(data)
+            const spinnerEl = document.querySelector('.spinnerborderindex');
+            spinnerEl.style.display = 'none';
             if(data.length==0){
                 document.getElementById('NotweetText').style.display = 'block'
             }else{

@@ -76,3 +76,4 @@ C:\Users\VC\Desktop\BloggingApp\Backend\BloggingApp\BloggingApp\bin\Debug\net6.0
 C:\Users\VC\Desktop\BloggingApp\Backend\BloggingApp\BloggingApp\bin\Debug\net6.0\System.ClientModel.dll
 C:\Users\VC\Desktop\BloggingApp\Backend\BloggingApp\BloggingApp\bin\Debug\net6.0\System.IO.Hashing.dll
 C:\Users\VC\Desktop\BloggingApp\Backend\BloggingApp\BloggingApp\bin\Debug\net6.0\System.Memory.Data.dll
+C:\Users\VC\Desktop\BloggingApp\Backend\BloggingApp\BloggingApp\bin\Debug\net6.0\log4net.dll

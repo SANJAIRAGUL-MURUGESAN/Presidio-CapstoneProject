@@ -22,6 +22,9 @@ document.getElementById('userimagemodal').src = localStorage.getItem('userprofil
 
 document.addEventListener('DOMContentLoaded', async function() {
 
+    const spinnerEl = document.querySelector('.spinnerborderpeople');
+    spinnerEl.style.display = 'flex';
+
     async function fetchPeoples() {
         await fetch('https://localhost:7186/api/User/TopUsers', {
             method: 'POST',
@@ -32,6 +35,8 @@ document.addEventListener('DOMContentLoaded', async function() {
             body: JSON.stringify(localStorage.getItem('userid'))
         })
         .then(async (response) => {
+            const spinnerEl = document.querySelector('.spinnerborderpeople');
+            spinnerEl.style.display = 'none';
             if (response.ok) {
                 const data = await response.json();
                 console.log(data);

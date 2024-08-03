@@ -155,6 +155,10 @@ document.addEventListener('DOMContentLoaded', function () {
   });
 
   document.querySelector('.modal-header button').addEventListener('click', function () {
+
+    const spinnerEl = document.querySelector('.spinnerborder');
+    spinnerEl.style.display = 'flex';
+
     const postContent = document.getElementById('tweetcontentinput').value;
     console.log(postContent)
     // Regular expressions to match mentions (@username) and comments (#comment)
@@ -195,6 +199,8 @@ document.addEventListener('DOMContentLoaded', function () {
             })
         })
         .then(async res => {
+            const spinnerEl = document.querySelector('.spinnerborder');
+            spinnerEl.style.display = 'none';
             if (!res.ok) {
                 console.log(data.errorCode)
             }else{
@@ -229,6 +235,8 @@ document.addEventListener('DOMContentLoaded', function () {
             })
         })
         .then(async res => {
+            const spinnerEl = document.querySelector('.spinnerborder');
+            spinnerEl.style.display = 'none';
             if (!res.ok) {
                 console.log(res)
             }else{
@@ -264,6 +272,8 @@ document.addEventListener('DOMContentLoaded', function () {
             })
         })
         .then(async res => {
+            const spinnerEl = document.querySelector('.spinnerborder');
+            spinnerEl.style.display = 'none';
             if (!res.ok) {
                 console.log(res.errorCode)
             }else{
@@ -284,11 +294,48 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
+    async function EditTweetContent(){
+
+        await fetch('https://localhost:7186/api/Tweet/UpdateTweetsCommentContent', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+             },
+            body: JSON.stringify({
+                "tweetId": localStorage.getItem('TweetId-Tweetdetails'),
+                "tweetContent": postContent,
+            })
+        })
+        .then(async res => {
+            const spinnerEl = document.querySelector('.spinnerborder');
+            spinnerEl.style.display = 'none';
+            if (!res.ok) {
+                console.log(res.errorCode)
+            }else{
+                localStorage.removeItem('BackendTo')
+                console.log(res)
+                Toastify({
+                    text: "Hey User, Your Tweet Commented Added Successfully!",
+                    style: {
+                        fontSize: "15px",
+                        background: "linear-gradient(to right, #00b09b, #96c93d)",
+                    }
+                   }).showToast();
+                // alert('Hey User, Your Reply Comment Added Successfully!');
+            }
+        })
+        .catch(error => {
+            alert(error);
+        });
+    }
+
     if(localStorage.getItem('TweetType-Tweetdetails') === "Tweet"){
         if(localStorage.getItem('BackendTo')=='ReplyComment'){
             addCommentReply()
         }else if(localStorage.getItem('BackendTo')=='ReplyReply'){
             addReplyReply()
+        }else if(localStorage.getItem('BackendTo')=='edittweetcontent'){
+            EditTweetContent()
         }
         else{
             addTweetComment()
@@ -298,10 +345,47 @@ document.addEventListener('DOMContentLoaded', function () {
             addRetweetCommentReply()
         }else if(localStorage.getItem('BackendTo')=='ReplyReply'){
             RetweetaddReplyReply()
+        }else if(localStorage.getItem('BackendTo')=='editretweetcontent'){
+            EditRetweetContent()
         }
         else{
             addRetweetComment()
         }
+    }
+
+    async function EditRetweetContent(){
+
+        await fetch('https://localhost:7186/api/Tweet/UpdateReweetsCommentContent', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+             },
+            body: JSON.stringify({
+                "retweetId": localStorage.getItem('TweetId-Tweetdetails'),
+                "retweetContent": postContent,
+            })
+        })
+        .then(async res => {
+            const spinnerEl = document.querySelector('.spinnerborder');
+            spinnerEl.style.display = 'none';
+            if (!res.ok) {
+                console.log(res.errorCode)
+            }else{
+                localStorage.removeItem('BackendTo')
+                console.log(res)
+                Toastify({
+                    text: "Hey User, Your Reweet Commented Added Successfully!",
+                    style: {
+                        fontSize: "15px",
+                        background: "linear-gradient(to right, #00b09b, #96c93d)",
+                    }
+                   }).showToast();
+                // alert('Hey User, Your Reply Comment Added Successfully!');
+            }
+        })
+        .catch(error => {
+            alert(error);
+        });
     }
 
     async function addRetweetComment(){
@@ -318,6 +402,8 @@ document.addEventListener('DOMContentLoaded', function () {
             })
         })
         .then(async res => {
+            const spinnerEl = document.querySelector('.spinnerborder');
+            spinnerEl.style.display = 'none';
             if (!res.ok) {
                 console.log(res)
             }else{
@@ -352,6 +438,8 @@ document.addEventListener('DOMContentLoaded', function () {
             })
         })
         .then(async res => {
+            const spinnerEl = document.querySelector('.spinnerborder');
+            spinnerEl.style.display = 'none';
             if (!res.ok) {
                 console.log(res.errorCode)
             }else{
@@ -387,6 +475,8 @@ document.addEventListener('DOMContentLoaded', function () {
             })
         })
         .then(async res => {
+            const spinnerEl = document.querySelector('.spinnerborder');
+            spinnerEl.style.display = 'none';
             if (!res.ok) {
                 console.log(res)
             }else{
@@ -414,6 +504,9 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
 document.addEventListener('DOMContentLoaded', async function() {
+
+    const spinnerEl = document.querySelector('.spinnerborderindex');
+    spinnerEl.style.display = 'flex';
 
     async function fetchTweets() {
 
@@ -451,6 +544,8 @@ document.addEventListener('DOMContentLoaded', async function() {
               "userId": localStorage.getItem('userid'),
           })
         }).then(async (response) => {
+            const spinnerEl = document.querySelector('.spinnerborderindex');
+            spinnerEl.style.display = 'none';
             var data = await response.json();
             console.log(data)
             await rendertweet(tweet,data)
@@ -496,6 +591,8 @@ document.addEventListener('DOMContentLoaded', async function() {
               "userId": localStorage.getItem('userid'),
           })
         }).then(async (response) => {
+            const spinnerEl = document.querySelector('.spinnerborderindex');
+            spinnerEl.style.display = 'none';
             var data = await response.json();
             console.log(data)
             await renderRetweet(tweet,data)
@@ -539,7 +636,21 @@ function rendertweet(tweet,comments){
     checkIcon.className = 'fas fa-check-circle';
     const userHandleSpan = document.createElement('span');
     userHandleSpan.textContent = `@${tweet.tweetOwnerUserId} . ${timeAgo(tweet.tweetDateTime)}`;
+    const span =document.createElement('span');
+    span.textContent = 'Edit'
+    span.style.fontSize = '12px'
+    span.style.cursor = 'pointer'
+    span.style.color = 'blue'
+    span.style.textDecoration = 'underline';
+    userHandleSpan.appendChild(span)
     userHandleSpan.style.fontSize = '12px'
+
+    span.addEventListener('click',async()=>{
+        modal.style.display = 'block'
+        modalWrapper.classList.add('modal-wrapper-display')
+        document.getElementById('tweetcontentinput').value = tweet.tweetContent
+        localStorage.setItem('BackendTo','edittweetcontent')
+    })
 
     postUserInfoDiv.appendChild(userNameH4);
     postUserInfoDiv.appendChild(checkIcon);
@@ -900,8 +1011,23 @@ function renderRetweet(tweet,comments) {
         const checkIcon = document.createElement('i');
         checkIcon.className = 'fas fa-check-circle';
         const userHandleSpan = document.createElement('span');
-        userHandleSpan.textContent = `@${tweet.retweetUserId} . Reposted ${timeAgo(tweet.retweetDateTime)}`;
+        userHandleSpan.textContent = `@${tweet.retweetUserId} . Reposted ${timeAgo(tweet.retweetDateTime)}    `;
         userHandleSpan.style.fontSize = '12px'
+        const span =document.createElement('span');
+        span.textContent = 'Edit'
+        span.style.fontSize = '12px'
+        span.style.cursor = 'pointer'
+        span.style.color = 'blue'
+        span.style.textDecoration = 'underline';
+        userHandleSpan.appendChild(span)
+        userHandleSpan.style.fontSize = '12px'
+    
+        span.addEventListener('click',async()=>{
+            modal.style.display = 'block'
+            modalWrapper.classList.add('modal-wrapper-display')
+            document.getElementById('tweetcontentinput').value = tweet.retweetContent
+            localStorage.setItem('BackendTo','editretweetcontent')
+        })
   
         postUserInfoDiv.appendChild(userNameH4);
         postUserInfoDiv.appendChild(checkIcon);
@@ -997,7 +1123,7 @@ function renderRetweet(tweet,comments) {
         retweetIcon.style.cursor = 'pointer'
         const retweetText = document.createElement('h6');
         retweetText.style.fontSize = '8px';
-        retweetText.textContent = '3 Retweets';
+        retweetText.textContent = 'Retweet';
         retweetIcon.appendChild(retweetText);
   
         retweetIcon.addEventListener('click', async function() {

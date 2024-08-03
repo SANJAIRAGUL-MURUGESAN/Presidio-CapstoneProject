@@ -1426,3 +1426,29 @@ body{
     }
 
 }
+
+.spinnerborderindex{
+    display: flex;
+    justify-content: center; /* Center horizontally */
+    align-items: center; /* Center vertically */
+    /* margin-left: 200px; */
+}
+
+.spinnerborderindex img{
+
+    height: 40px;
+    width: 40px;
+}
+
+.spinnerborderpeople{
+    display: flex;
+    justify-content: center; /* Center horizontally */
+    align-items: center; /* Center vertically */
+    /* margin-left: 200px; */
+}
+
+.spinnerborderpeople img{
+
+    height: 40px;
+    width: 40px;
+}

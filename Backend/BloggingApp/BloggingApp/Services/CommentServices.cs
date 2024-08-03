@@ -313,6 +313,22 @@ namespace BloggingApp.Services
             {
                 var reply = MapAddReplyDTOToReply1(addReplyDTO);
                 var addedreply = await _ReplyRepository.Add(reply);
+
+                var commentdetails = await _CommentRepository.GetbyKey(addReplyDTO.CommentId);
+                var tweetdetails = await _TweetRepository.GetbyKey(commentdetails.TweetId);
+                var tweetowneruserdetails = await _UserRepository.GetbyKey(tweetdetails.UserId);
+
+                var user = await _UserRepository.GetbyKey(addReplyDTO.UserId);
+                UserNotification userNotification = new UserNotification();
+                userNotification.UserId = tweetowneruserdetails.Id;
+                userNotification.NotificationPost = user.UserProfileImgLink;
+                userNotification.IsUserSeen = "No";
+                userNotification.ContentDateTime = reply.ReplyDateTime;
+                userNotification.TweetType = "Tweet";
+                userNotification.TweetId = tweetdetails.Id;
+                userNotification.NotificatioContent = user.UserName + " Replied to your Comment";
+                var addedNotification = await _UserNotificationRepository.Add(userNotification);
+
                 if (addedreply != null)
                 {
                     return "success";
@@ -443,6 +459,22 @@ namespace BloggingApp.Services
             {
                 var reply = MapRetweetCommentRepltotReply(addRetweetCommentReplytoRelpy);
                 var addedreply = await _RetweetCommentReplyRepository.Add(reply);
+
+                var commentdetails = await _RetweetCommentRepository.GetbyKey(addRetweetCommentReplytoRelpy.RetweetCommentId);
+                var tweetdetails = await _RetweetRepository.GetbyKey(commentdetails.RetweetId);
+                var tweetowneruserdetails = await _UserRepository.GetbyKey(tweetdetails.UserId);
+
+                var user = await _UserRepository.GetbyKey(addRetweetCommentReplytoRelpy.UserId);
+                UserNotification userNotification = new UserNotification();
+                userNotification.UserId = tweetowneruserdetails.Id;
+                userNotification.NotificationPost = user.UserProfileImgLink;
+                userNotification.IsUserSeen = "No";
+                userNotification.ContentDateTime = reply.ReplyDateTime;
+                userNotification.TweetType = "Retweet";
+                userNotification.TweetId = tweetdetails.Id;
+                userNotification.NotificatioContent = user.UserName + " Replied to your Comment";
+                var addedNotification = await _UserNotificationRepository.Add(userNotification);
+
                 if (addedreply != null)
                 {
                     return "success";

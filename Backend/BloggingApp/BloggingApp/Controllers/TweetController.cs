@@ -486,6 +486,55 @@ namespace BloggingApp.Controllers
         }
         // Function to Add Retweet Reply Dislike - Ends
 
+        // Function to Update Tweet content - Starts
+
+        [Route("UpdateTweetsCommentContent")]
+        [HttpPost]
+        [ProducesResponseType(typeof(string), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ErrorModel), StatusCodes.Status409Conflict)]
+        [ProducesResponseType(typeof(ErrorModel), StatusCodes.Status500InternalServerError)]
+        [ProducesErrorResponseType(typeof(ErrorModel))]
+        public async Task<ActionResult<string>> UpdateTweetContent([FromBody] UpdateTweetContentDTO updateTweetContentDTO)
+        {
+            try
+            {
+                var tweetcontent = await _TweetServices.UpdateTweetContent(updateTweetContentDTO);
+                return Ok(tweetcontent);
+
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                return StatusCode(StatusCodes.Status500InternalServerError, new ErrorModel(500, ex.Message));
+            }
+        }
+        // Function to Update Tweet content - Ends
+
+
+        // Function to Update Retweet content - Starts
+
+        [Route("UpdateReweetsCommentContent")]
+        [HttpPost]
+        [ProducesResponseType(typeof(string), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ErrorModel), StatusCodes.Status409Conflict)]
+        [ProducesResponseType(typeof(ErrorModel), StatusCodes.Status500InternalServerError)]
+        [ProducesErrorResponseType(typeof(ErrorModel))]
+        public async Task<ActionResult<string>> UpdateRetweetContent([FromBody] UpdateRetweetContentDTO updateRetweetContentDTO)
+        {
+            try
+            {
+                var reweetcontent = await _TweetServices.UpdateRetweetContent(updateRetweetContentDTO);
+                return Ok(reweetcontent);
+
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                return StatusCode(StatusCodes.Status500InternalServerError, new ErrorModel(500, ex.Message));
+            }
+        }
+        // Function to Update Retweet content - Ends
+
 
     }
 }

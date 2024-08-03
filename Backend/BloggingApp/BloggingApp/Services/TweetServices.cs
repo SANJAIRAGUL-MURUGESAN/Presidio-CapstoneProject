@@ -671,5 +671,51 @@ namespace BloggingApp.Services
         }
 
         // Function to Return RetweetDetails - Ends
+
+        // Function to Update Tweet Content - Starts
+
+        public async Task<string> UpdateTweetContent(UpdateTweetContentDTO updateTweetContentDTO)
+        {
+            try
+            {
+                var tweet = await _TweetRepository.GetbyKey(updateTweetContentDTO.TweetId);
+                if(tweet != null)
+                {
+                    tweet.TweetContent = updateTweetContentDTO.TweetContent;
+                    var updatedTwee = await _TweetRepository.Update(tweet);
+                    return "success";
+                }
+                throw new Exception();
+            }
+            catch (Exception)
+            {
+                throw new Exception();
+            }
+        }
+
+        // Function to Update Tweet Content - Ends
+
+        // Function to Update Retweet Content - Starts
+
+        public async Task<string> UpdateRetweetContent(UpdateRetweetContentDTO updateRetweetContentDTO)
+        {
+            try
+            {
+                var retweet = await _RetweetRepository.GetbyKey(updateRetweetContentDTO.RetweetId);
+                if (retweet != null)
+                {
+                    retweet.RetweetContent = updateRetweetContentDTO.RetweetContent;
+                    var updatedTwee = await _RetweetRepository.Update(retweet);
+                    return "success";
+                }
+                throw new Exception();
+            }
+            catch (Exception)
+            {
+                throw new Exception();
+            }
+        }
+
+        // Function to Update Retweet Content - Ends
     }
 }

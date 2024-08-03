@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "k00c7M24y0kJjR1YgbZi/nrKYVojfJpUdIR7o9NV8vMYsRpUyHlbfUIsu1eM/q/43qP9MXhYl16LuMra0p3YsA==",
+  "dgSpecHash": "+aRymaCIm7ro9a5apIbjO8YSEsc4z9hCkjy9jqXRuIgmLQyEV8fb3mA9XLZKQfXVmXTZjz+idkP6taAKYdNVSw==",
   "success": true,
   "projectFilePath": "C:\\Users\\VC\\Desktop\\BloggingApp\\Backend\\BloggingApp\\BloggingApp\\BloggingApp.csproj",
   "expectedPackageFiles": [
@@ -8,6 +8,7 @@
     "C:\\Users\\VC\\.nuget\\packages\\azure.storage.blobs\\12.21.0\\azure.storage.blobs.12.21.0.nupkg.sha512",
     "C:\\Users\\VC\\.nuget\\packages\\azure.storage.common\\12.20.0\\azure.storage.common.12.20.0.nupkg.sha512",
     "C:\\Users\\VC\\.nuget\\packages\\humanizer.core\\2.8.26\\humanizer.core.2.8.26.nupkg.sha512",
+    "C:\\Users\\VC\\.nuget\\packages\\log4net\\2.0.17\\log4net.2.0.17.nupkg.sha512",
     "C:\\Users\\VC\\.nuget\\packages\\microsoft.aspnetcore.authentication.jwtbearer\\6.0.29\\microsoft.aspnetcore.authentication.jwtbearer.6.0.29.nupkg.sha512",
     "C:\\Users\\VC\\.nuget\\packages\\microsoft.bcl.asyncinterfaces\\1.1.1\\microsoft.bcl.asyncinterfaces.1.1.1.nupkg.sha512",
     "C:\\Users\\VC\\.nuget\\packages\\microsoft.csharp\\4.5.0\\microsoft.csharp.4.5.0.nupkg.sha512",

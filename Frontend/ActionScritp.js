@@ -55,6 +55,10 @@ document.getElementById('fileInput').addEventListener('change', function (event)
 });
 
 document.querySelector('.modal-header button').addEventListener('click', function () {
+
+    const spinnerEl = document.querySelector('.spinnerborder');
+    spinnerEl.style.display = 'flex';
+
     const formData = new FormData();
 
     const postContent = document.getElementById('tweetcontentinput').value;
@@ -167,6 +171,8 @@ document.querySelector('.modal-header button').addEventListener('click', functio
         })
     })
     .then(async res => {
+        const spinnerEl = document.querySelector('.spinnerborder');
+        spinnerEl.style.display = 'none';
         console.log(res)
         if (!res.ok) {
             console.log(data.errorCode)
@@ -193,6 +199,8 @@ document.querySelector('.modal-header button').addEventListener('click', functio
             body: formData
         })
         .then(data => {
+            const spinnerEl = document.querySelector('.spinnerborder');
+            spinnerEl.style.display = 'none';
             console.log(data);
             // alert('Hey User, Your Feed Added Successfully!!');
             Toastify({
@@ -526,6 +534,9 @@ function timeAgo(date) {
 
 document.addEventListener('DOMContentLoaded', async function() {
 
+    const spinnerEl = document.querySelector('.spinnerborderindex');
+    spinnerEl.style.display = 'flex';
+
     async function fetchTweets() {
 
       await fetch('https://localhost:7186/api/Tweet/Feeds', {
@@ -536,6 +547,8 @@ document.addEventListener('DOMContentLoaded', async function() {
           },
           body: JSON.stringify(localStorage.getItem('userid'))
       }).then(async (response) => {
+          const spinnerEl = document.querySelector('.spinnerborderindex');
+          spinnerEl.style.display = 'none';
           var data = await response.json();
           console.log(data.retweets);
           console.log(data.tweets);

@@ -15,6 +15,8 @@
 
 
 document.addEventListener('DOMContentLoaded', async function() {
+    const spinnerEl = document.querySelector('.spinnerborderindex');
+    spinnerEl.style.display = 'flex';
     await NotificationInfo1()
     var n = document.getElementById('notifi')
     n.style.removeProperty('color');   
@@ -41,6 +43,8 @@ async function NotificationInfo1() {
         }else{
             var data = await response.json();
             console.log(data)
+            const spinnerEl = document.querySelector('.spinnerborderindex');
+            spinnerEl.style.display = 'none';
             if(data.length==0){
                 document.getElementById('NotweetText').style.display = 'flex';
             }else{

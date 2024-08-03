@@ -101,3 +101,53 @@ input[type="file"] {
     border-top: 1px solid #ccc;
 }
 
+.spinnerborder{
+    display: flex;
+    justify-content: center; /* Center horizontally */
+    align-items: center; /* Center vertically */
+    margin-left: 400px;
+}
+
+.spinnerborder img{
+
+    height: 40px;
+    width: 40px;
+}
+
+@media(max-width: 500px){
+    .spinnerborder{
+        margin-left: 245px;
+    }
+}
+
+.spinnerborderindex{
+    display: flex;
+    justify-content: center; /* Center horizontally */
+    align-items: center; /* Center vertically */
+    /* margin-left: 200px; */
+}
+
+.spinnerborderindex img{
+
+    height: 40px;
+    width: 40px;
+}
+
+/* @media(max-width: 500px){
+    .spinnerborderindex{
+        margin-left: 245px;
+    }
+} */
+
+.spinnerborderpeople{
+    display: flex;
+    justify-content: center; /* Center horizontally */
+    align-items: center; /* Center vertically */
+    /* margin-left: 200px; */
+}
+
+.spinnerborderpeople img{
+
+    height: 40px;
+    width: 40px;
+}
